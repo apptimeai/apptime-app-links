@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="custom">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apptime 🚀</title>
+    <meta name="description" content="🔗 Uma Página. Mil Possibilidades.
+🚀 Personalize, conecte e expanda sua presença digital em poucos minutos.">
+    <meta name="keywords" content="Link na bio, Apptime 🚀, Apps">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Literata:wght@100..900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS 4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+    <style>
+        
+        :root {
+            --color-primary: #6200ea;
+            --color-primary-content: #ffffff;
+            --color-secondary: #03dac6;
+            --color-secondary-content: #000000;
+            --color-accent: #ff9800;
+            --color-accent-content: #ffffff;
+            --color-neutral: #ffffff;
+            --color-neutral-content: #000000;
+            --color-base-100: #f5f5f5;
+            --color-base-200: #ffffff;
+            --color-base-300: #eeeeee;
+            --color-base-content: #000000;
+            
+            --radius-selector: 0.5rem;
+            --radius-field: 0.5rem;
+            --radius-box: 0.5rem;
+
+            --font-family-sans: 'Literata', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family-sans);
+            background: linear-gradient(135deg, var(--color-base-100) 0%, var(--color-base-300) 100%);
+            color: var(--color-base-content);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            overflow-y: auto;
+            background-attachment: fixed;
+        }
+
+        *:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .text-primary-content { color: var(--color-primary-content); }
+        .bg-primary { background-color: var(--color-primary); }
+        .text-secondary-content { color: var(--color-secondary-content); }
+        .bg-secondary { background-color: var(--color-secondary); }
+        .text-accent-content { color: var(--color-accent-content); }
+        .bg-accent { background-color: var(--color-accent); }
+        .text-neutral-content { color: var(--color-neutral-content); }
+        .bg-neutral { background-color: var(--color-neutral); }
+        .text-base-content { color: var(--color-base-content); }
+        .bg-base-100 { background-color: var(--color-base-100); }
+        .bg-base-200 { background-color: var(--color-base-200); }
+        .bg-base-300 { background-color: var(--color-base-300); }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-selector);
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            color: var(--color-secondary-content);
+            background: linear-gradient(45deg, var(--color-secondary) 0%, var(--color-accent) 100%);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--color-accent);
+            background: linear-gradient(45deg, var(--color-accent) 0%, var(--color-secondary) 100%);
+            color: var(--color-accent-content);
+        }
+
+        .card {
+            background: linear-gradient(145deg, var(--color-base-200) 0%, var(--color-base-300) 100%);
+            border-radius: var(--radius-box);
+            padding: 1rem;
+            transition: transform 0.3s ease-in-out;
+            border: 2px solid var(--color-neutral);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-accent);
+            background: linear-gradient(145deg, var(--color-base-300) 0%, var(--color-base-200) 100%);
+        }
+
+        .card-media {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: var(--radius-field);
+            margin-bottom: 1rem;
+        }
+
+        .card-link {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            color: var(--color-base-content);
+            text-decoration: none;
+        }
+
+        .card-link-icon {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: var(--radius-selector);
+            object-fit: contain;
+            margin-right: 0.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-base-content);
+            line-height: 1.2;
+            font-family: var(--font-family-sans);
+        }
+
+        .card-description {
+            font-size: 1rem;
+            color: var(--color-base-content);
+            opacity: 0.8;
+            margin-top: 0.25rem;
+            line-height: 1.4;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--color-accent);
+        }
+
+        .profile-name {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--color-base-content);
+            margin-top: 1rem;
+        }
+
+        .profile-description {
+            font-size: 1.1rem;
+            color: var(--color-base-content);
+            opacity: 0.8;
+            text-align: center;
+            margin-top: 0.5rem;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .app-container {
+            max-width: 600px;
+            width: 95%;
+            margin: 2rem auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="app-container">
+        <!-- Header Section -->
+        <div v-if="profile.image" class="flex flex-col items-center mb-6">
+            <img :src="profile.image.url" :alt="'Foto de perfil de ' + profile.title" class="profile-image">
+            <h1 class="profile-name">{{ profile.title }}</h1>
+            <p class="profile-description">{{ profile.description }}</p>
+        </div>
+
+        <!-- Body Content (Cards) -->
+        <template v-for="item in (content.body || [])" :key="item.id || Math.random()">
+            <!-- Skip cards without props or with empty props -->
+            <template v-if="item.type === 'card' && item.props">
+                <!-- Clickable card with link -->
+                <a v-if="item.props.to" :href="item.props.to" target="_blank" rel="noopener noreferrer" class="card w-full">
+                    <template v-if="item.props.media">
+                        <img v-if="item.props.media.type === 'image'" :src="item.props.media.url" :alt="item.props.link?.title?.text || 'Mídia do card'" class="card-media">
+                        <video v-else-if="item.props.media.type === 'video'" :src="item.props.media.url" controls class="card-media"></video>
+                    </template>
+                    <div v-if="item.props.link" class="card-link flex-grow">
+                        <img v-if="item.props.link.icon" :src="item.props.link.icon.icon" :alt="item.props.link.title?.text || 'Ícone do link'" class="card-link-icon">
+                        <div class="flex flex-col items-start text-left flex-grow">
+                            <span v-if="item.props.link.title" class="card-title">{{ item.props.link.title.text }}</span>
+                            <span v-if="item.props.link.description" class="card-description">{{ item.props.link.description.text }}</span>
+                        </div>
+                    </div>
+                    <!-- Show text if no link but has text -->
+                    <div v-else-if="item.props.text" class="card-link flex-grow">
+                        <span class="card-title">{{ item.props.text.text }}</span>
+                    </div>
+                </a>
+                
+                <!-- Non-clickable card -->
+                <div v-else class="card w-full">
+                    <template v-if="item.props.media">
+                        <img v-if="item.props.media.type === 'image'" :src="item.props.media.url" :alt="item.props.link?.title?.text || item.props.text?.text || 'Mídia do card'" class="card-media">
+                        <video v-else-if="item.props.media.type === 'video'" :src="item.props.media.url" controls class="card-media"></video>
+                    </template>
+                    <div v-if="item.props.link" class="card-link flex-grow">
+                        <img v-if="item.props.link.icon" :src="item.props.link.icon.icon" :alt="item.props.link.title?.text || 'Ícone do link'" class="card-link-icon">
+                        <div class="flex flex-col items-start text-left flex-grow">
+                            <span v-if="item.props.link.title" class="card-title">{{ item.props.link.title.text }}</span>
+                            <span v-if="item.props.link.description" class="card-description">{{ item.props.link.description.text }}</span>
+                        </div>
+                    </div>
+                    <!-- Show text if no link but has text -->
+                    <div v-else-if="item.props.text" class="card-link flex-grow">
+                        <span class="card-title">{{ item.props.text.text }}</span>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        createApp({
+            setup() {
+                const appData = {
+          "planTier": "free",
+          "slug": "apptime",
+          "ownerId": "ouniXmgSDjoG54KtHSPe",
+          "userIds": [
+                    "ouniXmgSDjoG54KtHSPe"
+          ],
+          "category": "business",
+          "title": "Apptime 🚀",
+          "status": "active",
+          "image": {
+                    "type": "image",
+                    "url": "https://storage.googleapis.com/storage.apptime.app/public/pages/MlIejcUbUk9tXjQAEnh7/meta/image/imgHd.png",
+                    "status": "uploaded"
+          },
+          "description": "🔗 Uma Página. Mil Possibilidades.\n🚀 Personalize, conecte e expanda sua presença digital em poucos minutos.",
+          "theme": {
+                    "fontFamilyName": "Literata",
+                    "borderRadiusOut": "1.5rem",
+                    "borderRadiusIn": "0.75rem",
+                    "onPrimaryColor": "#ffffff",
+                    "onSecondaryColor": "#000000",
+                    "surfaceContainerColor": "#eeeeee",
+                    "backgroundColor": "#f5f5f5",
+                    "surfaceColor": "#ffffff",
+                    "onSurfaceColor": "#000000",
+                    "onSurfaceContainerColor": "#333333",
+                    "primaryColor": "#6200ea",
+                    "outlineColor": "#cccccc",
+                    "onBackgroundColor": "#000000",
+                    "outlineHighlightColor": "#ff9800",
+                    "onBackgroundDimColor": "#6d6d6d",
+                    "secondaryColor": "#03dac6"
+          },
+          "createdAt": {
+                    "_seconds": 1741385294,
+                    "_nanoseconds": 486000000
+          },
+          "content": {
+                    "header": {
+                              "type": "profile",
+                              "id": "9cfhk9q3k"
+                    },
+                    "body": [
+                              {
+                                        "id": "b10fy9xle",
+                                        "type": "card",
+                                        "props": {
+                                                  "link": {
+                                                            "icon": {
+                                                                      "icon": "https://storage.googleapis.com/storage.apptime.app/public/websiteIcons/appti_me.jpg",
+                                                                      "type": "image"
+                                                            },
+                                                            "title": {
+                                                                      "text": "Crie sua página 🚀\n"
+                                                            }
+                                                  },
+                                                  "media": {
+                                                            "status": "uploaded",
+                                                            "type": "image",
+                                                            "url": "https://storage.googleapis.com/storage.apptime.app/public/pages/MlIejcUbUk9tXjQAEnh7/content/images/fEY74Y-w6ra_/imgHd.jpg"
+                                                  },
+                                                  "to": "https://appti.me"
+                                        }
+                              },
+                              {
+                                        "id": "j6r1z5pi7",
+                                        "type": "card",
+                                        "props": {
+                                                  "link": {
+                                                            "icon": {
+                                                                      "icon": "https://storage.googleapis.com/storage.apptime.app/websiteIcons/instagram.webp",
+                                                                      "type": "image"
+                                                            },
+                                                            "title": {
+                                                                      "text": "Instagram"
+                                                            }
+                                                  },
+                                                  "to": "https://instagram.com/apptimedev"
+                                        }
+                              },
+                              {
+                                        "type": "card",
+                                        "props": {
+                                                  "link": {
+                                                            "icon": {
+                                                                      "icon": "https://storage.googleapis.com/storage.apptime.app/websiteIcons/linkedin.webp",
+                                                                      "type": "image"
+                                                            },
+                                                            "title": {
+                                                                      "text": "LinkedIn"
+                                                            }
+                                                  },
+                                                  "to": "https://linkedin.com/company/apptimedev"
+                                        }
+                              },
+                              {
+                                        "type": "card",
+                                        "props": {
+                                                  "link": {
+                                                            "icon": {
+                                                                      "icon": "https://storage.googleapis.com/storage.apptime.app/websiteIcons/buymeacoffee.webp",
+                                                                      "type": "image"
+                                                            },
+                                                            "title": {
+                                                                      "text": "Buy Me a Coffee"
+                                                            }
+                                                  },
+                                                  "to": "https://buymeacoffee.com/apptime"
+                                        }
+                              }
+                    ]
+          },
+          "updatedAt": {
+                    "_seconds": 1755486436,
+                    "_nanoseconds": 971000000
+          }
+};
+
+                const profile = ref({
+                    title: appData.title,
+                    description: appData.description,
+                    image: appData.image
+                });
+
+                // Ensure content structure exists and filter out invalid cards
+                const contentData = appData.content || {};
+                const bodyItems = (contentData.body || []).filter(item => {
+                    return item && item.type === 'card' && (
+                        // Valid if has props with at least one content type
+                        (item.props && (item.props.media || item.props.link || item.props.text)) ||
+                        // Or if it's a header/profile type
+                        item.type === 'profile'
+                    );
+                });
+
+                const content = ref({
+                    ...contentData,
+                    body: bodyItems
+                });
+
+                return {
+                    profile,
+                    content
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
