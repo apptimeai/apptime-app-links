@@ -20,22 +20,42 @@
     <style>
         
         :root {
-            --color-primary: #6200ea;
+            /* Dark Blue-Tinted Background Hierarchy */
+            --color-base-100: #050a18; /* Very dark with blue undertone */
+            --color-base-200: #0a1224; /* Dark card background, slightly bluer */
+            --color-base-300: #1a2a45; /* Tertiary layer with strong blue tone */
+            --color-base-content: #e2e8f0; /* Soft light-blue text color */
+
+            /* Brand colors (unchanged) */
+            --color-primary: #ff7f00;
             --color-primary-content: #ffffff;
-            --color-secondary: #03dac6;
-            --color-secondary-content: #000000;
-            --color-accent: #ff9800;
+            --color-secondary: #ff00ae;
+            --color-secondary-content: #ffffff;
+            --color-accent: #4508f9;
             --color-accent-content: #ffffff;
-            --color-neutral: #ffffff;
-            --color-neutral-content: #000000;
-            --color-base-100: #f5f5f5;
-            --color-base-200: #ffffff;
-            --color-base-300: #eeeeee;
-            --color-base-content: #000000;
-            
-            --radius-selector: 0.5rem;
-            --radius-field: 0.5rem;
-            --radius-box: 0.5rem;
+
+            /* Grayscale for text, borders, and muted elements */
+            --color-neutral: #22314f; /* Cooler neutral gray with blue tint */
+            --color-neutral-content: #e2e8f0;
+
+            /* Semantic colors */
+            --color-info: #0ea5e9;
+            --color-info-content: #ffffff;
+            --color-success: #22c55e;
+            --color-success-content: #ffffff;
+            --color-warning: #f59e0b;
+            --color-warning-content: #000000;
+            --color-error: #ef4444;
+            --color-error-content: #ffffff;
+
+            --radius-selector: 0.1rem;
+            --radius-field: 0.1rem;
+            --radius-box: 0.1rem;
+            --size-selector: 0.25rem;
+            --size-field: 0.25rem;
+            --border: 1px;
+            --depth: 0;
+            --noise: 0;
 
             --font-family-sans: 'Literata', sans-serif;
         }
