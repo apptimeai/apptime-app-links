@@ -12,9 +12,11 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&family=Archivo:wght@300;400;600;900&display=swap"
     rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Tailwind CSS 4 & DaisyUI -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -93,11 +95,11 @@
     </div>
 
     <!-- Social Links Section -->
-    <div class="flex flex-wrap justify-center gap-4 mb-16 fade-in-up" style="animation-delay: 0.4s">
+    <div class="flex flex-wrap justify-center gap-6 mb-16 fade-in-up" style="animation-delay: 0.4s">
       <template v-for="social in socialLinks" :key="social.id">
         <a :href="social.url" target="_blank"
-          class="btn btn-circle btn-ghost glass-card border-none hover:bg-opacity-80" :title="social.name">
-          <img :src="social.icon" :alt="social.name" class="w-6 h-6" />
+          class="btn btn-circle btn-ghost glass-card border-none hover:bg-opacity-80 text-2xl" :title="social.name">
+          <i :class="social.iconClass"></i>
         </a>
       </template>
     </div>
@@ -157,9 +159,9 @@
         ]);
 
         const socialLinks = ref([
-          { id: 'ig', name: 'Instagram', url: 'https://instagram.com/apptimeai', icon: 'https://storage.googleapis.com/storage.apptime.app/websiteIcons/instagram.webp' },
-          { id: 'li', name: 'LinkedIn', url: 'https://linkedin.com/company/apptimeai', icon: 'https://storage.googleapis.com/storage.apptime.app/websiteIcons/linkedin.webp' },
-          { id: 'coffee', name: 'Buy Me a Coffee', url: 'https://buymeacoffee.com/apptime', icon: 'https://storage.googleapis.com/storage.apptime.app/websiteIcons/buymeacoffee.webp' }
+          { id: 'ig', name: 'Instagram', url: 'https://instagram.com/apptimeai', iconClass: 'fa-brands fa-instagram' },
+          { id: 'li', name: 'LinkedIn', url: 'https://linkedin.com/company/apptimeai', iconClass: 'fa-brands fa-linkedin' },
+          { id: 'gh', name: 'GitHub', url: 'https://github.com/apptime-agency', iconClass: 'fa-brands fa-github' }
         ]);
 
         const handleImageError = (e) => {
