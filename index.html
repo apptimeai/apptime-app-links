@@ -1,533 +1,209 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="custom">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Apptime AI</title>
-    <meta
-      name="description"
-      content="🚀 Crie Seu App em Segundos
-🇧🇷 Ideal para Pequenos Negócios"
-    />
-    <meta name="keywords" content="Link na bio, Apptime 🚀, Apps" />
+<html lang="pt-BR" data-theme="apptime-cyber">
 
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Literata:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apptime AI | Hub de Serviços</title>
+  <meta name="description"
+    content="🚀 Apptime AI - Seu Hub de Tecnologia, Infoprodutos e Desenvolvimento Sob Medida." />
+  <meta name="keywords" content="Apptime, Tecnologia, SaaS, Agência Dev, Infoprodutos" />
 
-    <!-- Tailwind CSS 4 -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap"
+    rel="stylesheet">
 
-    <!-- Vue 3 -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <!-- Tailwind CSS 4 & DaisyUI -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
 
-    <style>
-      <script
-        src='https://apptime.app/sdk.js'
-        data-app='aDImrvAM8MvciCtg7vMk'
-        defer
-        > </script
-        > :root {
-        /* Dark Blue-Tinted Background Hierarchy */
-        --color-base-100: #050a18; /* Very dark with blue undertone */
-        --color-base-200: #0a1224; /* Dark card background, slightly bluer */
-        --color-base-300: #1a2a45; /* Tertiary layer with strong blue tone */
-        --color-base-content: #e2e8f0; /* Soft light-blue text color */
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
 
-        /* Brand colors (unchanged) */
-        --color-primary: #ff7f00;
-        --color-primary-content: #ffffff;
-        --color-secondary: #ff00ae;
-        --color-secondary-content: #ffffff;
-        --color-accent: #4508f9;
-        --color-accent-content: #ffffff;
-
-        /* Grayscale for text, borders, and muted elements */
-        --color-neutral: #22314f; /* Cooler neutral gray with blue tint */
-        --color-neutral-content: #e2e8f0;
-
-        /* Semantic colors */
-        --color-info: #0ea5e9;
-        --color-info-content: #ffffff;
-        --color-success: #22c55e;
-        --color-success-content: #ffffff;
-        --color-warning: #f59e0b;
-        --color-warning-content: #000000;
-        --color-error: #ef4444;
-        --color-error-content: #ffffff;
-
-        --radius-selector: 0.1rem;
-        --radius-field: 0.1rem;
-        --radius-box: 0.1rem;
-        --size-selector: 0.25rem;
-        --size-field: 0.25rem;
-        --border: 1px;
-        --depth: 0;
-        --noise: 0;
-
-        --font-family-sans: 'Literata', sans-serif;
-      }
-
-      body {
-        font-family: var(--font-family-sans);
-        background: linear-gradient(
-          135deg,
-          var(--color-base-100) 0%,
-          var(--color-base-300) 100%
-        );
-        color: var(--color-base-content);
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        min-height: 100vh;
-        overflow-y: auto;
-        background-attachment: fixed;
-      }
-
-      *:focus {
-        outline: none;
-        box-shadow: none;
-      }
-
-      .text-primary-content {
-        color: var(--color-primary-content);
-      }
-      .bg-primary {
-        background-color: var(--color-primary);
-      }
-      .text-secondary-content {
-        color: var(--color-secondary-content);
-      }
-      .bg-secondary {
-        background-color: var(--color-secondary);
-      }
-      .text-accent-content {
-        color: var(--color-accent-content);
-      }
-      .bg-accent {
-        background-color: var(--color-accent);
-      }
-      .text-neutral-content {
-        color: var(--color-neutral-content);
-      }
-      .bg-neutral {
-        background-color: var(--color-neutral);
-      }
-      .text-base-content {
-        color: var(--color-base-content);
-      }
-      .bg-base-100 {
-        background-color: var(--color-base-100);
-      }
-      .bg-base-200 {
-        background-color: var(--color-base-200);
-      }
-      .bg-base-300 {
-        background-color: var(--color-base-300);
-      }
-
-      .btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.5rem 1rem;
-        border-radius: var(--radius-selector);
-        font-weight: 700;
-        text-decoration: none;
-        transition: all 0.2s ease-in-out;
-        border: 2px solid transparent;
-        position: relative;
-        overflow: hidden;
-        color: var(--color-secondary-content);
-        background: linear-gradient(
-          45deg,
-          var(--color-secondary) 0%,
-          var(--color-accent) 100%
-        );
-      }
-
-      .btn:hover {
-        transform: translateY(-2px);
-        border-color: var(--color-accent);
-        background: linear-gradient(
-          45deg,
-          var(--color-accent) 0%,
-          var(--color-secondary) 100%
-        );
-        color: var(--color-accent-content);
-      }
-
-      .card {
-        background: linear-gradient(
-          145deg,
-          var(--color-base-200) 0%,
-          var(--color-base-300) 100%
-        );
-        border-radius: var(--radius-box);
-        padding: 1rem;
-        transition: transform 0.3s ease-in-out;
-        border: 2px solid var(--color-neutral);
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
-
-      .card:hover {
-        transform: translateY(-5px);
-        border-color: var(--color-accent);
-        background: linear-gradient(
-          145deg,
-          var(--color-base-300) 0%,
-          var(--color-base-200) 100%
-        );
-      }
-
-      .card-media {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        object-fit: contain;
-        border-radius: var(--radius-field);
-        margin-bottom: 1rem;
-      }
-
-      .card-link {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        color: var(--color-base-content);
-        text-decoration: none;
-      }
-
-      .card-link-icon {
-        width: 40px;
-        height: 40px;
-        min-width: 40px;
-        border-radius: var(--radius-selector);
-        object-fit: contain;
-        margin-right: 0.5rem;
-      }
-
-      .card-title {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: var(--color-base-content);
-        line-height: 1.2;
-        font-family: var(--font-family-sans);
-      }
-
-      .card-description {
-        font-size: 1rem;
-        color: var(--color-base-content);
-        opacity: 0.8;
-        margin-top: 0.25rem;
-        line-height: 1.4;
-      }
-
-      .profile-image {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid var(--color-accent);
-      }
-
-      .profile-name {
-        font-size: 2.5rem;
-        font-weight: 900;
-        color: var(--color-base-content);
-        margin-top: 1rem;
-      }
-
-      .profile-description {
-        font-size: 1.1rem;
-        color: var(--color-base-content);
-        opacity: 0.8;
-        text-align: center;
-        margin-top: 0.5rem;
-        white-space: pre-wrap;
-        line-height: 1.6;
-      }
-
-      .app-container {
-        max-width: 600px;
-        width: 95%;
-        margin: 2rem auto;
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        align-items: center;
-        padding: 1rem;
-      }
-    </style>
-  <script src="https://cdn.apptime.app/apptime.js"></script>
+  <!-- Vue 3 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 </head>
-  <body>
-    <div id="app" class="app-container">
-      <!-- Header Section -->
-      <div v-if="profile.image" class="flex flex-col items-center mb-6">
-        <img
-          :src="profile.image.url"
-          :alt="'Foto de perfil de ' + profile.title"
-          class="profile-image"
-        />
-        <h1 class="profile-name">{{ profile.title }}</h1>
-        <p class="profile-description">{{ profile.description }}</p>
+
+<body>
+  <!-- Stars Background -->
+  <div class="stars-container" id="stars"></div>
+
+  <div id="app" class="container mx-auto px-4 py-12 max-w-2xl relative z-10">
+
+    <!-- Header Section -->
+    <header class="flex flex-col items-center mb-16 fade-in-up">
+      <div class="relative mb-12">
+        <div class="avatar">
+          <div
+            class="w-32 rounded-full profile-glow ring-2 ring-offset-base-100 ring-offset-4 overflow-hidden bg-slate-800"
+            style="border-color: var(--color-primary)">
+            <img :src="profile.image?.url" :alt="profile.title" @error="handleImageError" />
+          </div>
+        </div>
+        <div class="absolute -bottom-2 -right-2 badge p-3 font-bold border-none"
+          style="background-color: var(--color-secondary); color: var(--color-secondary-content)">AI</div>
       </div>
 
-      <!-- Body Content (Cards) -->
-      <template
-        v-for="item in (content.body || [])"
-        :key="item.id || Math.random()"
-      >
-        <!-- Skip cards without props or with empty props -->
-        <template v-if="item.type === 'card' && item.props">
-          <!-- Clickable card with link -->
-          <a
-            v-if="item.props.to"
-            :href="item.props.to"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="card w-full"
-          >
-            <template v-if="item.props.media">
-              <img
-                v-if="item.props.media.type === 'image'"
-                :src="item.props.media.url"
-                :alt="item.props.link?.title?.text || 'Mídia do card'"
-                class="card-media"
-              />
-              <video
-                v-else-if="item.props.media.type === 'video'"
-                :src="item.props.media.url"
-                controls
-                class="card-media"
-              ></video>
-            </template>
-            <div v-if="item.props.link" class="card-link flex-grow">
-              <img
-                v-if="item.props.link.icon"
-                :src="item.props.link.icon.icon"
-                :alt="item.props.link.title?.text || 'Ícone do link'"
-                class="card-link-icon"
-              />
-              <div class="flex flex-col items-start text-left flex-grow">
-                <span v-if="item.props.link.title" class="card-title"
-                  >{{ item.props.link.title.text }}</span
-                >
-                <span
-                  v-if="item.props.link.description"
-                  class="card-description"
-                  >{{ item.props.link.description.text }}</span
-                >
-              </div>
-            </div>
-            <!-- Show text if no link but has text -->
-            <div v-else-if="item.props.text" class="card-link flex-grow">
-              <span class="card-title">{{ item.props.text.text }}</span>
-            </div>
-          </a>
+      <h1 class="text-3xl md:text-4xl font-black mb-10 heading-cyber text-center opacity-80">
+        {{ profile.title }}
+      </h1>
 
-          <!-- Non-clickable card -->
-          <div v-else class="card w-full">
-            <template v-if="item.props.media">
-              <img
-                v-if="item.props.media.type === 'image'"
-                :src="item.props.media.url"
-                :alt="item.props.link?.title?.text || item.props.text?.text || 'Mídia do card'"
-                class="card-media"
-              />
-              <video
-                v-else-if="item.props.media.type === 'video'"
-                :src="item.props.media.url"
-                controls
-                class="card-media"
-              ></video>
-            </template>
-            <div v-if="item.props.link" class="card-link flex-grow">
-              <img
-                v-if="item.props.link.icon"
-                :src="item.props.link.icon.icon"
-                :alt="item.props.link.title?.text || 'Ícone do link'"
-                class="card-link-icon"
-              />
-              <div class="flex flex-col items-start text-left flex-grow">
-                <span v-if="item.props.link.title" class="card-title"
-                  >{{ item.props.link.title.text }}</span
-                >
-                <span
-                  v-if="item.props.link.description"
-                  class="card-description"
-                  >{{ item.props.link.description.text }}</span
-                >
-              </div>
-            </div>
-            <!-- Show text if no link but has text -->
-            <div v-else-if="item.props.text" class="card-link flex-grow">
-              <span class="card-title">{{ item.props.text.text }}</span>
-            </div>
+      <div class="text-center max-w-lg mb-4 mt-4">
+        <p class="catchphrase-cyber text-xl md:text-base font-black mb-12 leading-snug">
+          {{ profile.catchphrase }}
+        </p>
+        <p class="text-slate-400 text-lg md:text-base font-light leading-relaxed p-4">
+          {{ profile.description }}
+        </p>
+      </div>
+    </header>
+
+    <!-- Main Services Section -->
+    <div class="grid gap-6 mb-12">
+      <template v-for="(item, index) in mainLinks" :key="item.id">
+        <a :href="item.url" target="_blank"
+          class="glass-card neon-border rounded-2xl p-6 flex items-center gap-6 group fade-in-up"
+          :style="{ animationDelay: (index * 0.1) + 's' }">
+          <div class="p-4 rounded-xl shadow-lg transition-all bg-opacity-20 group-hover:scale-110"
+            :style="{ backgroundColor: item.brandColor }">
+            <div v-html="item.icon" class="w-8 h-8 text-white"></div>
           </div>
-        </template>
+
+          <div class="flex-grow">
+            <div class="flex items-center gap-2">
+              <h3 class="text-xl font-bold text-white transition-colors" :style="{ color: item.brandColor }">
+                {{ item.title }}
+              </h3>
+              <span class="badge badge-sm badge-outline opacity-50">{{ item.tag }}</span>
+            </div>
+            <p class="text-slate-400 text-sm mt-1">{{ item.description }}</p>
+          </div>
+
+          <div class="text-slate-500 group-hover:text-white transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+              stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </div>
+        </a>
       </template>
     </div>
 
-    <script>
-      const { createApp, ref } = Vue;
+    <!-- Social Links Section -->
+    <div class="flex flex-wrap justify-center gap-4 mb-16 fade-in-up" style="animation-delay: 0.4s">
+      <template v-for="social in socialLinks" :key="social.id">
+        <a :href="social.url" target="_blank"
+          class="btn btn-circle btn-ghost glass-card border-none hover:bg-opacity-80" :title="social.name">
+          <img :src="social.icon" :alt="social.name" class="w-6 h-6" />
+        </a>
+      </template>
+    </div>
 
-      createApp({
-        setup() {
-          const appData = {
-            planTier: 'free',
-            slug: 'apptime',
-            ownerId: 'ouniXmgSDjoG54KtHSPe',
-            userIds: ['ouniXmgSDjoG54KtHSPe'],
-            category: 'business',
-            title: 'Apptime AI',
-            status: 'active',
-            image: {
-              type: 'image',
-              url: 'https://storage.googleapis.com/storage.apptime.app/public/apps/aDImrvAM8MvciCtg7vMk/storage/libraries/default/lJLbRmB3D7H02M2RZ41y/imgHd.jpeg',
-              status: 'uploaded',
-            },
-            description:
-              '🚀 Crie Seu App em Segundos\n🇧🇷 Ideal para Pequenos Negócios',
-            theme: {
-              fontFamilyName: 'Literata',
-              borderRadiusOut: '1.5rem',
-              borderRadiusIn: '0.75rem',
-              onPrimaryColor: '#ffffff',
-              onSecondaryColor: '#000000',
-              surfaceContainerColor: '#eeeeee',
-              backgroundColor: '#f5f5f5',
-              surfaceColor: '#ffffff',
-              onSurfaceColor: '#000000',
-              onSurfaceContainerColor: '#333333',
-              primaryColor: '#6200ea',
-              outlineColor: '#cccccc',
-              onBackgroundColor: '#000000',
-              outlineHighlightColor: '#ff9800',
-              onBackgroundDimColor: '#6d6d6d',
-              secondaryColor: '#03dac6',
-            },
-            createdAt: {
-              _seconds: 1741385294,
-              _nanoseconds: 486000000,
-            },
-            content: {
-              header: {
-                type: 'profile',
-                id: '9cfhk9q3k',
-              },
-              body: [
-                {
-                  id: 'b10fy9xle',
-                  type: 'card',
-                  props: {
-                    link: {
-                      icon: {
-                        icon: 'https://storage.googleapis.com/storage.apptime.app/public/apps/aDImrvAM8MvciCtg7vMk/storage/libraries/default/lJLbRmB3D7H02M2RZ41y/imgHd.jpeg',
-                        type: 'image',
-                      },
-                      status: 'uploaded',
-                      type: 'image',
-                      url: 'https://storage.googleapis.com/storage.apptime.app/public/pages/MlIejcUbUk9tXjQAEnh7/content/images/fEY74Y-w6ra_/imgHd.jpg',
-                      title: { text: 'Crie Seu App' },
-                    },
-                    to: 'https://appti.me',
-                  },
-                },
-                {
-                  id: 'j6r1z5pi7',
-                  type: 'card',
-                  props: {
-                    link: {
-                      icon: {
-                        icon: 'https://storage.googleapis.com/storage.apptime.app/websiteIcons/instagram.webp',
-                        type: 'image',
-                      },
-                      title: {
-                        text: 'Apptime',
-                      },
-                    },
-                    to: 'https://instagram.com/apptimeai',
-                  },
-                },
-                {
-                  type: 'card',
-                  props: {
-                    link: {
-                      icon: {
-                        icon: 'https://storage.googleapis.com/storage.apptime.app/websiteIcons/linkedin.webp',
-                        type: 'image',
-                      },
-                      title: {
-                        text: 'Apptime',
-                      },
-                    },
-                    to: 'https://linkedin.com/company/apptimeai',
-                  },
-                },
-                {
-                  type: 'card',
-                  props: {
-                    link: {
-                      icon: {
-                        icon: 'https://storage.googleapis.com/storage.apptime.app/websiteIcons/buymeacoffee.webp',
-                        type: 'image',
-                      },
-                      title: {
-                        text: 'Buy Me a Coffee',
-                      },
-                    },
-                    to: 'https://buymeacoffee.com/apptime',
-                  },
-                },
-              ],
-            },
-            updatedAt: {
-              _seconds: 1755486436,
-              _nanoseconds: 971000000,
-            },
-          };
+    <!-- Footer -->
+    <footer class="text-center text-slate-500 text-sm fade-in-up" style="animation-delay: 0.6s">
+      <p>© 2026 Apptime AI. Todos os direitos reservados.</p>
+      <div class="mt-4 flex justify-center gap-2">
+        <span class="w-2 h-2 rounded-full animate-pulse" style="background-color: var(--color-primary)"></span>
+        <span class="uppercase tracking-widest text-[10px] font-bold">Inovação Continua</span>
+      </div>
+    </footer>
+  </div>
 
-          const profile = ref({
-            title: appData.title,
-            description: appData.description,
-            image: appData.image,
-          });
+  <script>
+    const { createApp, ref, onMounted } = Vue;
 
-          // Ensure content structure exists and filter out invalid cards
-          const contentData = appData.content || {};
-          const bodyItems = (contentData.body || []).filter((item) => {
-            return (
-              item &&
-              item.type === 'card' &&
-              // Valid if has props with at least one content type
-              ((item.props &&
-                (item.props.media || item.props.link || item.props.text)) ||
-                // Or if it's a header/profile type
-                item.type === 'profile')
-            );
-          });
+    createApp({
+      setup() {
+        const profile = ref({
+          title: 'Apptime AI',
+          catchphrase: 'Aprenda, construa e venda. No mesmo lugar.',
+          description: 'A Apptime une plataforma SaaS, conhecimento prático e execução profissional para transformar ideias em negócios reais.',
+          image: {
+            url: 'https://storage.googleapis.com/storage.apptime.app/public/apps/aDImrvAM8MvciCtg7vMk/storage/libraries/default/lJLbRmB3D7H02M2RZ41y/imgHd.jpeg'
+          }
+        });
 
-          const content = ref({
-            ...contentData,
-            body: bodyItems,
-          });
+        const mainLinks = ref([
+          {
+            id: 'lp-info',
+            title: 'Apptime Academy',
+            description: 'Aprenda a dominar a tecnologia com os nossos infoprodutos exclusivos.',
+            url: 'https://apptime.com.br',
+            tag: '.com.br',
+            brandColor: '#ff00ae', // Secondary (Pink)
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>'
+          },
+          {
+            id: 'saas-plat',
+            title: 'Plataforma Apptime',
+            description: 'Crie seu próprio aplicativo em segundos com nossa solução SaaS.',
+            url: 'https://apptime.ai',
+            tag: '.ai',
+            brandColor: '#ff7f00', // Primary (Orange)
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>'
+          },
+          {
+            id: 'agency-dev',
+            title: 'Apptime Agency',
+            description: 'Desenvolvimento sob medida para transformar suas ideias em softwares robustos.',
+            url: 'https://apptime.dev',
+            tag: '.dev',
+            brandColor: '#4508f9', // Accent (Blue/Purple)
+            icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>'
+          }
+        ]);
 
-          return {
-            profile,
-            content,
-          };
-        },
-      }).mount('#app');
-    </script>
-  </body>
+        const socialLinks = ref([
+          { id: 'ig', name: 'Instagram', url: 'https://instagram.com/apptimeai', icon: 'https://storage.googleapis.com/storage.apptime.app/websiteIcons/instagram.webp' },
+          { id: 'li', name: 'LinkedIn', url: 'https://linkedin.com/company/apptimeai', icon: 'https://storage.googleapis.com/storage.apptime.app/websiteIcons/linkedin.webp' },
+          { id: 'coffee', name: 'Buy Me a Coffee', url: 'https://buymeacoffee.com/apptime', icon: 'https://storage.googleapis.com/storage.apptime.app/websiteIcons/buymeacoffee.webp' }
+        ]);
+
+        const handleImageError = (e) => {
+          e.target.src = 'https://ui-avatars.com/api/?name=Apptime+AI&background=1e293b&color=a78bfa';
+        };
+
+        // Background stars effect
+        const initStars = () => {
+          const container = document.getElementById('stars');
+          if (!container) return;
+          const starCount = 100;
+
+          for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            const size = Math.random() * 2 + 1;
+            const duration = Math.random() * 3 + 2;
+
+            star.style.left = `${x}%`;
+            star.style.top = `${y}%`;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.setProperty('--duration', `${duration}s`);
+
+            container.appendChild(star);
+          }
+        };
+
+        onMounted(() => {
+          initStars();
+        });
+
+        return {
+          profile,
+          mainLinks,
+          socialLinks,
+          handleImageError
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+
 </html>
