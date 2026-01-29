@@ -30,8 +30,13 @@
 </head>
 
 <body>
-  <!-- Stars Background -->
+  <!-- Background Layers -->
+  <div class="nebula-container" id="nebulas">
+    <div class="nebula nebula-1" id="nebula-1"></div>
+    <div class="nebula nebula-2" id="nebula-2"></div>
+  </div>
   <div class="stars-container" id="stars"></div>
+  <div class="mouse-aura" id="mouse-aura"></div>
 
   <div id="app" class="container mx-auto px-4 py-12 max-w-2xl relative z-10">
 
@@ -67,28 +72,30 @@
     <div class="grid gap-6 mb-12">
       <template v-for="(item, index) in mainLinks" :key="item.id">
         <a :href="item.url" target="_blank"
-          class="glass-card neon-border rounded-2xl p-6 flex items-center gap-6 group fade-in-up"
-          :style="{ animationDelay: (index * 0.1) + 's' }">
-          <div class="p-4 rounded-xl shadow-lg transition-all bg-opacity-20 group-hover:scale-110"
-            :style="{ backgroundColor: item.brandColor }">
-            <div v-html="item.icon" class="w-8 h-8 text-white"></div>
-          </div>
-
-          <div class="flex-grow">
-            <div class="flex items-center gap-2">
-              <h3 class="text-xl font-bold text-white transition-colors" :style="{ color: item.brandColor }">
-                {{ item.title }}
-              </h3>
-              <span class="badge badge-sm badge-outline opacity-50">{{ item.tag }}</span>
+          class="glass-card neon-border rounded-2xl p-6 flex items-center gap-6 group fade-in-up tilt-card"
+          :style="{ animationDelay: (index * 0.1) + 's' }" @mousemove="handleTilt" @mouseleave="resetTilt">
+          <div class="card-content flex items-center gap-6 w-full">
+            <div class="p-4 rounded-xl shadow-lg transition-all bg-opacity-20 group-hover:scale-110"
+              :style="{ backgroundColor: item.brandColor }">
+              <div v-html="item.icon" class="w-8 h-8 text-white"></div>
             </div>
-            <p class="text-slate-400 text-sm mt-1">{{ item.description }}</p>
-          </div>
 
-          <div class="text-slate-500 group-hover:text-white transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-              stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
+            <div class="flex-grow">
+              <div class="flex items-center gap-2">
+                <h3 class="text-xl font-bold text-white transition-colors" :style="{ color: item.brandColor }">
+                  {{ item.title }}
+                </h3>
+                <span class="badge badge-sm badge-outline opacity-50">{{ item.tag }}</span>
+              </div>
+              <p class="text-slate-400 text-sm mt-1">{{ item.description }}</p>
+            </div>
+
+            <div class="text-slate-500 group-hover:text-white transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </div>
           </div>
         </a>
       </template>
@@ -135,7 +142,7 @@
             description: 'Aprenda a dominar a tecnologia com os nossos infoprodutos exclusivos.',
             url: 'https://apptime.com.br',
             tag: '.com.br',
-            brandColor: '#ff00ae', // Secondary (Pink)
+            brandColor: '#ff00ae',
             icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>'
           },
           {
@@ -144,7 +151,7 @@
             description: 'Crie seu próprio aplicativo em segundos com nossa solução SaaS.',
             url: 'https://apptime.ai',
             tag: '.ai',
-            brandColor: '#ff7f00', // Primary (Orange)
+            brandColor: '#ff7f00',
             icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>'
           },
           {
@@ -153,7 +160,7 @@
             description: 'Desenvolvimento sob medida para transformar suas ideias em softwares robustos.',
             url: 'https://apptime.dev',
             tag: '.dev',
-            brandColor: '#4508f9', // Accent (Blue/Purple)
+            brandColor: '#4508f9',
             icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>'
           }
         ]);
@@ -168,19 +175,45 @@
           e.target.src = 'https://ui-avatars.com/api/?name=Apptime+AI&background=1e293b&color=a78bfa';
         };
 
-        // Background stars effect
+        // 3D Tilt Logic
+        const handleTilt = (e) => {
+          const card = e.currentTarget;
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const rotateX = ((y - centerY) / centerY) * -10;
+          const rotateY = ((x - centerX) / centerX) * 10;
+
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        };
+
+        const resetTilt = (e) => {
+          e.currentTarget.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
+        };
+
+        // Background stars and nebula effect with Parallax
         const initStars = () => {
-          const container = document.getElementById('stars');
-          if (!container) return;
-          const starCount = 100;
+          const starContainer = document.getElementById('stars');
+          const aura = document.getElementById('mouse-aura');
+          const neb1 = document.getElementById('nebula-1');
+          const neb2 = document.getElementById('nebula-2');
+
+          if (!starContainer) return;
+          const starCount = 120;
+          const stars = [];
 
           for (let i = 0; i < starCount; i++) {
             const star = document.createElement('div');
-            star.className = 'star';
+            const depth = Math.random();
+            star.className = 'star parallax-star';
 
             const x = Math.random() * 100;
             const y = Math.random() * 100;
-            const size = Math.random() * 2 + 1;
+            const size = (depth * 2) + 1;
             const duration = Math.random() * 3 + 2;
 
             star.style.left = `${x}%`;
@@ -188,9 +221,40 @@
             star.style.width = `${size}px`;
             star.style.height = `${size}px`;
             star.style.setProperty('--duration', `${duration}s`);
+            star.dataset.depth = depth;
 
-            container.appendChild(star);
+            starContainer.appendChild(star);
+            stars.push(star);
           }
+
+          window.addEventListener('mousemove', (e) => {
+            const mouseX = (e.clientX / window.innerWidth - 0.5);
+            const mouseY = (e.clientY / window.innerHeight - 0.5);
+
+            requestAnimationFrame(() => {
+              // Stars parallax
+              stars.forEach(star => {
+                const depth = parseFloat(star.dataset.depth);
+                const moveX = mouseX * (depth * 60);
+                const moveY = mouseY * (depth * 60);
+                star.style.transform = `translate(${moveX}px, ${moveY}px)`;
+              });
+
+              // Aura position
+              if (aura) {
+                aura.style.left = `${e.clientX}px`;
+                aura.style.top = `${e.clientY}px`;
+              }
+
+              // Nebula parallax (inverse)
+              if (neb1) {
+                neb1.style.transform = `translate(${-mouseX * 40}px, ${-mouseY * 40}px)`;
+              }
+              if (neb2) {
+                neb2.style.transform = `translate(${-mouseX * 60}px, ${-mouseY * 60}px)`;
+              }
+            });
+          });
         };
 
         onMounted(() => {
@@ -201,7 +265,9 @@
           profile,
           mainLinks,
           socialLinks,
-          handleImageError
+          handleImageError,
+          handleTilt,
+          resetTilt
         };
       }
     }).mount('#app');
