@@ -72,8 +72,8 @@
     <div class="grid gap-6 mb-12">
       <template v-for="(item, index) in mainLinks" :key="item.id">
         <a :href="item.url" target="_blank"
-          class="glass-card neon-border rounded-2xl p-6 flex items-center gap-6 group fade-in-up tilt-card"
-          :style="{ animationDelay: (index * 0.1) + 's' }" @mousemove="handleTilt" @mouseleave="resetTilt">
+          class="glass-card neon-border rounded-2xl p-6 flex items-center gap-6 group fade-in-up"
+          :style="{ animationDelay: (index * 0.1) + 's' }">
           <div class="card-content flex items-center gap-6 w-full">
             <div class="p-4 rounded-xl shadow-lg transition-all bg-opacity-20 group-hover:scale-110"
               :style="{ backgroundColor: item.brandColor }">
@@ -175,26 +175,6 @@
           e.target.src = 'https://ui-avatars.com/api/?name=Apptime+AI&background=1e293b&color=a78bfa';
         };
 
-        // 3D Tilt Logic
-        const handleTilt = (e) => {
-          const card = e.currentTarget;
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-
-          const rotateX = ((y - centerY) / centerY) * -10;
-          const rotateY = ((x - centerX) / centerX) * 10;
-
-          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-        };
-
-        const resetTilt = (e) => {
-          e.currentTarget.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
-        };
-
         // Background stars and nebula effect with Parallax
         const initStars = () => {
           const starContainer = document.getElementById('stars');
@@ -265,9 +245,7 @@
           profile,
           mainLinks,
           socialLinks,
-          handleImageError,
-          handleTilt,
-          resetTilt
+          handleImageError
         };
       }
     }).mount('#app');
