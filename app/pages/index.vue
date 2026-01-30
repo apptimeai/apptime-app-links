@@ -61,8 +61,21 @@ const socialLinks = ref([
   },
 ]);
 
+// HUD State
+const mousePos = ref({ x: 0, y: 0 });
+const systemTime = ref("");
+const altitude = ref(45000);
+const velocity = ref(28400);
+
 // Starfield Animation Logic
 let animationId: number;
+
+const updateSystemStats = () => {
+    const now = new Date();
+    systemTime.value = now.toLocaleTimeString('pt-BR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    altitude.value += (Math.random() - 0.5) * 10;
+    velocity.value += (Math.random() - 0.5) * 5;
+};
 
 onMounted(() => {
   const canvas = canvasRef.value;
@@ -75,9 +88,9 @@ onMounted(() => {
   let height = 0;
   
   // Star parameters
-  const starCount = 1500;
-  const stars: { x: number; y: number; z: number; speed: number; color: string }[] = [];
-  const baseSpeed = 4.0; 
+  const starCount = 1200;
+  const stars: { x: number; y: number; z: number; speed: number; color: string; size: number }[] = [];
+  const baseSpeed = 2.5; 
   
   const resize = () => {
     width = window.innerWidth;
@@ -94,37 +107,58 @@ onMounted(() => {
 
   const getStarColor = () => {
     const r = Math.random();
-    if (r > 0.8) return '#a855f7'; // Purple-500
-    if (r > 0.6) return '#d8b4fe'; // Purple-300
-    if (r > 0.4) return '#e879f9'; // Fuchsia
+    if (r > 0.90) return '#a855f7'; // secondary
+    if (r > 0.80) return '#d8b4fe'; // secondary
+    if (r > 0.70) return '#e879f9'; // Fuchsia
+    if (r > 0.60) return '#fb923c'; // primary
     return '#ffffff'; // White
   }
 
   const resetStar = (index: number, initial = false) => {
-    const spread = width + height; 
+    const spread = width * 1.5; 
     let x = (Math.random() - 0.5) * spread;
     let y = (Math.random() - 0.5) * spread;
-
     const z = initial ? Math.random() * width : width;
     
+    const starData = { 
+        x, 
+        y, 
+        z, 
+        speed: baseSpeed + Math.random() * 2, 
+        color: getStarColor(),
+        size: 0.5 + Math.random() * 2 
+    };
+
     if (stars[index]) {
-        stars[index].x = x;
-        stars[index].y = y;
-        stars[index].z = z;
-        stars[index].speed = baseSpeed + Math.random();
-        stars[index].color = getStarColor();
+        stars[index] = starData;
     } else {
-        stars.push({ x, y, z, speed: baseSpeed + Math.random(), color: getStarColor() });
+        stars.push(starData);
     }
   };
 
+  const handleMouseMove = (e: MouseEvent) => {
+    mousePos.value = { x: e.clientX, y: e.clientY };
+  };
+
   const draw = () => {
-    // Warp speed trail effect - Slight purple tint in the void
-    ctx.fillStyle = "rgba(10, 5, 20, 0.3)"; 
+    // Space black with a hint of purple
+    ctx.fillStyle = "rgba(8, 4, 18, 0.25)"; 
     ctx.fillRect(0, 0, width, height);
 
     const cx = width / 2;
     const cy = height / 2;
+
+    // Distant Nebula glow
+    const time = Date.now() * 0.0005;
+    const nebulaX = cx + Math.sin(time) * 100;
+    const nebulaY = cy + Math.cos(time * 0.7) * 100;
+    
+    const grad = ctx.createRadialGradient(nebulaX, nebulaY, 100, nebulaX, nebulaY, width);
+    grad.addColorStop(0, "rgba(168, 85, 247, 0.03)");
+    grad.addColorStop(0.5, "rgba(249, 115, 22, 0.01)");
+    grad.addColorStop(1, "transparent");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, width, height);
 
     for (let i = 0; i < stars.length; i++) {
         const star = stars[i];
@@ -142,74 +176,133 @@ onMounted(() => {
         const px = (star.x / star.z) * width + cx;
         const py = (star.y / star.z) * height + cy;
 
-        // Size grows as it gets closer
-        const r = (1 - star.z / width) * 3.5; 
-
+        // Render point
         if (px < 0 || px > width || py < 0 || py > height) {
             continue;
         }
 
         const opacity = (1 - star.z / width);
+        const r = (1 - star.z / width) * star.size;
+
         ctx.beginPath();
-        const flicker = Math.random() > 0.9 ? 0.5 : 1;
         ctx.fillStyle = star.color;
-        ctx.globalAlpha = opacity * flicker;
-        ctx.arc(px, py, r > 0 ? r : 0, 0, Math.PI * 2);
+        ctx.globalAlpha = opacity;
+        
+        // Draw star with slight glow if it's large
+        if (r > 1.5) {
+            ctx.shadowBlur = 5;
+            ctx.shadowColor = star.color;
+        }
+        
+        ctx.arc(px, py, Math.max(0.1, r), 0, Math.PI * 2);
         ctx.fill();
+        ctx.shadowBlur = 0;
         ctx.globalAlpha = 1.0;
+        
+        // Add trail for fast stars
+        if (star.speed > 4 && star.z < width * 0.5) {
+            ctx.beginPath();
+            ctx.strokeStyle = star.color;
+            ctx.globalAlpha = opacity * 0.2;
+            ctx.moveTo(px, py);
+            const prevX = (star.x / (star.z + star.speed * 2)) * width + cx;
+            const prevY = (star.y / (star.z + star.speed * 2)) * height + cy;
+            ctx.lineTo(prevX, prevY);
+            ctx.stroke();
+            ctx.globalAlpha = 1.0;
+        }
     }
     
+    updateSystemStats();
     animationId = requestAnimationFrame(draw);
   };
 
   window.addEventListener('resize', resize);
+  window.addEventListener('mousemove', handleMouseMove);
   resize();
   draw();
 });
 
 onUnmounted(() => {
   cancelAnimationFrame(animationId);
+  window.removeEventListener('resize', () => {});
+  window.removeEventListener('mousemove', () => {});
 });
 </script>
 
 <template>
-  <div class="relative min-h-screen w-full overflow-hidden bg-[#0a0510] text-white font-sans selection:bg-orange-500 selection:text-white">
+  <div class="relative min-h-screen w-full overflow-hidden bg-[#0a0510] text-white font-sans selection:bg-primary selection:text-white">
     
     <!-- Starfield Background -->
     <canvas ref="canvasRef" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
     
     <!-- CRT Scanline Effect -->
-    <div class="absolute inset-0 pointer-events-none z-[1] opacity-20 bg-scanlines mix-blend-overlay"></div>
+    <div class="absolute inset-0 pointer-events-none z-[1] opacity-[0.07] bg-scanlines mix-blend-overlay"></div>
     
-    <!-- Cockpit Vignette -->
-    <div class="absolute inset-0 pointer-events-none z-[2] bg-cockpit-vignette"></div>
+    <!-- Cockpit Frame & Vignette -->
+    <div class="absolute inset-0 pointer-events-none z-[2] bg-cockpit-vignette opacity-80"></div>
+    <div class="absolute inset-0 pointer-events-none z-[3] border-[40px] border-black/20 blur-2xl"></div>
 
-    <!-- HUD Overlay Static Elements -->
-    <div class="absolute inset-0 pointer-events-none z-[5] p-6 flex flex-col justify-between overflow-hidden">
+    <!-- HUD Overlay Dynamic Elements -->
+    <div class="absolute inset-0 pointer-events-none z-[5] p-4 md:p-8 flex flex-col justify-between overflow-hidden font-oxanium">
         <!-- Top HUD -->
-        <div class="flex justify-between items-start opacity-70">
-            <div class="border-t-2 border-l-2 border-orange-500/50 w-16 h-16 rounded-tl-xl relative">
-                <span class="absolute top-2 left-2 font-mono text-[10px] text-orange-400">SYS.01</span>
+        <div class="flex justify-between items-start">
+            <div class="flex flex-col gap-2">
+                <div class="border-t-2 border-l-2 border-primary/60 w-24 h-12 rounded-tl-field relative bg-primary/5 backdrop-blur-[2px]">
+                    <span class="absolute top-1 left-2 text-[9px] text-primary/80 tracking-tighter">HDG.312°</span>
+                    <span class="absolute bottom-1 left-2 text-[10px] text-primary font-mono">{{ systemTime }}</span>
+                </div>
+                <div class="flex gap-1">
+                    <div v-for="i in 5" :key="i" class="h-1 w-4 bg-primary/20 rounded-field overflow-hidden">
+                        <div class="h-full bg-primary animate-pulse" :style="{ animationDelay: `${i * 200}ms`, width: '100%' }"></div>
+                    </div>
+                </div>
             </div>
-            <div class="flex gap-4">
-                 <div class="h-1 w-24 bg-gradient-to-r from-transparent via-orange-500/50 to-transparent"></div>
+
+            <div class="flex flex-col items-center gap-1">
+                <div class="h-[1px] w-32 bg-gradient-to-r from-transparent via-primary/80 to-transparent"></div>
+                <div class="text-[10px] text-primary/60 tracking-[0.4em] uppercase">Feito na Apptime AI</div>
+                <div class="h-[1px] w-48 bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
             </div>
-            <div class="border-t-2 border-r-2 border-orange-500/50 w-16 h-16 rounded-tr-xl relative">
-                 <span class="absolute top-2 right-2 font-mono text-[10px] text-orange-400">PWR.99%</span>
+
+            <div class="flex flex-col items-end gap-2">
+                <div class="border-t-2 border-r-2 border-primary/60 w-24 h-12 rounded-tr-field relative bg-primary/5 backdrop-blur-[2px]">
+                    <span class="absolute top-1 right-2 text-[9px] text-primary/80 tracking-tighter">REACT.CORE</span>
+                    <span class="absolute bottom-1 right-2 text-[10px] text-primary font-mono">99.2%</span>
+                </div>
+                <div class="text-[8px] text-secondary/60 font-mono uppercase">See you space cowboy...</div>
             </div>
+        </div>
+
+        <!-- Center Aiming HUD (Subtle) -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-primary/10 rounded-field flex items-center justify-center pointer-events-none">
+            <div class="w-full h-[1px] bg-primary/5 absolute"></div>
+            <div class="h-full w-[1px] bg-primary/5 absolute"></div>
+            <div class="w-12 h-12 border-2 border-primary/20 rounded-field animate-ping"></div>
         </div>
         
         <!-- Bottom HUD -->
-         <div class="flex justify-between items-end opacity-70">
-            <div class="border-b-2 border-l-2 border-orange-500/50 w-16 h-16 rounded-bl-xl relative">
-                 <span class="absolute bottom-2 left-2 font-mono text-[10px] text-orange-400 blur-[0.5px]">VEL.MACH.10</span>
+         <div class="flex justify-between items-end">
+            <div class="flex flex-col gap-2">
+                 <div class="text-[8px] text-primary/40 font-mono tracking-widest uppercase">Alt: {{ Math.floor(altitude) }}m</div>
+                 <div class="border-b-2 border-l-2 border-primary/60 w-24 h-12 rounded-bl-field relative bg-primary/5 backdrop-blur-[2px]">
+                      <span class="absolute bottom-1 left-2 text-[10px] text-primary font-mono">VEL: {{ Math.floor(velocity) }}</span>
+                 </div>
             </div>
-            <div class="text-center">
-                 <div class="font-mono text-[10px] text-orange-500/70 tracking-[0.5em] mb-2 uppercase">Pronto para lançar?</div>
-                 <div class="w-64 h-[1px] bg-gradient-to-r from-transparent via-orange-500 to-transparent"></div>
+
+            <div class="flex flex-col items-center">
+                 <div class="font-mono text-[9px] text-primary/60 tracking-[0.5em] mb-2 uppercase">Pronto para decolar?</div>
+                 <div class="flex gap-1 mb-1">
+                    <div v-for="i in 12" :key="i" class="w-1 h-3 rounded-field" :class="i < 8 ? 'bg-primary/60' : 'bg-primary/40'"></div>
+                 </div>
+                 <div class="w-64 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent"></div>
             </div>
-            <div class="border-b-2 border-r-2 border-orange-500/50 w-16 h-16 rounded-br-xl relative">
-                  <span class="absolute bottom-2 right-2 font-mono text-[10px] text-orange-400">COORD.X09</span>
+
+            <div class="flex flex-col items-end gap-2">
+                <div class="text-[8px] text-primary/40 font-mono tracking-widest uppercase truncate w-24 text-right">Target_Acquired</div>
+                <div class="border-b-2 border-r-2 border-primary/60 w-24 h-12 rounded-br-field relative bg-primary/5 backdrop-blur-[2px]">
+                      <span class="absolute bottom-1 right-2 text-[10px] text-primary font-mono">COORD: X-{{ (mousePos.x/100).toFixed(1) }}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -218,64 +311,87 @@ onUnmounted(() => {
     <div class="relative z-10 max-w-2xl mx-auto px-6 py-20 flex flex-col items-center gap-10 h-full">
       
       <!-- Profile HUD Module -->
-      <header class="flex flex-col items-center text-center gap-6 animate-slide-down relative">
-        <div class="absolute -inset-10 bg-orange-500/10 blur-3xl rounded-full"></div>
+      <header class="flex flex-col items-center text-center gap-6 animate-slide-down relative w-full">
+        <div class="absolute -top-20 -inset-x-20 h-64 bg-secondary/10 blur-[100px] rounded-field"></div>
         
         <div class="relative group cursor-crosshair">
-            <div class="absolute -inset-0.5 bg-gradient-to-b from-orange-400/20 to-red-600/20 rounded-full blur transition duration-500 animate-pulse-slow"></div>
+            <!-- HUD Target Circle -->
+            <div class="absolute -inset-12 border border-primary/10 rounded-field animate-spin-slow-reverse"></div>
+            <div class="absolute -inset-16 border border-secondary/5 rounded-field animate-spin-slow"></div>
+            
+            <div class="absolute -inset-1 bg-gradient-to-b from-primary/30 to-secondary/30 rounded-field blur transition duration-511 animate-pulse-slow"></div>
+            <div class="relative bg-black/40 p-6 rounded-field border border-white/5 backdrop-blur-md">
                 <Logo size="2xl" />
-             <!-- HUD Target Circle -->
-             </div>
+            </div>
+             
+             <!-- Corner brackets for logo -->
+             <div class="absolute top-0 left-0 w-4 h-4 border-t border-l border-primary/40"></div>
+             <div class="absolute top-0 right-0 w-4 h-4 border-t border-r border-primary/40"></div>
+             <div class="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-primary/40"></div>
+             <div class="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-primary/40"></div>
+        </div>
         
-        <div class="space-y-3 relative">
-          <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-orange-300 via-white to-orange-300 drop-shadow-[0_0_10px_rgba(249,115,22,0.5)]">
-            {{ profile.catchphrase.toUpperCase() }}
+        <div class="space-y-4 relative">
+          <h1 class="text-3xl md:text-5xl font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_15px_rgba(249,115,22,0.4)] font-oxanium italic">
+            {{ profile.catchphrase }}
           </h1>
-          <div class="h-[1px] w-1/2 mx-auto bg-gradient-to-r from-transparent via-orange-500/50 to-transparent"></div>
-          <p class="text-orange-100/80 max-w-lg mx-auto text-sm leading-relaxed font-mono">
-            >> {{ profile.description }}
+          <div class="flex items-center gap-4 justify-center">
+            <div class="h-[1px] w-24 bg-gradient-to-r from-transparent to-primary/50"></div>
+            <div class="w-2 h-2 bg-primary rotate-45 animate-pulse"></div>
+            <div class="h-[1px] w-24 bg-gradient-to-l from-transparent to-primary/50"></div>
+          </div>
+          <p class="max-w-lg mx-auto text-xs md:text-sm leading-relaxed font-mono tracking-wide uppercase text-base-content">
+            <span class="text-primary">></span> {{ profile.description }}
           </p>
         </div>
       </header>
 
       <!-- Links Holographic Panels -->
-      <main class="w-full flex flex-col gap-4 perspective-container px-2">
+      <main class="w-full flex flex-col gap-6 perspective-container px-2">
         <a 
           v-for="(item, index) in mainLinks" 
           :key="item.id"
           :href="item.url"
           target="_blank"
-          class="holo-card group relative flex flex-col md:flex-row items-center md:items-start gap-4 p-5 overflow-hidden transition-all duration-300"
+          class="holo-card group relative flex flex-col md:flex-row items-center md:items-start gap-4 p-6 overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02]"
           :style="{ animationDelay: `${index * 150}ms` }"
         >
             <!-- Border Glows -->
-            <div class="absolute top-0 left-0 w-[20px] h-[20px] border-t-2 border-l-2 border-orange-500/50 rounded-tl transition-all duration-300 group-hover:w-full group-hover:h-full group-hover:border-orange-400 group-hover:border-opacity-100 opacity-60"></div>
-            <div class="absolute bottom-0 right-0 w-[20px] h-[20px] border-b-2 border-r-2 border-orange-500/50 rounded-br transition-all duration-300 group-hover:w-full group-hover:h-full group-hover:border-orange-400 group-hover:border-opacity-100 opacity-60"></div>
+            <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary/40 rounded-tl-field transition-all duration-300 group-hover:w-full group-hover:h-full group-hover:border-primary group-hover:bg-primary/5 opacity-60"></div>
+            <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-primary/40 rounded-br-field transition-all duration-300 group-hover:w-full group-hover:h-full group-hover:border-primary group-hover:bg-primary/5 opacity-60"></div>
           
-            <!-- Active Scan Effect -->
-            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-orange-400/10 to-transparent -translate-x-[200%] group-hover:animate-scan-once"></div>
+            <!-- Moving Grid Background (Subtle) -->
+            <div class="absolute inset-0 bg-grid-pattern opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none"></div>
 
             <!-- Content -->
-            <div class="flex-grow z-10 w-full text-center md:text-left">
-              <span v-if="item.tag" class="font-mono text-xs uppercase tracking-widest px-2 rounded border border-orange-900 bg-orange-950/50 text-orange-400 group-hover:bg-orange-900/50 group-hover:text-orange-200 transition-colors shadow-[0_0_10px_-3px_rgba(249,115,22,0.5)]">
-                        // {{ item.tag }}
+            <div class="flex-grow z-10 w-full text-left relative">
+                <div class="flex justify-between items-start mb-2">
+                    <span v-if="item.tag" class="font-oxanium text-[9px] uppercase tracking-[0.2em] px-2 py-0.5 rounded border border-primary/30 bg-primary/10 text-primary group-hover:border-primary group-hover:text-white transition-colors">
+                        {{ item.tag }}
                     </span>
-                <div class="flex flex-col md:flex-row items-center gap-3 mb-1 mt-2 justify-center md:justify-start">
-                    <h2 class="font-bold text-lg text-white group-hover:text-orange-300 transition-colors tracking-wide drop-shadow-[0_0_5px_rgba(0,0,0,0.8)]">
+                    <span class="text-[9px] font-mono text-primary/30 group-hover:text-primary/60 transition-colors">0{{ index + 1 }}</span>
+                </div>
+
+                <h2 class="font-oxanium font-bold uppercase italic text-xl md:text-2xl text-white group-hover:text-primary transition-colors tracking-tight mb-2">
                     {{ item.title }}
-                    </h2>
-                    
-                 </div>
-                <p class="text-sm text-orange-200/60 font-mono leading-relaxed group-hover:text-orange-100 transition-colors">
+                </h2>
+                
+                <p class="text-sm md:text-base text-base-content/80 font-mono leading-relaxed group-hover:text-base-content transition-colors">
                     {{ item.description }}
                 </p>
+
+                <!-- Status Indicator -->
+                <div class="mt-4 flex items-center gap-2 opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
+                    <div class="w-2 h-2 rounded-field bg-primary animate-ping"></div>
+                    <span class="text-[10px] font-oxanium text-base-content/80 group-hover:text-primary tracking-widest uppercase">Acesse Agora</span>
+                </div>
             </div>
         </a>
       </main>
 
       <!-- Socials -->
       <footer class="flex flex-col items-center gap-6 w-full mt-2">
-        <div class="flex gap-4 items-center justify-center p-4 rounded-full bg-black/40 border border-white/5 backdrop-blur-sm">
+        <div class="flex gap-4 items-center justify-center p-4 rounded-box bg-black/40 border border-white/5 backdrop-blur-sm">
           <a 
             v-for="social in socialLinks" 
             :key="social.id"
@@ -284,12 +400,12 @@ onUnmounted(() => {
             class="group relative p-2 transition-all duration-300 hover:scale-110"
             :title="social.name"
           >
-            <div class="absolute inset-0 bg-orange-500/20 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <i :class="social.iconClass" class="relative text-2xl text-orange-300/50 group-hover:text-orange-300 transition-colors"></i>
+            <div class="absolute inset-0 bg-primary/20 rounded-field blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <i :class="social.iconClass" class="relative text-2xl text-primary/80 group-hover:text-primary transition-colors"></i>
           </a>
         </div>
         
-        <div class="text-center font-mono text-[9px] text-orange-500/30 uppercase tracking-[0.2em] hover:text-orange-500/60 transition-colors">
+        <div class="text-center font-mono text-[9px] text-primary/30 uppercase tracking-[0.2em] hover:text-primary/60 transition-colors">
           <p class="mb-1">© {{ new Date().getFullYear() }} Apptime Serviços de Internet Ltda.</p>
           <p class="mb-1">Todos os direitos reservados.</p>
         </div>
@@ -299,13 +415,15 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+.font-oxanium { font-family: 'Oxanium', sans-serif; }
+
 .bg-scanlines {
     background: linear-gradient(
         to bottom,
         rgba(255, 255, 255, 0),
         rgba(255, 255, 255, 0) 50%,
-        rgba(0, 0, 0, 0.2) 50%,
-        rgba(0, 0, 0, 0.2)
+        rgba(255, 127, 0, 0.1) 50%,
+        rgba(255, 127, 0, 0.1)
     );
     background-size: 100% 4px;
 }
@@ -313,52 +431,79 @@ onUnmounted(() => {
 .bg-cockpit-vignette {
     background: radial-gradient(
         circle at center,
-        transparent 50%,
-        rgba(10, 5, 20, 0.6) 80%,
-        rgba(10, 5, 20, 0.95) 100%
+        transparent 40%,
+        rgba(10, 5, 25, 0.4) 70%,
+        rgba(5, 2, 12, 0.98) 100%
     );
+}
+
+.bg-grid-pattern {
+    background-image: 
+        linear-gradient(rgba(249, 115, 22, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(249, 115, 22, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
 }
 
 .holo-card {
-    background: rgba(30, 20, 40, 0.6);
-    backdrop-filter: blur(8px);
+    background: rgba(20, 10, 30, 0.4);
+    backdrop-filter: blur(12px) saturate(180%);
     clip-path: polygon(
-        10px 0, 
+        15px 0, 
         100% 0, 
-        100% calc(100% - 10px), 
-        calc(100% - 10px) 100%, 
+        100% calc(100% - 15px), 
+        calc(100% - 15px) 100%, 
         0 100%, 
-        0 10px
+        0 15px
     );
-    border: 1px solid rgba(249, 115, 22, 0.1);
+    border: 1px solid rgba(249, 115, 22, 0.08);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.holo-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent, rgba(249, 115, 22, 0.03), transparent);
+    pointer-events: none;
 }
 
 .holo-card:hover {
-    background: rgba(40, 25, 50, 0.8);
-    box-shadow: 0 0 20px rgba(249, 115, 22, 0.15), inset 0 0 10px rgba(249, 115, 22, 0.05);
+    background: rgba(30, 15, 45, 0.6);
+    box-shadow: 
+        0 0 30px rgba(249, 115, 22, 0.1),
+        inset 0 0 15px rgba(249, 115, 22, 0.05);
 }
 
-@keyframes scan-once {
-    0% { transform: translateX(-150%) skewX(-20deg); }
-    100% { transform: translateX(200%) skewX(-20deg); }
+@keyframes scan-vertical {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(1000%); }
 }
 
 @keyframes pulse-slow {
-    0%, 100% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 0.8; transform: scale(1.05); }
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+@keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 @keyframes spin-slow-reverse {
-    from { transform: rotate(360deg) scale(1.1); }
-    to { transform: rotate(0deg) scale(1.1); }
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
 }
 
-.animate-scan-once {
-    animation: scan-once 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+.animate-scan-vertical {
+    animation: scan-vertical 3s linear infinite;
 }
 
 .animate-pulse-slow {
-    animation: pulse-slow 4s ease-in-out infinite;
+    animation: pulse-slow 5s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+    animation: spin-slow 20s linear infinite;
 }
 
 .animate-spin-slow-reverse {
@@ -366,12 +511,27 @@ onUnmounted(() => {
 }
 
 .animate-slide-down {
-    animation: slideDown 1s ease-out forwards;
+    animation: slideDown 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-30px); }
+    from { opacity: 0; transform: translateY(-40px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom scrollbar for HUD feel */
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(249, 115, 22, 0.3);
+    border-radius: 20px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(249, 115, 22, 0.5);
 }
 </style>
 
