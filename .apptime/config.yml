@@ -2,5 +2,5 @@
 
 app:
   buildType: 'static'
-  deployPath: '.output'
+  deployPath: '.output/public'
   deployEntry: '.output/public/index.html'
