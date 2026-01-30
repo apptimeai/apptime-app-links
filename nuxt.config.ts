@@ -2,7 +2,6 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
-  ssr: false,
   nitro: {
     preset: 'static',
   },
@@ -15,19 +14,19 @@ export default defineNuxtConfig({
   ],
   app: {
     head: {
-      title: 'Apptime | Idéias em negócios reais, sem complicar',
+      title: 'Apptime | Sites e IA para quem quer resultado',
       meta: [
         { charset: 'UTF-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
-        { name: 'description', content: 'Tudo em um só lugar para aprender, criar com IA ou com Experts. Mais rápido, mais simples e com foco em resultado.' },
+        { name: 'description', content: 'Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.' },
         { name: 'keywords', content: 'Apptime, Academy, AI, Agency, Tecnologia, SaaS, Mentoria, Desenvolvimento, IA' },
-        { property: 'og:title', content: 'Apptime | Idéias em negócios reais, sem complicar' },
-        { property: 'og:description', content: 'Tudo em um só lugar para aprender, criar com IA ou com Experts. Mais rápido, mais simples e com foco em resultado.' },
+        { property: 'og:title', content: 'Apptime | Sites e IA para quem quer resultado' },
+        { property: 'og:description', content: 'Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.' },
         { property: 'og:type', content: 'website' },
         { property: 'og:url', content: 'https://appti.me' },
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'Apptime | Idéias em negócios reais, sem complicar' },
-        { name: 'twitter:description', content: 'Tudo em um só lugar para aprender, criar com IA ou com Experts. Mais rápido, mais simples e com foco em resultado.' },
+        { name: 'twitter:title', content: 'Apptime | Sites e IA para quem quer resultado' },
+        { name: 'twitter:description', content: 'Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },

@@ -2,9 +2,9 @@
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 
 const profile = ref({
-  catchphrase: "Idéias em negócios reais, sem complicar",
+  catchphrase: "Sites e IA para quem quer resultado",
   description:
-    "Tudo em um só lugar para aprender, criar com IA ou com Experts. Mais rápido, mais simples e com foco em resultado.",
+    "Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.",
 });
 
 const mainLinks = ref([
@@ -76,11 +76,18 @@ const updateMobileStatus = () => {
 let animationId: number;
 let width = 0;
 let height = 0;
-const starCount = 1200;
-const stars: { x: number; y: number; z: number; speed: number; color: string; size: number }[] = [];
-const baseSpeed = 2.5;
+const getStarCount = () => window.innerWidth < 768 ? 800 : 2600;
+const stars: { x: number; y: number; z: number; speed: number; color: string; size: number; o: number }[] = [];
+const nebulas: { x: number; y: number; radius: number; color: string; vx: number; vy: number }[] = [];
+const baseSpeed = 1.2;
+let targetSpeed = baseSpeed;
+let currentSpeed = baseSpeed;
+let lastStatsUpdate = 0;
 
-const updateSystemStats = () => {
+const updateSystemStats = (timestamp: number) => {
+    if (timestamp - lastStatsUpdate < 200) return;
+    lastStatsUpdate = timestamp;
+    
     const now = new Date();
     systemTime.value = now.toLocaleTimeString('pt-BR', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
     altitude.value += (Math.random() - 0.5) * 10;
@@ -89,15 +96,30 @@ const updateSystemStats = () => {
 
 const getStarColor = () => {
     const r = Math.random();
-    if (r > 0.90) return '#a855f7'; 
-    if (r > 0.80) return '#d8b4fe'; 
-    if (r > 0.70) return '#e879f9'; 
-    if (r > 0.60) return '#fb923c'; 
+    if (r > 0.95) return '#a855f7'; 
+    if (r > 0.90) return '#fb923c'; 
+    if (r > 0.85) return '#38bdf8'; 
     return '#ffffff';
 };
 
+const initNebulas = () => {
+    nebulas.length = 0;
+    const colors = ['rgba(168, 85, 247, 0.05)', 'rgba(251, 146, 60, 0.05)', 'rgba(30, 20, 100, 0.05)'];
+    for (let i = 0; i < 5; i++) {
+        const color = colors[i % colors.length] || colors[0];
+        nebulas.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 400 + 300,
+            color: color as string,
+            vx: (Math.random() - 0.5) * 0.2,
+            vy: (Math.random() - 0.5) * 0.2
+        });
+    }
+};
+
 const resetStar = (index: number, initial = false) => {
-    const spread = width * 1.5; 
+    const spread = width * 2; 
     let x = (Math.random() - 0.5) * spread;
     let y = (Math.random() - 0.5) * spread;
     const z = initial ? Math.random() * width : width;
@@ -106,9 +128,10 @@ const resetStar = (index: number, initial = false) => {
         x, 
         y, 
         z, 
-        speed: baseSpeed + Math.random() * 2, 
+        speed: 1 + Math.random() * 2, 
         color: getStarColor(),
-        size: 0.5 + Math.random() * 2 
+        size: 0.2 + Math.random() * 1.8,
+        o: 0.3 + Math.random() * 0.7
     };
 
     if (stars[index]) {
@@ -128,76 +151,111 @@ const resize = () => {
     }
     
     stars.length = 0;
-    for (let i = 0; i < starCount; i++) {
+    const count = getStarCount();
+    for (let i = 0; i < count; i++) {
         resetStar(i, true);
     }
+    initNebulas();
 };
 
 const handleMouseMove = (e: MouseEvent) => {
     mousePos.value = { x: e.clientX, y: e.clientY };
 };
 
-const draw = () => {
+const handleMouseDown = () => {
+    targetSpeed = baseSpeed * 5;
+};
+
+const handleMouseUp = () => {
+    targetSpeed = baseSpeed;
+};
+
+const draw = (timestamp: number) => {
     const canvas = canvasRef.value;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    ctx.fillStyle = "rgba(8, 4, 18, 0.25)"; 
+    // Fade effect for trails
+    ctx.fillStyle = "rgba(8, 4, 18, 0.2)"; 
     ctx.fillRect(0, 0, width, height);
+
+    // Speed interpolation
+    currentSpeed += (targetSpeed - currentSpeed) * 0.05;
+
+    // Draw Nebulas
+    nebulas.forEach(nebula => {
+        nebula.x += nebula.vx;
+        nebula.y += nebula.vy;
+        
+        if (nebula.x < -nebula.radius) nebula.x = width + nebula.radius;
+        if (nebula.x > width + nebula.radius) nebula.x = -nebula.radius;
+        if (nebula.y < -nebula.radius) nebula.y = height + nebula.radius;
+        if (nebula.y > height + nebula.radius) nebula.y = -nebula.radius;
+
+        const gradient = ctx.createRadialGradient(nebula.x, nebula.y, 0, nebula.x, nebula.y, nebula.radius);
+        gradient.addColorStop(0, nebula.color);
+        gradient.addColorStop(1, 'transparent');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(nebula.x - nebula.radius, nebula.y - nebula.radius, nebula.radius * 2, nebula.radius * 2);
+    });
 
     const cx = width / 2;
     const cy = height / 2;
+    
+    // Parallax mouse effect
+    const mx = (mousePos.value.x - cx) / 25;
+    const my = (mousePos.value.y - cy) / 25;
 
     for (let i = 0; i < stars.length; i++) {
         const star = stars[i];
         if (!star) continue;
       
-        star.z -= star.speed;
+        star.z -= star.speed * (currentSpeed / 2);
 
         if (star.z <= 0) {
             resetStar(i);
             continue;
         }
 
-        const px = (star.x / star.z) * width + cx;
-        const py = (star.y / star.z) * height + cy;
+        // Project 3D to 2D with parallax
+        const px = (star.x / star.z) * width + cx - (mx * (1 - star.z / width));
+        const py = (star.y / star.z) * height + cy - (my * (1 - star.z / width));
 
-        if (px < 0 || px > width || py < 0 || py > height) {
+        if (px < -100 || px > width + 100 || py < -100 || py > height + 100) {
             continue;
         }
 
-        const opacity = (1 - star.z / width);
-        const r = (1 - star.z / width) * star.size;
+        const normZ = (1 - star.z / width);
+        const opacity = normZ * star.o;
+        const r = Math.max(0.1, normZ * star.size);
 
-        ctx.beginPath();
-        ctx.fillStyle = star.color;
-        ctx.globalAlpha = opacity;
+        // Convert hex to rgba for performance (avoiding globalAlpha)
+        const rgb = star.color === '#a855f7' ? '168, 85, 247' :
+                    star.color === '#fb923c' ? '251, 146, 60' :
+                    star.color === '#38bdf8' ? '56, 189, 248' : '255, 255, 255';
         
-        if (r > 1.5) {
-            ctx.shadowBlur = 5;
-            ctx.shadowColor = star.color;
-        }
+        ctx.fillStyle = `rgba(${rgb}, ${opacity})`;
         
-        ctx.arc(px, py, Math.max(0.1, r), 0, Math.PI * 2);
-        ctx.fill();
-        ctx.shadowBlur = 0;
-        ctx.globalAlpha = 1.0;
+        // Use fillRect instead of arc for performance - fits HUD aesthetic
+        ctx.fillRect(px - r, py - r, r * 2, r * 2);
         
-        if (star.speed > 4 && star.z < width * 0.5) {
+        // Star streaks when fast or close
+        if (star.z < width * 0.2) {
             ctx.beginPath();
-            ctx.strokeStyle = star.color;
-            ctx.globalAlpha = opacity * 0.2;
+            ctx.strokeStyle = `rgba(${rgb}, ${opacity * 0.2})`;
+            ctx.lineWidth = Math.max(0.5, r / 2);
+            const streakLen = 1 + (currentSpeed * 1.5);
             ctx.moveTo(px, py);
-            const prevX = (star.x / (star.z + star.speed * 2)) * width + cx;
-            const prevY = (star.y / (star.z + star.speed * 2)) * height + cy;
+            const zOff = star.z + star.speed * streakLen;
+            const prevX = (star.x / zOff) * width + cx - (mx * (1 - zOff / width));
+            const prevY = (star.y / zOff) * height + cy - (my * (1 - zOff / width));
             ctx.lineTo(prevX, prevY);
             ctx.stroke();
-            ctx.globalAlpha = 1.0;
         }
     }
     
-    updateSystemStats();
+    updateSystemStats(timestamp);
     animationId = requestAnimationFrame(draw);
 };
 
@@ -205,9 +263,11 @@ onMounted(() => {
   window.addEventListener('resize', resize);
   window.addEventListener('resize', updateMobileStatus);
   window.addEventListener('mousemove', handleMouseMove);
+  window.addEventListener('mousedown', handleMouseDown);
+  window.addEventListener('mouseup', handleMouseUp);
   resize();
   updateMobileStatus();
-  draw();
+  requestAnimationFrame(draw);
 });
 
 onUnmounted(() => {
@@ -215,6 +275,8 @@ onUnmounted(() => {
   window.removeEventListener('resize', resize);
   window.removeEventListener('resize', updateMobileStatus);
   window.removeEventListener('mousemove', handleMouseMove);
+  window.removeEventListener('mousedown', handleMouseDown);
+  window.removeEventListener('mouseup', handleMouseUp);
 });
 </script>
 
@@ -249,7 +311,7 @@ onUnmounted(() => {
 
             <div class="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-0.5 md:gap-1 scale-[0.8] md:scale-100 transition-all duration-300">
                 <div class="h-[1px] w-32 bg-gradient-to-r from-transparent via-primary/80 to-transparent"></div>
-                <div class="text-[8px] md:text-[10px] text-primary/60 tracking-[0.2em] md:tracking-[0.4em] uppercase whitespace-nowrap">Feito na Apptime AI</div>
+                <div class="text-[9px] md:text-[10px] text-primary/60 tracking-[0.2em] md:tracking-[0.4em] uppercase whitespace-nowrap">Feito na Apptime AI</div>
                 <div class="h-[1px] w-48 bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
             </div>
 
@@ -354,7 +416,7 @@ onUnmounted(() => {
             <!-- Content -->
             <div class="flex-grow z-10 w-full text-left relative">
                 <div class="flex justify-between items-start mb-2">
-                    <span v-if="item.tag" class="font-oxanium text-[9px] uppercase tracking-[0.2em] px-2 py-0.5 rounded border border-primary/30 bg-primary/10 text-primary group-hover:border-primary group-hover:text-white transition-colors">
+                    <span v-if="item.tag" class="font-oxanium text-xs uppercase tracking-[0.2em] px-2 py-0.5 rounded border border-primary/30 bg-primary/10 text-primary group-hover:border-primary group-hover:text-white transition-colors">
                         {{ item.tag }}
                     </span>
                     <span class="text-[9px] font-mono text-primary/30 group-hover:text-primary/60 transition-colors">0{{ index + 1 }}</span>
@@ -460,6 +522,12 @@ onUnmounted(() => {
     box-shadow: 
         0 0 30px rgba(249, 115, 22, 0.1),
         inset 0 0 15px rgba(249, 115, 22, 0.05);
+}
+
+@media (max-width: 768px) {
+    .holo-card {
+        backdrop-filter: blur(6px) saturate(150%);
+    }
 }
 
 @keyframes scan-vertical {
