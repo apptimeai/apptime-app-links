@@ -67,7 +67,7 @@ const socialLinks = ref([
   <div class="max-w-2xl mx-auto px-6 py-16 flex flex-col items-center gap-12">
     <!-- Profile Header -->
     <header class="flex flex-col items-center text-center gap-6">
-      <Logo size="xl" />
+      <Logo size="2xl" />
       <div>
         <p class="text-primary font-bold mb-4 text-3xl">{{ profile.catchphrase }}</p>
         <p class="text-base-content/70 max-w-md mx-auto text-sm">

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface Props {
   iconOnly?: boolean;
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   to?: string;
   fill?: string;
   iconFill?: string;
@@ -20,6 +20,7 @@ const sizeMap = {
   md: { icon: 'h-6 w-6', text: 'h-[1.25rem]', gap: 'gap-[0.375rem]' },
   lg: { icon: 'h-8 w-8', text: 'h-[1.5rem]', gap: 'gap-[0.5rem]' },
   xl: { icon: 'h-10 w-10', text: 'h-[1.875rem]', gap: 'gap-[0.625rem]' },
+  '2xl': { icon: 'h-12 w-12', text: 'h-[2.125rem]', gap: 'gap-[0.75rem]' }, 
 };
 
 const sizeClasses = computed(() => sizeMap[props.size]);
@@ -32,6 +33,7 @@ const animationScale = computed(() => {
     md: 1, // 100% of base movement (current)
     lg: 1.25, // 125% of base movement
     xl: 1.5, // 150% of base movement
+    '2xl': 1.75, // 175% of base movement
   };
   return scaleMap[props.size];
 });
