@@ -1,26 +1,52 @@
+@import 'tailwindcss';
 @plugin "daisyui";
 
-:root {
-  --font-archivo: 'Archivo', sans-serif;
+@plugin "daisyui/theme" {
+  name: 'apptime';
+  default: false;
+  prefersdark: false;
+  color-scheme: dark;
 
-  /* Brand Colors Integrated */
+  /* Dark Blue-Tinted Background Hierarchy */
+  --color-base-100: #050a18; /* Very dark with blue undertone */
+  --color-base-200: #0a1224; /* Dark card background, slightly bluer */
+  --color-base-300: #1a2a45; /* Tertiary layer with strong blue tone */
+  --color-base-content: #e2e8f0; /* Soft light-blue text color */
+
+  /* Brand colors (unchanged) */
   --color-primary: #ff7f00;
   --color-primary-content: #ffffff;
   --color-secondary: #ff00ae;
   --color-secondary-content: #ffffff;
   --color-accent: #4508f9;
   --color-accent-content: #ffffff;
-  --color-base-content: #ffffff;
+
+  /* Grayscale for text, borders, and muted elements */
+  --color-neutral: #22314f; /* Cooler neutral gray with blue tint */
+  --color-neutral-content: #e2e8f0;
+
+  /* Semantic colors */
+  --color-info: #0ea5e9;
+  --color-info-content: #ffffff;
+  --color-success: #22c55e;
+  --color-success-content: #ffffff;
+  --color-warning: #f59e0b;
+  --color-warning-content: #000000;
+  --color-error: #ef4444;
+  --color-error-content: #ffffff;
+
+  --radius-selector: 0.1rem;
+  --radius-field: 0.1rem;
+  --radius-box: 0.1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
 }
 
-[data-theme='apptime-cyber'] {
-  --p: 30 100% 50%;
-  /* #ff7f00 approx */
-  --s: 319 100% 50%;
-  /* #ff00ae approx */
-  --a: 255 94% 50%;
-  /* #4508f9 approx */
-  --n: 226 50% 10%;
-  --b1: 226 50% 5%;
-  --bc: 226 20% 90%;
+body {
+  font-family: var(--font-archivo);
+  background-color: var(--bg-base-100);
+  color: var(--fg-base-content);
 }

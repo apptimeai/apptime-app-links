@@ -43,7 +43,7 @@ export default defineNuxtConfig({
       ],
       htmlAttrs: {
         lang: 'pt-BR',
-        'data-theme': 'apptime-cyber'
+        'data-theme': 'apptime'
       }
     }
   },
