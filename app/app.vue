@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
 
 const initVisuals = () => {
   const starContainer = document.getElementById('stars');

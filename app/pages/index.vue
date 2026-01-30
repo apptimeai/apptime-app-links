@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
 const profile = ref({
   title: "Apptime AI",
   catchphrase: "Aprenda, construa e venda. No mesmo lugar.",

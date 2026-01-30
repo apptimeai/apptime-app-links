@@ -9,6 +9,10 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
+  css: ['~/assets/css/main.css'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+  ],
   app: {
     head: {
       title: 'Apptime AI | Hub de Serviços',
@@ -22,12 +26,10 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Zen+Dots&family=Archivo:wght@300;400;600;900&display=swap' },
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;900&display=swap' },
         { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css' },
-        { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css' }
       ],
       script: [
-        { src: 'https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4' },
         { src: 'https://www.googletagmanager.com/gtag/js?id=G-SW0RL74KBX', async: true },
         {
           innerHTML: `
@@ -39,14 +41,11 @@ export default defineNuxtConfig({
           type: 'text/javascript'
         }
       ],
-      noscript: [
-        { innerHTML: 'Este site requer JavaScript para funcionar.' }
-      ],
       htmlAttrs: {
         lang: 'pt-BR',
         'data-theme': 'apptime-cyber'
       }
     }
   },
-  css: ['~/assets/css/main.css']
+
 })

@@ -1,0 +1,26 @@
+@plugin "daisyui";
+
+:root {
+  --font-archivo: 'Archivo', sans-serif;
+
+  /* Brand Colors Integrated */
+  --color-primary: #ff7f00;
+  --color-primary-content: #ffffff;
+  --color-secondary: #ff00ae;
+  --color-secondary-content: #ffffff;
+  --color-accent: #4508f9;
+  --color-accent-content: #ffffff;
+  --color-base-content: #ffffff;
+}
+
+[data-theme='apptime-cyber'] {
+  --p: 30 100% 50%;
+  /* #ff7f00 approx */
+  --s: 319 100% 50%;
+  /* #ff00ae approx */
+  --a: 255 94% 50%;
+  /* #4508f9 approx */
+  --n: 226 50% 10%;
+  --b1: 226 50% 5%;
+  --bc: 226 20% 90%;
+}
