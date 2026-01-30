@@ -19,6 +19,7 @@ export default defineNuxtConfig({
         { name: 'keywords', content: 'Apptime, Tecnologia, SaaS, Agência Dev, Infoprodutos' }
       ],
       link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Zen+Dots&family=Archivo:wght@300;400;600;900&display=swap' },
