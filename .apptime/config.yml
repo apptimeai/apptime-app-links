@@ -4,3 +4,6 @@ app:
   buildType: 'static'
   deployPath: '.output/public'
   deployEntry: '.output/public/index.html'
+  title: 'Apptime Links'
+  description: 'Links da Apptime'
+  keywords: 'apptime, links, apptime.com.br, apptime.ai, apptime.dev'

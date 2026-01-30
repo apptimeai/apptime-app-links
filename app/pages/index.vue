@@ -1,35 +1,35 @@
 <script setup lang="ts">
 const profile = ref({
-  catchphrase: "Aprenda, construa e venda. No mesmo lugar.",
+  catchphrase: "Idéias em negócios reais, sem complicar",
   description:
-    "A Apptime une plataforma SaaS, conhecimento prático e execução profissional para transformar ideias em negócios reais.",
+    "Tudo em um só lugar para aprender, criar com IA ou com Experts. Mais rápido, mais simples e com foco em resultado.",
 });
 
 const mainLinks = ref([
   {
-    id: "lp-info",
+    id: "academy",
     title: "Apptime Academy",
     description:
-      "Aprenda a dominar a tecnologia com os nossos infoprodutos exclusivos.",
-    url: "https://apptime.com.br",
+      "Aprenda o que importa para lançar e validar, sem perder tempo.",
+    url: "https://apptime.com.br?utm_source=apptime-links",
     tag: "Para começar",
     brandColor: "#ff00ae",
   },
   {
-    id: "saas-plat",
+    id: "platform",
     title: "Apptime AI",
     description:
-      "Crie seu próprio aplicativo em segundos com nossa solução SaaS.",
-    url: "https://apptime.ai",
+      "Crie e hospede seu app rapidamente com IA, sem complicação.",
+    url: "https://apptime.ai?utm_source=apptime-links",
     tag: "Este site foi feito aqui",
     brandColor: "#ff7f00",
   },
   {
-    id: "agency-dev",
+    id: "agency",
     title: "Apptime Agency",
     description:
-      "Desenvolvimento sob medida para transformar suas ideias em softwares robustos.",
-    url: "https://apptime.dev",
+      "Transformamos suas ideias em sites e automações que funcionam de verdade.",
+    url: "https://apptime.dev?utm_source=apptime-links",
     tag: "Nós criamos pra você",
     brandColor: "#4508f9",
   },
@@ -37,40 +37,40 @@ const mainLinks = ref([
 
 const socialLinks = ref([
   {
-    id: "ig",
+    id: "instagram",
     name: "Instagram",
-    url: "https://instagram.com/apptimeai",
+    url: "https://instagram.com/apptimeai?utm_source=apptime-links",
     iconClass: "fa-brands fa-instagram",
   },
   {
-    id: "li",
+    id: "linkedin",
     name: "LinkedIn",
-    url: "https://linkedin.com/company/apptimeai",
+    url: "https://linkedin.com/company/apptimeai?utm_source=apptime-links",
     iconClass: "fa-brands fa-linkedin",
   },
   {
-    id: "dc",
+    id: "discord",
     name: "Discord",
-    url: "https://discord.gg/afcuMUuXju",
+    url: "https://discord.gg/afcuMUuXju?utm_source=apptime-links",
     iconClass: "fa-brands fa-discord",
   },
   {
-    id: "gh",
+    id: "github",
     name: "GitHub",
-    url: "https://github.com/apptimeai",
+    url: "https://github.com/apptimeai?utm_source=apptime-links",
     iconClass: "fa-brands fa-github",
   },
 ]);
 </script>
 
 <template>
-  <div class="max-w-xl mx-auto px-6 py-16 flex flex-col items-center gap-12">
+  <div class="max-w-2xl mx-auto px-6 py-16 flex flex-col items-center gap-12">
     <!-- Profile Header -->
     <header class="flex flex-col items-center text-center gap-6">
       <Logo size="xl" />
       <div>
         <p class="text-primary font-bold mb-4 text-3xl">{{ profile.catchphrase }}</p>
-        <p class="text-base-content/70 max-w-sm mx-auto text-sm">
+        <p class="text-base-content/70 max-w-md mx-auto text-sm">
           {{ profile.description }}
         </p>
       </div>
