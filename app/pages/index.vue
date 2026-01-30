@@ -66,9 +66,19 @@ const mousePos = ref({ x: 0, y: 0 });
 const systemTime = ref("");
 const altitude = ref(45000);
 const velocity = ref(28400);
+const isMobile = ref(false);
+
+const updateMobileStatus = () => {
+    isMobile.value = window.innerWidth < 768;
+};
 
 // Starfield Animation Logic
 let animationId: number;
+let width = 0;
+let height = 0;
+const starCount = 1200;
+const stars: { x: number; y: number; z: number; speed: number; color: string; size: number }[] = [];
+const baseSpeed = 2.5;
 
 const updateSystemStats = () => {
     const now = new Date();
@@ -77,44 +87,16 @@ const updateSystemStats = () => {
     velocity.value += (Math.random() - 0.5) * 5;
 };
 
-onMounted(() => {
-  const canvas = canvasRef.value;
-  if (!canvas) return;
-
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-
-  let width = 0;
-  let height = 0;
-  
-  // Star parameters
-  const starCount = 1200;
-  const stars: { x: number; y: number; z: number; speed: number; color: string; size: number }[] = [];
-  const baseSpeed = 2.5; 
-  
-  const resize = () => {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-    
-    // Initialize stars
-    stars.length = 0;
-    for (let i = 0; i < starCount; i++) {
-        resetStar(i, true);
-    }
-  };
-
-  const getStarColor = () => {
+const getStarColor = () => {
     const r = Math.random();
-    if (r > 0.90) return '#a855f7'; // secondary
-    if (r > 0.80) return '#d8b4fe'; // secondary
-    if (r > 0.70) return '#e879f9'; // Fuchsia
-    if (r > 0.60) return '#fb923c'; // primary
-    return '#ffffff'; // White
-  }
+    if (r > 0.90) return '#a855f7'; 
+    if (r > 0.80) return '#d8b4fe'; 
+    if (r > 0.70) return '#e879f9'; 
+    if (r > 0.60) return '#fb923c'; 
+    return '#ffffff';
+};
 
-  const resetStar = (index: number, initial = false) => {
+const resetStar = (index: number, initial = false) => {
     const spread = width * 1.5; 
     let x = (Math.random() - 0.5) * spread;
     let y = (Math.random() - 0.5) * spread;
@@ -134,40 +116,45 @@ onMounted(() => {
     } else {
         stars.push(starData);
     }
-  };
+};
 
-  const handleMouseMove = (e: MouseEvent) => {
+const resize = () => {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    const canvas = canvasRef.value;
+    if (canvas) {
+        canvas.width = width;
+        canvas.height = height;
+    }
+    
+    stars.length = 0;
+    for (let i = 0; i < starCount; i++) {
+        resetStar(i, true);
+    }
+};
+
+const handleMouseMove = (e: MouseEvent) => {
     mousePos.value = { x: e.clientX, y: e.clientY };
-  };
+};
 
-  const draw = () => {
-    // Space black with a hint of purple
+const draw = () => {
+    const canvas = canvasRef.value;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
     ctx.fillStyle = "rgba(8, 4, 18, 0.25)"; 
     ctx.fillRect(0, 0, width, height);
 
     const cx = width / 2;
     const cy = height / 2;
 
-    // Distant Nebula glow
-    const time = Date.now() * 0.0005;
-    const nebulaX = cx + Math.sin(time) * 100;
-    const nebulaY = cy + Math.cos(time * 0.7) * 100;
-    
-    const grad = ctx.createRadialGradient(nebulaX, nebulaY, 100, nebulaX, nebulaY, width);
-    grad.addColorStop(0, "rgba(168, 85, 247, 0.03)");
-    grad.addColorStop(0.5, "rgba(249, 115, 22, 0.01)");
-    grad.addColorStop(1, "transparent");
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, width, height);
-
     for (let i = 0; i < stars.length; i++) {
         const star = stars[i];
         if (!star) continue;
       
-        // Update Z
         star.z -= star.speed;
 
-        // Reset if passed viewer
         if (star.z <= 0) {
             resetStar(i);
             continue;
@@ -176,7 +163,6 @@ onMounted(() => {
         const px = (star.x / star.z) * width + cx;
         const py = (star.y / star.z) * height + cy;
 
-        // Render point
         if (px < 0 || px > width || py < 0 || py > height) {
             continue;
         }
@@ -188,7 +174,6 @@ onMounted(() => {
         ctx.fillStyle = star.color;
         ctx.globalAlpha = opacity;
         
-        // Draw star with slight glow if it's large
         if (r > 1.5) {
             ctx.shadowBlur = 5;
             ctx.shadowColor = star.color;
@@ -199,7 +184,6 @@ onMounted(() => {
         ctx.shadowBlur = 0;
         ctx.globalAlpha = 1.0;
         
-        // Add trail for fast stars
         if (star.speed > 4 && star.z < width * 0.5) {
             ctx.beginPath();
             ctx.strokeStyle = star.color;
@@ -215,18 +199,22 @@ onMounted(() => {
     
     updateSystemStats();
     animationId = requestAnimationFrame(draw);
-  };
+};
 
+onMounted(() => {
   window.addEventListener('resize', resize);
+  window.addEventListener('resize', updateMobileStatus);
   window.addEventListener('mousemove', handleMouseMove);
   resize();
+  updateMobileStatus();
   draw();
 });
 
 onUnmounted(() => {
   cancelAnimationFrame(animationId);
-  window.removeEventListener('resize', () => {});
-  window.removeEventListener('mousemove', () => {});
+  window.removeEventListener('resize', resize);
+  window.removeEventListener('resize', updateMobileStatus);
+  window.removeEventListener('mousemove', handleMouseMove);
 });
 </script>
 
@@ -248,29 +236,29 @@ onUnmounted(() => {
         <!-- Top HUD -->
         <div class="flex justify-between items-start">
             <div class="flex flex-col gap-2">
-                <div class="border-t-2 border-l-2 border-primary/60 w-24 h-12 rounded-tl-field relative bg-primary/5 backdrop-blur-[2px]">
-                    <span class="absolute top-1 left-2 text-[9px] text-primary/80 tracking-tighter">HDG.312°</span>
-                    <span class="absolute bottom-1 left-2 text-[10px] text-primary font-mono">{{ systemTime }}</span>
+                <div class="border-t-2 border-l-2 border-primary/60 w-20 md:w-24 h-12 rounded-tl-field relative bg-primary/5 backdrop-blur-[2px]">
+                    <span class="absolute top-1 left-2 text-[8px] md:text-[9px] text-primary/80 tracking-tighter">HDG.312°</span>
+                    <span class="absolute bottom-1 left-2 text-[9px] md:text-[10px] text-primary font-mono">{{ systemTime }}</span>
                 </div>
                 <div class="flex gap-1">
-                    <div v-for="i in 5" :key="i" class="h-1 w-4 bg-primary/20 rounded-field overflow-hidden">
+                    <div v-for="i in 5" :key="i" class="h-1 w-2 md:w-4 bg-primary/20 rounded-field overflow-hidden">
                         <div class="h-full bg-primary animate-pulse" :style="{ animationDelay: `${i * 200}ms`, width: '100%' }"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="flex flex-col items-center gap-1">
+            <div class="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-0.5 md:gap-1 scale-[0.8] md:scale-100 transition-all duration-300">
                 <div class="h-[1px] w-32 bg-gradient-to-r from-transparent via-primary/80 to-transparent"></div>
-                <div class="text-[10px] text-primary/60 tracking-[0.4em] uppercase">Feito na Apptime AI</div>
+                <div class="text-[8px] md:text-[10px] text-primary/60 tracking-[0.2em] md:tracking-[0.4em] uppercase whitespace-nowrap">Feito na Apptime AI</div>
                 <div class="h-[1px] w-48 bg-gradient-to-r from-transparent via-primary/40 to-transparent"></div>
             </div>
 
             <div class="flex flex-col items-end gap-2">
-                <div class="border-t-2 border-r-2 border-primary/60 w-24 h-12 rounded-tr-field relative bg-primary/5 backdrop-blur-[2px]">
-                    <span class="absolute top-1 right-2 text-[9px] text-primary/80 tracking-tighter">REACT.CORE</span>
-                    <span class="absolute bottom-1 right-2 text-[10px] text-primary font-mono">99.2%</span>
+                <div class="border-t-2 border-r-2 border-primary/60 w-20 md:w-24 h-12 rounded-tr-field relative bg-primary/5 backdrop-blur-[2px]">
+                    <span class="absolute top-1 right-2 text-[8px] md:text-[9px] text-primary/80 tracking-tighter">REACT.CORE</span>
+                    <span class="absolute bottom-1 right-2 text-[9px] md:text-[10px] text-primary font-mono">99.2%</span>
                 </div>
-                <div class="text-[8px] text-secondary/60 font-mono uppercase">See you space cowboy...</div>
+                <div class="text-[7px] md:text-[8px] text-secondary/60 font-mono uppercase">See you space cowboy...</div>
             </div>
         </div>
 
@@ -283,32 +271,32 @@ onUnmounted(() => {
         
         <!-- Bottom HUD -->
          <div class="flex justify-between items-end">
-            <div class="flex flex-col gap-2">
+             <div class="flex flex-col gap-2">
                  <div class="text-[8px] text-primary/40 font-mono tracking-widest uppercase">Alt: {{ Math.floor(altitude) }}m</div>
-                 <div class="border-b-2 border-l-2 border-primary/60 w-24 h-12 rounded-bl-field relative bg-primary/5 backdrop-blur-[2px]">
-                      <span class="absolute bottom-1 left-2 text-[10px] text-primary font-mono">VEL: {{ Math.floor(velocity) }}</span>
+                 <div class="border-b-2 border-l-2 border-primary/60 w-20 md:w-24 h-12 rounded-bl-field relative bg-primary/5 backdrop-blur-[2px]">
+                      <span class="absolute bottom-1 left-2 text-[9px] md:text-[10px] text-primary font-mono">VEL: {{ Math.floor(velocity) }}</span>
                  </div>
             </div>
 
-            <div class="flex flex-col items-center">
-                 <div class="font-mono text-[9px] text-primary/60 tracking-[0.5em] mb-2 uppercase">Pronto para decolar?</div>
+            <div class="absolute left-1/2 -translate-x-1/2 flex flex-col items-center scale-[0.8] md:scale-100 transition-all duration-300">
+                 <div class="font-mono text-[8px] md:text-[9px] text-primary/60 tracking-[0.3em] md:tracking-[0.5em] mb-2 uppercase whitespace-nowrap">Pronto para decolar?</div>
                  <div class="flex gap-1 mb-1">
-                    <div v-for="i in 12" :key="i" class="w-1 h-3 rounded-field" :class="i < 8 ? 'bg-primary/60' : 'bg-primary/40'"></div>
+                    <div v-for="i in (isMobile ? 8 : 12)" :key="i" class="w-1 h-3 rounded-field" :class="i < 6 ? 'bg-primary/60' : 'bg-primary/40'"></div>
                  </div>
-                 <div class="w-64 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+                 <div class="hidden md:block w-64 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent"></div>
             </div>
 
             <div class="flex flex-col items-end gap-2">
-                <div class="text-[8px] text-primary/40 font-mono tracking-widest uppercase truncate w-24 text-right">Target_Acquired</div>
-                <div class="border-b-2 border-r-2 border-primary/60 w-24 h-12 rounded-br-field relative bg-primary/5 backdrop-blur-[2px]">
-                      <span class="absolute bottom-1 right-2 text-[10px] text-primary font-mono">COORD: X-{{ (mousePos.x/100).toFixed(1) }}</span>
+                <div class="text-[8px] text-primary/40 font-mono tracking-widest uppercase truncate w-20 md:w-24 text-right">Target_Acq</div>
+                <div class="border-b-2 border-r-2 border-primary/60 w-20 md:w-24 h-12 rounded-br-field relative bg-primary/5 backdrop-blur-[2px]">
+                      <span class="absolute bottom-1 right-2 text-[9px] md:text-[10px] text-primary font-mono">X-{{ (mousePos.x/100).toFixed(1) }}</span>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Dynamic Content -->
-    <div class="relative z-10 max-w-2xl mx-auto px-6 py-20 flex flex-col items-center gap-10 h-full">
+    <div class="relative z-10 max-w-2xl mx-auto px-3 md:px-6 py-26 md:py-20 flex flex-col items-center gap-10 h-full">
       
       <!-- Profile HUD Module -->
       <header class="flex flex-col items-center text-center gap-6 animate-slide-down relative w-full">
