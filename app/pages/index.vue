@@ -49,6 +49,12 @@ const socialLinks = ref([
     iconClass: "fa-brands fa-linkedin",
   },
   {
+    id: "dc",
+    name: "Discord",
+    url: "https://discord.gg/afcuMUuXju",
+    iconClass: "fa-brands fa-discord",
+  },
+  {
     id: "gh",
     name: "GitHub",
     url: "https://github.com/apptimeai",
@@ -63,8 +69,8 @@ const socialLinks = ref([
     <header class="flex flex-col items-center text-center gap-6">
       <Logo size="xl" />
       <div>
-        <p class="text-primary font-bold mb-4">{{ profile.catchphrase }}</p>
-        <p class="text-base-content/70 max-w-md mx-auto leading-relaxed">
+        <p class="text-primary font-bold mb-4 text-3xl">{{ profile.catchphrase }}</p>
+        <p class="text-base-content/70 max-w-sm mx-auto text-sm">
           {{ profile.description }}
         </p>
       </div>
@@ -77,17 +83,15 @@ const socialLinks = ref([
         :key="item.id"
         :href="item.url"
         target="_blank"
-        class="group flex items-center gap-4 p-4 rounded-field border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+        class="group flex items-start gap-4 p-4 rounded-field border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
       >
         
         <div class="flex-grow">
-          <div class="flex items-center gap-2">
-            <h2 class="font-bold text-lg text-white group-hover:text-primary transition-colors">
-              {{ item.title }}
-            </h2>
-            <span class="badge badge-sm badge-outline opacity-40">{{ item.tag }}</span>
-          </div>
-          <p class="text-sm text-base-content/60 line-clamp-1 italic">{{ item.description }}</p>
+          <span v-if="item.tag" class="badge badge-xs badge-outline opacity-40 mb-1">{{ item.tag }}</span>
+          <h2 class="font-bold text-lg text-white group-hover:text-primary transition-colors">
+            {{ item.title }}
+          </h2>
+          <p class="text-sm text-base-content/60 italic">{{ item.description }}</p>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity">
           <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
