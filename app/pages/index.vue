@@ -13,7 +13,6 @@ const mainLinks = ref([
       "Aprenda o que importa para lançar e validar, sem perder tempo.",
     url: "https://apptime.com.br?utm_source=apptime-links",
     tag: "Para começar",
-    brandColor: "#ff00ae",
   },
   {
     id: "platform",
@@ -22,7 +21,6 @@ const mainLinks = ref([
       "Crie e hospede seu app rapidamente com IA, sem complicação.",
     url: "https://apptime.ai?utm_source=apptime-links",
     tag: "Este site foi feito aqui",
-    brandColor: "#ff7f00",
   },
   {
     id: "agency",
@@ -30,8 +28,7 @@ const mainLinks = ref([
     description:
       "Transformamos suas ideias em sites e automações que funcionam de verdade.",
     url: "https://apptime.dev?utm_source=apptime-links",
-    tag: "Nós criamos pra você",
-    brandColor: "#4508f9",
+    tag: "Nós criamos para você",
   },
 ]);
 
