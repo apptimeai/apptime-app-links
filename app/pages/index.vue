@@ -76,10 +76,10 @@ const updateMobileStatus = () => {
 let animationId: number;
 let width = 0;
 let height = 0;
-const getStarCount = () => window.innerWidth < 768 ? 800 : 2600;
+const getStarCount = () => window.innerWidth < 768 ? 2500 : 8000;
 const stars: { x: number; y: number; z: number; speed: number; color: string; size: number; o: number }[] = [];
 const nebulas: { x: number; y: number; radius: number; color: string; vx: number; vy: number }[] = [];
-const baseSpeed = 1.2;
+const baseSpeed = 1.5;
 let targetSpeed = baseSpeed;
 let currentSpeed = baseSpeed;
 let lastStatsUpdate = 0;
@@ -96,9 +96,12 @@ const updateSystemStats = (timestamp: number) => {
 
 const getStarColor = () => {
     const r = Math.random();
-    if (r > 0.95) return '#a855f7'; 
-    if (r > 0.90) return '#fb923c'; 
-    if (r > 0.85) return '#38bdf8'; 
+    if (r > 0.98) return '#f472b6'; // Hot Pink
+    if (r > 0.96) return '#22d3ee'; // Cyan
+    if (r > 0.94) return '#fbbf24'; // Gold
+    if (r > 0.90) return '#a855f7'; // Purple
+    if (r > 0.85) return '#fb923c'; // Orange
+    if (r > 0.80) return '#38bdf8'; // Sky Blue
     return '#ffffff';
 };
 
@@ -107,19 +110,19 @@ const initNebulas = () => {
 };
 
 const resetStar = (index: number, initial = false) => {
-    const spread = width * 2; 
+    const spread = width * 4; 
     let x = (Math.random() - 0.5) * spread;
     let y = (Math.random() - 0.5) * spread;
-    const z = initial ? Math.random() * width : width;
+    const z = initial ? Math.random() * (width * 1.5) : width * 1.5;
     
     const starData = { 
         x, 
         y, 
         z, 
-        speed: 1 + Math.random() * 2, 
+        speed: 0.5 + Math.random() * 2, 
         color: getStarColor(),
-        size: 0.2 + Math.random() * 1.8,
-        o: 0.3 + Math.random() * 0.7
+        size: (Math.random() > 0.98 ? 3 + Math.random() * 3 : 0.5 + Math.random() * 2), // Occasional "Superstars"
+        o: 0.5 + Math.random() * 0.5
     };
 
     if (stars[index]) {
@@ -178,8 +181,8 @@ const draw = (timestamp: number) => {
     const cy = height / 2;
     
     // Parallax mouse effect
-    const mx = (mousePos.value.x - cx) / 25;
-    const my = (mousePos.value.y - cy) / 25;
+    const mx = (mousePos.value.x - cx) / 10;
+    const my = (mousePos.value.y - cy) / 10;
 
     for (let i = 0; i < stars.length; i++) {
         const star = stars[i];
@@ -193,25 +196,34 @@ const draw = (timestamp: number) => {
         }
 
         // Project 3D to 2D with parallax
-        const px = (star.x / star.z) * width + cx - (mx * (1 - star.z / width));
-        const py = (star.y / star.z) * height + cy - (my * (1 - star.z / width));
+        const px = (star.x / star.z) * width + cx - (mx * (1 - star.z / (width * 1.5)));
+        const py = (star.y / star.z) * height + cy - (my * (1 - star.z / (width * 1.5)));
 
         if (px < -100 || px > width + 100 || py < -100 || py > height + 100) {
             continue;
         }
 
-        const normZ = (1 - star.z / width);
-        const opacity = normZ * star.o;
+        const maxZ = width * 1.5;
+        const normZ = Math.max(0, (1 - star.z / maxZ));
+        const twinkle = 0.8 + Math.sin(timestamp * 0.005 + i) * 0.2; // Add subtle twinkle
+        const opacity = normZ * star.o * twinkle;
         const r = Math.max(0.1, normZ * star.size);
 
-        // Convert hex to rgba for performance (avoiding globalAlpha)
-        const rgb = star.color === '#a855f7' ? '168, 85, 247' :
+        // Match colors for RGB logic
+        const rgb = star.color === '#f472b6' ? '244, 114, 182' :
+                    star.color === '#22d3ee' ? '34, 211, 238' :
+                    star.color === '#fbbf24' ? '251, 191, 36' :
+                    star.color === '#a855f7' ? '168, 85, 247' :
                     star.color === '#fb923c' ? '251, 146, 60' :
                     star.color === '#38bdf8' ? '56, 189, 248' : '255, 255, 255';
         
+        // Outer Glow for larger stars
+        if (r > 1.5) {
+            ctx.fillStyle = `rgba(${rgb}, ${opacity * 0.3})`;
+            ctx.fillRect(px - r * 2, py - r * 2, r * 4, r * 4);
+        }
+
         ctx.fillStyle = `rgba(${rgb}, ${opacity})`;
-        
-        // Use fillRect instead of arc for performance - fits HUD aesthetic
         ctx.fillRect(px - r, py - r, r * 2, r * 2);
         
         // Star streaks when fast or close
@@ -222,8 +234,8 @@ const draw = (timestamp: number) => {
             const streakLen = 1 + (currentSpeed * 1.5);
             ctx.moveTo(px, py);
             const zOff = star.z + star.speed * streakLen;
-            const prevX = (star.x / zOff) * width + cx - (mx * (1 - zOff / width));
-            const prevY = (star.y / zOff) * height + cy - (my * (1 - zOff / width));
+            const prevX = (star.x / zOff) * width + cx - (mx * (1 - zOff / maxZ));
+            const prevY = (star.y / zOff) * height + cy - (my * (1 - zOff / maxZ));
             ctx.lineTo(prevX, prevY);
             ctx.stroke();
         }
