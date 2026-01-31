@@ -2,7 +2,7 @@
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 
 const profile = ref({
-  catchphrase: "Sites e IA para quem quer resultado",
+  catchphrase: "Sites e IA para quem quer Resultado",
   description:
     "Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.",
 });
@@ -104,18 +104,6 @@ const getStarColor = () => {
 
 const initNebulas = () => {
     nebulas.length = 0;
-    const colors = ['rgba(168, 85, 247, 0.05)', 'rgba(251, 146, 60, 0.05)', 'rgba(30, 20, 100, 0.05)'];
-    for (let i = 0; i < 5; i++) {
-        const color = colors[i % colors.length] || colors[0];
-        nebulas.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            radius: Math.random() * 400 + 300,
-            color: color as string,
-            vx: (Math.random() - 0.5) * 0.2,
-            vy: (Math.random() - 0.5) * 0.2
-        });
-    }
 };
 
 const resetStar = (index: number, initial = false) => {
@@ -177,28 +165,14 @@ const draw = (timestamp: number) => {
     if (!ctx) return;
 
     // Fade effect for trails
-    ctx.fillStyle = "rgba(8, 4, 18, 0.2)"; 
+    ctx.fillStyle = "rgba(0, 0, 0, 0.2)"; 
     ctx.fillRect(0, 0, width, height);
 
     // Speed interpolation
     currentSpeed += (targetSpeed - currentSpeed) * 0.05;
 
-    // Draw Nebulas
-    nebulas.forEach(nebula => {
-        nebula.x += nebula.vx;
-        nebula.y += nebula.vy;
-        
-        if (nebula.x < -nebula.radius) nebula.x = width + nebula.radius;
-        if (nebula.x > width + nebula.radius) nebula.x = -nebula.radius;
-        if (nebula.y < -nebula.radius) nebula.y = height + nebula.radius;
-        if (nebula.y > height + nebula.radius) nebula.y = -nebula.radius;
-
-        const gradient = ctx.createRadialGradient(nebula.x, nebula.y, 0, nebula.x, nebula.y, nebula.radius);
-        gradient.addColorStop(0, nebula.color);
-        gradient.addColorStop(1, 'transparent');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(nebula.x - nebula.radius, nebula.y - nebula.radius, nebula.radius * 2, nebula.radius * 2);
-    });
+    // Draw Nebulas (Removed)
+    // nebulas.forEach(nebula => { ... });
 
     const cx = width / 2;
     const cy = height / 2;
@@ -281,7 +255,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="relative min-h-screen w-full overflow-hidden bg-[#0a0510] text-white font-sans selection:bg-primary selection:text-white">
+  <div class="relative min-h-screen w-full overflow-hidden bg-base-100 text-white font-sans selection:bg-primary selection:text-white">
     
     <!-- Starfield Background -->
     <canvas ref="canvasRef" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
@@ -358,11 +332,10 @@ onUnmounted(() => {
     </div>
 
     <!-- Dynamic Content -->
-    <div class="relative z-10 max-w-2xl mx-auto px-3 md:px-6 py-26 md:py-20 flex flex-col items-center gap-10 h-full">
+    <div class="relative z-10 max-w-2xl mx-auto px-3 md:px-6 py-30 flex flex-col items-center gap-20 h-full">
       
       <!-- Profile HUD Module -->
-      <header class="flex flex-col items-center text-center gap-6 animate-slide-down relative w-full">
-        <div class="absolute -top-20 -inset-x-20 h-64 bg-secondary/10 blur-[100px] rounded-field"></div>
+      <header class="flex flex-col items-center text-center gap-20 animate-slide-down relative w-full">
         
         <div class="relative group cursor-crosshair">
             <!-- HUD Target Circle -->
@@ -382,7 +355,7 @@ onUnmounted(() => {
         </div>
         
         <div class="space-y-4 relative">
-          <h1 class="text-3xl md:text-5xl font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_15px_rgba(249,115,22,0.4)] font-oxanium italic">
+          <h1 class="text-4xl md:text-5xl uppercase font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_15px_rgba(249,115,22,0.4)] font-oxanium italic">
             {{ profile.catchphrase }}
           </h1>
           <div class="flex items-center gap-4 justify-center">
@@ -390,7 +363,7 @@ onUnmounted(() => {
             <div class="w-2 h-2 bg-primary rotate-45 animate-pulse"></div>
             <div class="h-[1px] w-24 bg-gradient-to-l from-transparent to-primary/50"></div>
           </div>
-          <p class="max-w-lg mx-auto text-xs md:text-sm leading-relaxed font-mono tracking-wide uppercase text-base-content">
+          <p class="max-w-lg mx-auto text-xs uppercase md:text-sm leading-relaxed font-mono tracking-wide  text-base-content">
             <span class="text-primary">></span> {{ profile.description }}
           </p>
         </div>
@@ -403,20 +376,23 @@ onUnmounted(() => {
           :key="item.id"
           :href="item.url"
           target="_blank"
-          class="holo-card group relative flex flex-col md:flex-row items-center md:items-start gap-4 p-6 overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02]"
+          class="holo-card group relative flex bg-white/20 flex-col md:flex-row items-center md:items-start gap-4 p-6 overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02]"
           :style="{ animationDelay: `${index * 150}ms` }"
         >
+            <!-- Background Color -->
+            <div class="absolute top-0 left-0 w-full h-full bg-accent/10 group-hover:bg-transparent transition-all duration-300"></div>
+
             <!-- Border Glows -->
-            <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary/40 rounded-tl-field transition-all duration-300 group-hover:w-full group-hover:h-full group-hover:border-primary group-hover:bg-primary/5 opacity-60"></div>
-            <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-primary/40 rounded-br-field transition-all duration-300 group-hover:w-full group-hover:h-full group-hover:border-primary group-hover:bg-primary/5 opacity-60"></div>
+            <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-secondary/40 rounded-tl-field transition-all duration-300 group-hover:w-full group-hover:h-full group-hover:border-secondary bg-secondary/20 group-hover:bg-secondary/5 opacity-60"></div>
+            <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-secondary/40 rounded-br-field transition-all duration-300 group-hover:w-full group-hover:h-full group-hover:border-secondary bg-secondary/20 group-hover:bg-secondary/5 opacity-60"></div>
           
             <!-- Moving Grid Background (Subtle) -->
-            <div class="absolute inset-0 bg-grid-pattern opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none"></div>
+            <div class="absolute inset-0 bg-grid-pattern opacity-70 group-hover:opacity-40 transition-opacity pointer-events-none"></div>
 
             <!-- Content -->
             <div class="flex-grow z-10 w-full text-left relative">
                 <div class="flex justify-between items-start mb-2">
-                    <span v-if="item.tag" class="font-oxanium text-xs uppercase tracking-[0.2em] px-2 py-0.5 rounded border border-primary/30 bg-primary/10 text-primary group-hover:border-primary group-hover:text-white transition-colors">
+                    <span v-if="item.tag" class="font-oxanium text-xs uppercase tracking-[0.2em] px-2 py-0.5 rounded border border-primary/30 bg-primary/10 text-primary group-hover:border-base-content group-hover:text-base-content transition-colors">
                         {{ item.tag }}
                     </span>
                     <span class="text-[9px] font-mono text-primary/30 group-hover:text-primary/60 transition-colors">0{{ index + 1 }}</span>
@@ -433,7 +409,7 @@ onUnmounted(() => {
                 <!-- Status Indicator -->
                 <div class="mt-4 flex items-center gap-2 opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
                     <div class="w-2 h-2 rounded-field bg-primary animate-ping"></div>
-                    <span class="text-[10px] font-oxanium text-base-content/80 group-hover:text-primary tracking-widest uppercase">Acesse Agora</span>
+                    <span class="text-[10px] font-oxanium text-primary tracking-widest uppercase">Acesse Agora</span>
                 </div>
             </div>
         </a>
@@ -455,7 +431,7 @@ onUnmounted(() => {
           </a>
         </div>
         
-        <div class="text-center font-mono text-[9px] text-primary/30 uppercase tracking-[0.2em] hover:text-primary/60 transition-colors">
+        <div class="text-center font-mono text-[9px] text-base-content/80 uppercase tracking-[0.2em] hover:text-base-content transition-colors">
           <p class="mb-1">© {{ new Date().getFullYear() }} Apptime Serviços de Internet Ltda.</p>
           <p class="mb-1">Todos os direitos reservados.</p>
         </div>
@@ -468,23 +444,11 @@ onUnmounted(() => {
 .font-oxanium { font-family: 'Oxanium', sans-serif; }
 
 .bg-scanlines {
-    background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0),
-        rgba(255, 255, 255, 0) 50%,
-        rgba(255, 127, 0, 0.1) 50%,
-        rgba(255, 127, 0, 0.1)
-    );
-    background-size: 100% 4px;
+    background: none;
 }
 
 .bg-cockpit-vignette {
-    background: radial-gradient(
-        circle at center,
-        transparent 40%,
-        rgba(10, 5, 25, 0.4) 70%,
-        rgba(5, 2, 12, 0.98) 100%
-    );
+    background: none;
 }
 
 .bg-grid-pattern {
@@ -495,8 +459,8 @@ onUnmounted(() => {
 }
 
 .holo-card {
-    background: rgba(20, 10, 30, 0.4);
-    backdrop-filter: blur(12px) saturate(180%);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(16px) saturate(180%);
     clip-path: polygon(
         15px 0, 
         100% 0, 
@@ -505,8 +469,8 @@ onUnmounted(() => {
         0 100%, 
         0 15px
     );
-    border: 1px solid rgba(249, 115, 22, 0.08);
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
 }
 
 .holo-card::before {
@@ -518,10 +482,11 @@ onUnmounted(() => {
 }
 
 .holo-card:hover {
-    background: rgba(30, 15, 45, 0.6);
+    background: rgba(10, 10, 10, 0.8);
     box-shadow: 
-        0 0 30px rgba(249, 115, 22, 0.1),
-        inset 0 0 15px rgba(249, 115, 22, 0.05);
+        0 0 30px rgba(249, 115, 22, 0.15),
+        inset 0 0 15px rgba(255, 255, 255, 0.02);
+    border-color: rgba(249, 115, 22, 0.3);
 }
 
 @media (max-width: 768px) {

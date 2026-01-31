@@ -5,9 +5,6 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'static',
   },
-  future: {
-    compatibilityVersion: 4,
-  },
   css: ['~/assets/css/main.css'],
   modules: [
     '@nuxtjs/tailwindcss',
@@ -23,7 +20,6 @@ export default defineNuxtConfig({
         { property: 'og:title', content: 'Apptime | Sites e IA para quem quer resultado' },
         { property: 'og:description', content: 'Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.' },
         { property: 'og:type', content: 'website' },
-        { property: 'og:url', content: 'https://appti.me' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'Apptime | Sites e IA para quem quer resultado' },
         { name: 'twitter:description', content: 'Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.' },

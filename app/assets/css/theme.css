@@ -6,11 +6,11 @@
   prefersdark: false;
   color-scheme: dark;
 
-  /* Dark Blue-Tinted Background Hierarchy */
-  --color-base-100: #050a18; /* Very dark with blue undertone */
-  --color-base-200: #0a1224; /* Dark card background, slightly bluer */
-  --color-base-300: #1a2a45; /* Tertiary layer with strong blue tone */
-  --color-base-content: #e2e8f0; /* Soft light-blue text color */
+  /* True Black Space Background Hierarchy */
+  --color-base-100: #000000; /* Pure black */
+  --color-base-200: #050505; /* Extremely dark gray for cards */
+  --color-base-300: #0a0a0a; /* Slightly lighter for depth */
+  --color-base-content: #f8fafc; /* Clean white-gray text */
 
   /* Brand colors (unchanged) */
   --color-primary: #ff7f00;
