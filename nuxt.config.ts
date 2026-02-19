@@ -1,96 +1,86 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: "2024-11-01",
+  compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
   nitro: {
-    preset: "static",
+    preset: 'static',
   },
-  css: ["~/assets/css/main.css"],
-  modules: ["@nuxtjs/tailwindcss"],
+  css: ['~/assets/css/main.css'],
+  modules: ['@nuxtjs/tailwindcss'],
   app: {
     head: {
-      title: "Apptime | Sites e IA para quem quer resultado",
+      htmlAttrs: {
+        lang: 'pt-BR',
+        'data-theme': 'apptime',
+      },
+      title: 'Apptime | Sites e IA para quem quer resultado',
       meta: [
-        { charset: "UTF-8" },
-        { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+        { charset: 'UTF-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
         {
-          name: "description",
+          name: 'description',
           content:
-            "Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.",
+            'Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.',
         },
         {
-          name: "keywords",
+          name: 'keywords',
           content:
-            "Apptime, Academy, AI, Agency, Tecnologia, SaaS, Mentoria, Desenvolvimento, IA",
+            'Apptime, Academy, AI, Agency, Tecnologia, SaaS, Mentoria, Desenvolvimento, IA',
         },
         {
-          property: "og:title",
-          content: "Apptime | Sites e IA para quem quer resultado",
+          property: 'og:title',
+          content: 'Apptime | Sites e IA para quem quer resultado',
         },
         {
-          property: "og:description",
+          property: 'og:description',
           content:
-            "Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.",
+            'Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.',
         },
-        { property: "og:type", content: "website" },
-        { name: "twitter:card", content: "summary_large_image" },
+        { property: 'og:type', content: 'website' },
+        { name: 'twitter:card', content: 'summary_large_image' },
         {
-          name: "twitter:title",
-          content: "Apptime | Sites e IA para quem quer resultado",
+          name: 'twitter:title',
+          content: 'Apptime | Sites e IA para quem quer resultado',
         },
         {
-          name: "twitter:description",
+          name: 'twitter:description',
           content:
-            "Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.",
+            'Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.',
         },
       ],
       link: [
-        { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
-        { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         {
-          rel: "preconnect",
-          href: "https://fonts.gstatic.com",
-          crossorigin: "",
+          rel: 'preconnect',
+          href: 'https://fonts.gstatic.com',
+          crossorigin: '',
         },
         {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;900&family=Oxanium:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap",
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;900&family=Oxanium:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap',
         },
         {
-          rel: "stylesheet",
-          href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css",
+          rel: 'stylesheet',
+          href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
         },
       ],
       script: [
         {
-          innerHTML: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KM7HQX8N');`,
-          type: "text/javascript",
-        },
-        {
-          src: "https://cdn.apptime.app/apptime.js",
-        },
-        {
-          src: "https://www.googletagmanager.com/gtag/js?id=G-SW0RL74KBX",
+          src: 'https://cdn.apptime.app/apptime.js',
           async: true,
         },
         {
           innerHTML: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag('js', new Date());
-            gtag('config', 'G-SW0RL74KBX');
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-KM7HQX8N');
           `,
-          type: "text/javascript",
+          type: 'text/javascript',
         },
       ],
-      htmlAttrs: {
-        lang: "pt-BR",
-        "data-theme": "apptime",
-      },
       noscript: [
         {
           innerHTML: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KM7HQX8N" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
