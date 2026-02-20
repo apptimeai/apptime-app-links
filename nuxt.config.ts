@@ -37,6 +37,7 @@ export default defineNuxtConfig({
             'Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.',
         },
         { property: 'og:type', content: 'website' },
+        { property: 'og:image', content: '/og-image.webp' },
         { name: 'twitter:card', content: 'summary_large_image' },
         {
           name: 'twitter:title',
@@ -47,6 +48,7 @@ export default defineNuxtConfig({
           content:
             'Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.',
         },
+        { name: 'twitter:image', content: '/og-image.webp' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
