@@ -4,6 +4,6 @@ app:
   buildType: 'static'
   deployPath: '.output/public'
   deployEntry: '.output/public/index.html'
-  title: 'Apptime | Sites e IA para quem quer resultado'
-  description: 'Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.'
+  title: 'Apptime | Crie e hospede sites com IA + Experts'
+  description: 'Simples como pedir uma pizza 🍕 Profissional com resultados reais 🚀'
   keywords: 'apptime, academy, ai, agency, tecnologia, saas, mentoria, desenvolvimento, ia'

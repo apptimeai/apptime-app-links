@@ -79,7 +79,7 @@ const socialLinks = ref([
         class="absolute top-[20%] -right-[20%] w-[60%] h-[60%] rounded-full bg-blue-600/10 blur-[120px] mix-blend-screen animate-blob animation-delay-2000"
       ></div>
       <div
-        class="absolute -bottom-[40%] left-[10%] w-[80%] h-[80%] rounded-full bg-orange-600/10 blur-[120px] mix-blend-screen animate-blob animation-delay-4000"
+        class="absolute -bottom-[40%] left-[10%] w-[80%] h-[80%] rounded-full bg-purple-600/10 blur-[120px] mix-blend-screen animate-blob animation-delay-4000"
       ></div>
       <div class="absolute inset-0 opacity-20 mix-blend-overlay"></div>
     </div>
@@ -92,56 +92,52 @@ const socialLinks = ref([
         <a
           href="https://apptime.ai?utm_source=apptime-links"
           target="_blank"
-          class="group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 hover:border-white/20 shadow-lg"
+          class="group flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-1 mt-4"
         >
-          <span class="relative flex h-2 w-2">
+          <div class="flex flex-row justify-center items-center gap-2">
             <span
-              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-500 opacity-75"
-            ></span>
-            <span
-              class="relative inline-flex rounded-full h-2 w-2 bg-orange-500"
-            ></span>
-          </span>
-          <span
-            class="text-xs font-medium text-neutral-400 group-hover:text-neutral-200 transition-colors"
-          >
-            Feito na
-            <strong
-              class="text-white font-semibold group-hover:text-orange-400 transition-colors"
-              >Apptime AI</strong
+              class="text-xs md:text-sm font-mono font-semibold tracking-[0.3em] text-pink-500 uppercase group-hover:text-pink-400 transition-colors"
             >
-          </span>
-        </a>
-
-        <!-- Logo Container with glow -->
-        <a
-          class="relative group"
-          href="https://apptime.ai?utm_source=apptime-links"
-          target="_blank"
-        >
-          <div
-            class="absolute -inset-1 bg-gradient-to-r from-pink-600 via-orange-600 to-blue-600 rounded-3xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-tilt"
-          ></div>
-          <div
-            class="relative h-20 md:h-24 bg-base-100/80 backdrop-blur-xl rounded-3xl flex items-center justify-center p-4 border border-white/10 shadow-2xl transition-transform duration-500 group-hover:scale-105"
-          >
-            <Logo size="2xl" />
+              Feito na Apptime AI
+            </span>
+            <Logo
+              size="sm"
+              :icon-only="true"
+              icon-fill="currentColor"
+              class="text-pink-500 group-hover:text-pink-400 transition-colors"
+              :animate-on-group-hover="true"
+            />
           </div>
+          <div
+            class="w-full h-[2px] bg-gradient-to-r from-transparent via-pink-500/40 to-transparent mt-1 group-hover:via-pink-400/80 transition-colors"
+          ></div>
         </a>
-
-        <div class="space-y-3 px-2 max-w-2xl mx-auto">
+        <div
+          class="space-y-4 px-2 max-w-2xl mx-auto flex flex-col items-center"
+        >
           <h1
-            class="text-3xl md:text-4xl font-semibold tracking-tight text-white drop-shadow-sm leading-tight"
+            class="text-3xl md:text-5xl font-extrabold italic tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white/70 via-white/80 to-white/70 drop-shadow-[0_0_15px_rgba(245,158,11,0.4)] uppercase transform -skew-x-2 leading-[1.1]"
           >
             {{ profile.title }}
           </h1>
-          <div class="flex flex-col gap-1">
+
+          <div class="flex items-center justify-center py-2 md:py-4 w-full">
+            <div
+              class="w-full h-[2px] bg-gradient-to-r from-transparent to-blue-500/40"
+            ></div>
+            <div
+              class="w-full h-[2px] bg-gradient-to-l from-transparent to-blue-500/40"
+            ></div>
+          </div>
+
+          <div class="flex flex-col gap-2">
             <p
               v-for="(line, index) in profile.subtitle"
               :key="index"
-              class="text-xl md:text-2xl text-neutral-400 font-medium italic leading-relaxed"
+              class="text-lg md:text-xl text-neutral-400 font-medium italic leading-relaxed flex items-center justify-center gap-3"
             >
-              {{ line }}
+              <span class="text-blue-500 font-bold">></span>
+              <span>{{ line }}</span>
             </p>
           </div>
         </div>
