@@ -5,5 +5,5 @@ app:
   deployPath: '.output/public'
   deployEntry: '.output/public/index.html'
   title: 'Apptime | Crie e hospede sites com IA + Experts'
-  description: 'Simples como pedir uma pizza 🍕 Profissional com resultados reais 🚀'
+  description: 'Crie e publique seu site profissional rapidamente com IA, como se fosse uma conversa no WhatsApp.'
   keywords: 'apptime, academy, ai, agency, tecnologia, saas, mentoria, desenvolvimento, ia'

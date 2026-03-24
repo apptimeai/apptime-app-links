@@ -3,6 +3,7 @@ const profile = ref({
   title: 'Crie e hospede sites com IA + Experts',
   subtitle: [
     'Simples como pedir uma pizza 🍕',
+    'Como conversar no WhatsApp 💬',
     'Profissional com resultados reais 🚀',
   ],
 });
@@ -12,7 +13,7 @@ const mainLinks = ref([
     id: 'academy',
     title: 'Seu site com IA em minutos',
     description:
-      'Crie e publique seu site profissional rapidamente com IA, sem complicações.',
+      'Crie e publique seu site profissional rapidamente com IA, como se fosse uma conversa no WhatsApp.',
     url: 'https://apptime.com.br?utm_source=apptime-links',
     tag: 'Comece por aqui',
     cta: 'Quero criar agora',
@@ -26,10 +27,10 @@ const mainLinks = ref([
     id: 'agency',
     title: 'Experts criam seu projeto',
     description:
-      'Transformamos suas ideias em sites e automações que funcionam de verdade.',
+      'Transformamos suas ideias em sites e automações que funcionam de verdade para o seu negócio.',
     url: 'https://apptime.dev?utm_source=apptime-links',
     tag: 'Agência para resultados',
-    cta: 'Quero resultados',
+    cta: 'Quero mais resultados',
     themeColorRgb: '59, 130, 246',
     textClass: 'group-hover:text-blue-400',
     tagClass:
@@ -134,7 +135,7 @@ const socialLinks = ref([
             <p
               v-for="(line, index) in profile.subtitle"
               :key="index"
-              class="text-lg md:text-xl text-neutral-300 font-medium italic leading-relaxed flex items-center justify-center gap-3"
+              class="text-lg md:text-xl text-neutral-300 font-medium italic leading-relaxed text-left flex items-start justify-start gap-3"
             >
               <span class="text-blue-500 font-bold">></span>
               <span>{{ line }}</span>
@@ -188,7 +189,7 @@ const socialLinks = ref([
               <span
                 v-if="item.tag"
                 :class="[
-                  'text-xs md:text-sm font-semibold px-3 py-1 rounded-full border backdrop-blur-sm transition-all duration-300 shadow-lg',
+                  'text-sm md:text-base font-semibold px-3 py-1 rounded-full border backdrop-blur-sm transition-all duration-300 shadow-lg',
                   item.tagClass,
                 ]"
               >
@@ -207,7 +208,7 @@ const socialLinks = ref([
             </h2>
 
             <p
-              class="text-sm md:text-base text-neutral-400 group-hover:text-neutral-300 transition-colors leading-relaxed"
+              class="text-sm md:text-base text-neutral-300 group-hover:text-neutral-100 transition-colors leading-relaxed tracking-wide font-medium"
             >
               {{ item.description }}
             </p>
@@ -221,7 +222,7 @@ const socialLinks = ref([
                 style="background-color: rgb(var(--theme-color-rgb))"
               ></div>
               <span
-                class="text-sm md:text-base font-bold transition-colors"
+                class="text-base md:text-lg font-bold transition-colors"
                 :class="item.ctaClass"
                 >{{ item.cta }}</span
               >

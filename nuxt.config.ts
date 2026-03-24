@@ -20,7 +20,7 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content:
-            'Simples como pedir uma pizza 🍕 Profissional com resultados reais 🚀',
+            'Crie e publique seu site profissional rapidamente com IA, como se fosse uma conversa no WhatsApp.',
         },
         {
           name: 'keywords',
@@ -34,7 +34,7 @@ export default defineNuxtConfig({
         {
           property: 'og:description',
           content:
-            'Simples como pedir uma pizza 🍕 Profissional com resultados reais 🚀',
+            'Crie e publique seu site profissional rapidamente com IA, como se fosse uma conversa no WhatsApp.',
         },
         { property: 'og:type', content: 'website' },
         { property: 'og:image', content: '/og-image.webp' },
@@ -46,7 +46,7 @@ export default defineNuxtConfig({
         {
           name: 'twitter:description',
           content:
-            'Simples como pedir uma pizza 🍕 Profissional com resultados reais 🚀',
+            'Crie e publique seu site profissional rapidamente com IA, como se fosse uma conversa no WhatsApp.',
         },
         { name: 'twitter:image', content: '/og-image.webp' },
       ],
