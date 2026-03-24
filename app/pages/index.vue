@@ -94,14 +94,14 @@ const socialLinks = ref([
           target="_blank"
           class="group flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-1 mt-4"
         >
-          <div class="flex flex-row justify-center items-center gap-2">
+          <div class="flex flex-row justify-center items-center gap-3">
             <span
-              class="text-xs md:text-sm font-mono font-semibold tracking-[0.3em] text-pink-500 uppercase group-hover:text-pink-400 transition-colors"
+              class="text-base md:text-lg font-black tracking-[0.2em] text-pink-500 uppercase group-hover:text-pink-400 transition-colors"
             >
               Feito na Apptime AI
             </span>
             <Logo
-              size="sm"
+              size="md"
               :icon-only="true"
               icon-fill="currentColor"
               class="text-pink-500 group-hover:text-pink-400 transition-colors"
@@ -116,7 +116,7 @@ const socialLinks = ref([
           class="space-y-4 px-2 max-w-2xl mx-auto flex flex-col items-center"
         >
           <h1
-            class="text-3xl md:text-5xl font-extrabold italic tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white/70 via-white/80 to-white/70 drop-shadow-[0_0_15px_rgba(245,158,11,0.4)] uppercase transform -skew-x-2 leading-[1.1]"
+            class="text-3xl md:text-5xl font-extrabold italic tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white/80 via-white/90 to-white/80 drop-shadow-[0_0_15px_rgba(245,158,11,0.4)] uppercase transform -skew-x-2 leading-[1.1]"
           >
             {{ profile.title }}
           </h1>
@@ -134,7 +134,7 @@ const socialLinks = ref([
             <p
               v-for="(line, index) in profile.subtitle"
               :key="index"
-              class="text-lg md:text-xl text-neutral-400 font-medium italic leading-relaxed flex items-center justify-center gap-3"
+              class="text-lg md:text-xl text-neutral-300 font-medium italic leading-relaxed flex items-center justify-center gap-3"
             >
               <span class="text-blue-500 font-bold">></span>
               <span>{{ line }}</span>
