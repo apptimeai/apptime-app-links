@@ -1,4 +1,21 @@
 <script setup lang="ts">
+const appImages = ref([
+  '/images/apps/akira_appti_me.webp',
+  '/images/apps/beijo-doce-confeitari-zy1mhxba_appti_me.webp',
+  '/images/apps/cardapio-ehfjjv_appti_me.webp',
+  '/images/apps/cardapio-restaurante-italiano-tp2n40zg_appti_me.webp',
+  '/images/apps/cathedra_appti_me.webp',
+  '/images/apps/cns_com_br.webp',
+  '/images/apps/jogo-luta-3d-mobile-combate-personalizaca-a0qzw7ta_appti_me.webp',
+  '/images/apps/loupeloupe_com.webp',
+  '/images/apps/mapa-interativo-moder-dduv9pth_appti_me.webp',
+  '/images/apps/mimi-se_appti_me.webp',
+  '/images/apps/observatorio-migracao-religiao_appti_me.webp',
+  '/images/apps/quiz-emagrecimento-cartoon-dqmcchko_appti_me.webp',
+  '/images/apps/souzalimaodontologia_com.webp',
+  '/images/apps/teste-mbti-lb63ify0_appti_me.webp',
+]);
+
 const profile = ref({
   title: 'Crie e hospede sites com IA + Experts',
   subtitle: [
@@ -140,6 +157,47 @@ const socialLinks = ref([
               <span class="text-blue-500 font-bold">></span>
               <span>{{ line }}</span>
             </p>
+          </div>
+        </div>
+        <!-- App Images Carousel -->
+        <div
+          class="w-full overflow-hidden flex flex-col max-w-2xl gap-4 animate-fade-in"
+          style="animation-delay: 300ms"
+        >
+          <div
+            class="relative flex overflow-hidden group [mask-image:_linear-gradient(to_right,transparent_0,_black_64px,_black_calc(100%-64px),transparent_100%)] md:[mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]"
+          >
+            <div
+              class="flex animate-marquee gap-1 pr-1 md:gap-2 md:pr-2 whitespace-nowrap min-w-max"
+            >
+              <div
+                v-for="(img, idx) in appImages"
+                :key="`a-${idx}`"
+                class="relative w-[50px] md:w-[75px] aspect-[9/16] rounded-md overflow-hidden shrink-0 border border-2 border-white/20 shadow-xl bg-black/50"
+              >
+                <img
+                  :src="img"
+                  class="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-110"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div
+              class="flex animate-marquee gap-1 pr-1 md:gap-2 md:pr-2 whitespace-nowrap min-w-max"
+              aria-hidden="true"
+            >
+              <div
+                v-for="(img, idx) in appImages"
+                :key="`b-${idx}`"
+                class="relative w-[50px] md:w-[75px] aspect-[9/16] rounded-md overflow-hidden shrink-0 border border-2 border-white/20 shadow-xl bg-black/50"
+              >
+                <img
+                  :src="img"
+                  class="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-110"
+                  loading="lazy"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -372,5 +430,22 @@ const socialLinks = ref([
 
 .perspective-1000 {
   perspective: 1000px;
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+.group:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 </style>
