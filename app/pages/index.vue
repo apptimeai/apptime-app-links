@@ -1,7 +1,10 @@
 <script setup lang="ts">
 const profile = ref({
   title: 'Crie e hospede sites com IA + Experts',
-  subtitle: 'Simples como pedir uma pizza. Profissional com resultados reais.',
+  subtitle: [
+    'Simples como pedir uma pizza 🍕',
+    'Profissional com resultados reais 🚀',
+  ],
 });
 
 const mainLinks = ref([
@@ -12,7 +15,7 @@ const mainLinks = ref([
       'Crie e publique seu site profissional rapidamente com IA, sem complicações.',
     url: 'https://apptime.com.br?utm_source=apptime-links',
     tag: 'Comece por aqui',
-    cta: 'Quero sair do zero',
+    cta: 'Quero criar agora',
     themeColorRgb: '236, 72, 153',
     textClass: 'group-hover:text-pink-400',
     tagClass:
@@ -104,15 +107,19 @@ const socialLinks = ref([
 
         <div class="space-y-3 px-2 max-w-2xl mx-auto">
           <h1
-            class="text-3xl md:text-4xl font-bold tracking-tight text-white drop-shadow-sm leading-tight"
+            class="text-3xl md:text-4xl font-semibold tracking-tight text-white drop-shadow-sm leading-tight"
           >
             {{ profile.title }}
           </h1>
-          <p
-            class="text-xl md:text-2xl text-neutral-400 font-medium leading-relaxed"
-          >
-            {{ profile.subtitle }}
-          </p>
+          <div class="flex flex-col gap-1">
+            <p
+              v-for="(line, index) in profile.subtitle"
+              :key="index"
+              class="text-xl md:text-2xl text-neutral-400 font-medium italic leading-relaxed"
+            >
+              {{ line }}
+            </p>
+          </div>
         </div>
       </header>
 
