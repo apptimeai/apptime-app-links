@@ -13,14 +13,14 @@ export default defineNuxtConfig({
         lang: 'pt-BR',
         'data-theme': 'apptime',
       },
-      title: 'Apptime | Sites e IA para quem quer resultado',
+      title: 'Apptime | Crie e hospede sites com IA + Experts',
       meta: [
         { charset: 'UTF-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
         {
           name: 'description',
           content:
-            'Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.',
+            'Simples como pedir uma pizza 🍕 Profissional com resultados reais 🚀',
         },
         {
           name: 'keywords',
@@ -29,24 +29,24 @@ export default defineNuxtConfig({
         },
         {
           property: 'og:title',
-          content: 'Apptime | Sites e IA para quem quer resultado',
+          content: 'Apptime | Crie e hospede sites com IA + Experts',
         },
         {
           property: 'og:description',
           content:
-            'Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.',
+            'Simples como pedir uma pizza 🍕 Profissional com resultados reais 🚀',
         },
         { property: 'og:type', content: 'website' },
         { property: 'og:image', content: '/og-image.webp' },
         { name: 'twitter:card', content: 'summary_large_image' },
         {
           name: 'twitter:title',
-          content: 'Apptime | Sites e IA para quem quer resultado',
+          content: 'Apptime | Crie e hospede sites com IA + Experts',
         },
         {
           name: 'twitter:description',
           content:
-            'Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.',
+            'Simples como pedir uma pizza 🍕 Profissional com resultados reais 🚀',
         },
         { name: 'twitter:image', content: '/og-image.webp' },
       ],
