@@ -19,8 +19,7 @@ const appImages = ref([
 const profile = ref({
   title: 'Crie e hospede sites com IA + Experts',
   subtitle: [
-    'Simples como pedir uma pizza 🍕',
-    'Como conversar no WhatsApp 💬',
+    'Como uma conversa no WhatsApp 💬',
     'Profissional com resultados reais 🚀',
   ],
 });
