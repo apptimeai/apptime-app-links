@@ -1,30 +1,23 @@
 <script setup lang="ts">
-const canvasRef = ref<HTMLCanvasElement | null>(null);
-
 const profile = ref({
-  catchphrase: 'Sites e IA para quem quer Resultado',
-  description:
-    'Tudo em um só lugar para aprender e criar com IA + Experts. Mais rápido e com foco em resultado.',
+  title: 'Crie e hospede sites com IA + Experts',
+  subtitle: 'Simples como pedir uma pizza. Profissional com resultados reais.',
 });
 
 const mainLinks = ref([
   {
     id: 'academy',
-    title: 'Como criar e validar seu site',
+    title: 'Seu site com IA em minutos',
     description:
-      'Aprenda o que importa para criar, lançar e validar seu site, sem perder tempo.',
+      'Crie e publique seu site profissional rapidamente com IA, sem complicações.',
     url: 'https://apptime.com.br?utm_source=apptime-links',
     tag: 'Comece por aqui',
     cta: 'Quero sair do zero',
-  },
-  {
-    id: 'platform',
-    title: 'Crie seu site com IA',
-    description:
-      'Crie e hospede seu site rapidamente com IA, sem complicações.',
-    url: 'https://apptime.ai?utm_source=apptime-links',
-    tag: 'Este site foi feito aqui',
-    cta: 'Quero criar',
+    themeColorRgb: '236, 72, 153',
+    textClass: 'group-hover:text-pink-400',
+    tagClass:
+      'border-pink-500/30 bg-pink-500/10 text-pink-400 group-hover:text-pink-300 group-hover:border-pink-400',
+    ctaClass: 'text-pink-400',
   },
   {
     id: 'agency',
@@ -34,6 +27,11 @@ const mainLinks = ref([
     url: 'https://apptime.dev?utm_source=apptime-links',
     tag: 'Agência para resultados',
     cta: 'Quero resultados',
+    themeColorRgb: '59, 130, 246',
+    textClass: 'group-hover:text-blue-400',
+    tagClass:
+      'border-blue-500/30 bg-blue-500/10 text-blue-400 group-hover:text-blue-300 group-hover:border-blue-400',
+    ctaClass: 'text-blue-400',
   },
 ]);
 
@@ -63,530 +61,141 @@ const socialLinks = ref([
     iconClass: 'fa-brands fa-github',
   },
 ]);
-
-// HUD State
-const mousePos = ref({ x: 0, y: 0 });
-const systemTime = ref('');
-const altitude = ref(45000);
-const velocity = ref(28400);
-const isMobile = ref(false);
-
-const updateMobileStatus = () => {
-  isMobile.value = window.innerWidth < 768;
-};
-
-// Starfield Animation Logic
-let animationId: number;
-let width = 0;
-let height = 0;
-const getStarCount = () => (window.innerWidth < 768 ? 2500 : 8000);
-const stars: {
-  x: number;
-  y: number;
-  z: number;
-  speed: number;
-  color: string;
-  size: number;
-  o: number;
-}[] = [];
-const nebulas: {
-  x: number;
-  y: number;
-  radius: number;
-  color: string;
-  vx: number;
-  vy: number;
-}[] = [];
-const baseSpeed = 1.5;
-let targetSpeed = baseSpeed;
-let currentSpeed = baseSpeed;
-let lastStatsUpdate = 0;
-
-const updateSystemStats = (timestamp: number) => {
-  if (timestamp - lastStatsUpdate < 200) return;
-  lastStatsUpdate = timestamp;
-
-  const now = new Date();
-  systemTime.value = now.toLocaleTimeString('pt-BR', {
-    hour12: false,
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-  });
-  altitude.value += (Math.random() - 0.5) * 10;
-  velocity.value += (Math.random() - 0.5) * 5;
-};
-
-const getStarColor = () => {
-  const r = Math.random();
-  if (r > 0.98) return '#f472b6'; // Hot Pink
-  if (r > 0.96) return '#22d3ee'; // Cyan
-  if (r > 0.94) return '#fbbf24'; // Gold
-  if (r > 0.9) return '#a855f7'; // Purple
-  if (r > 0.85) return '#fb923c'; // Orange
-  if (r > 0.8) return '#38bdf8'; // Sky Blue
-  return '#ffffff';
-};
-
-const initNebulas = () => {
-  nebulas.length = 0;
-};
-
-const resetStar = (index: number, initial = false) => {
-  const spread = width * 4;
-  let x = (Math.random() - 0.5) * spread;
-  let y = (Math.random() - 0.5) * spread;
-  const z = initial ? Math.random() * (width * 1.5) : width * 1.5;
-
-  const starData = {
-    x,
-    y,
-    z,
-    speed: 0.5 + Math.random() * 2,
-    color: getStarColor(),
-    size:
-      Math.random() > 0.98 ? 3 + Math.random() * 3 : 0.5 + Math.random() * 2, // Occasional "Superstars"
-    o: 0.5 + Math.random() * 0.5,
-  };
-
-  if (stars[index]) {
-    stars[index] = starData;
-  } else {
-    stars.push(starData);
-  }
-};
-
-const resize = () => {
-  width = window.innerWidth;
-  height = window.innerHeight;
-  const canvas = canvasRef.value;
-  if (canvas) {
-    canvas.width = width;
-    canvas.height = height;
-  }
-
-  stars.length = 0;
-  const count = getStarCount();
-  for (let i = 0; i < count; i++) {
-    resetStar(i, true);
-  }
-  initNebulas();
-};
-
-const handleMouseMove = (e: MouseEvent) => {
-  mousePos.value = { x: e.clientX, y: e.clientY };
-};
-
-const handleMouseDown = () => {
-  targetSpeed = baseSpeed * 5;
-};
-
-const handleMouseUp = () => {
-  targetSpeed = baseSpeed;
-};
-
-const draw = (timestamp: number) => {
-  const canvas = canvasRef.value;
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-
-  // Fade effect for trails
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-  ctx.fillRect(0, 0, width, height);
-
-  // Speed interpolation
-  currentSpeed += (targetSpeed - currentSpeed) * 0.05;
-
-  // Draw Nebulas (Removed)
-  // nebulas.forEach(nebula => { ... });
-
-  const cx = width / 2;
-  const cy = height / 2;
-
-  // Parallax mouse effect
-  const mx = (mousePos.value.x - cx) / 10;
-  const my = (mousePos.value.y - cy) / 10;
-
-  for (let i = 0; i < stars.length; i++) {
-    const star = stars[i];
-    if (!star) continue;
-
-    star.z -= star.speed * (currentSpeed / 2);
-
-    if (star.z <= 0) {
-      resetStar(i);
-      continue;
-    }
-
-    // Project 3D to 2D with parallax
-    const px =
-      (star.x / star.z) * width + cx - mx * (1 - star.z / (width * 1.5));
-    const py =
-      (star.y / star.z) * height + cy - my * (1 - star.z / (width * 1.5));
-
-    if (px < -100 || px > width + 100 || py < -100 || py > height + 100) {
-      continue;
-    }
-
-    const maxZ = width * 1.5;
-    const normZ = Math.max(0, 1 - star.z / maxZ);
-    const twinkle = 0.8 + Math.sin(timestamp * 0.005 + i) * 0.2; // Add subtle twinkle
-    const opacity = normZ * star.o * twinkle;
-    const r = Math.max(0.1, normZ * star.size);
-
-    // Match colors for RGB logic
-    const rgb =
-      star.color === '#f472b6'
-        ? '244, 114, 182'
-        : star.color === '#22d3ee'
-          ? '34, 211, 238'
-          : star.color === '#fbbf24'
-            ? '251, 191, 36'
-            : star.color === '#a855f7'
-              ? '168, 85, 247'
-              : star.color === '#fb923c'
-                ? '251, 146, 60'
-                : star.color === '#38bdf8'
-                  ? '56, 189, 248'
-                  : '255, 255, 255';
-
-    // Outer Glow for larger stars
-    if (r > 1.5) {
-      ctx.fillStyle = `rgba(${rgb}, ${opacity * 0.3})`;
-      ctx.fillRect(px - r * 2, py - r * 2, r * 4, r * 4);
-    }
-
-    ctx.fillStyle = `rgba(${rgb}, ${opacity})`;
-    ctx.fillRect(px - r, py - r, r * 2, r * 2);
-
-    // Star streaks when fast or close
-    if (star.z < width * 0.2) {
-      ctx.beginPath();
-      ctx.strokeStyle = `rgba(${rgb}, ${opacity * 0.2})`;
-      ctx.lineWidth = Math.max(0.5, r / 2);
-      const streakLen = 1 + currentSpeed * 1.5;
-      ctx.moveTo(px, py);
-      const zOff = star.z + star.speed * streakLen;
-      const prevX = (star.x / zOff) * width + cx - mx * (1 - zOff / maxZ);
-      const prevY = (star.y / zOff) * height + cy - my * (1 - zOff / maxZ);
-      ctx.lineTo(prevX, prevY);
-      ctx.stroke();
-    }
-  }
-
-  updateSystemStats(timestamp);
-  animationId = requestAnimationFrame(draw);
-};
-
-onMounted(() => {
-  window.addEventListener('resize', resize);
-  window.addEventListener('resize', updateMobileStatus);
-  window.addEventListener('mousemove', handleMouseMove);
-  window.addEventListener('mousedown', handleMouseDown);
-  window.addEventListener('mouseup', handleMouseUp);
-  resize();
-  updateMobileStatus();
-  requestAnimationFrame(draw);
-});
-
-onUnmounted(() => {
-  cancelAnimationFrame(animationId);
-  window.removeEventListener('resize', resize);
-  window.removeEventListener('resize', updateMobileStatus);
-  window.removeEventListener('mousemove', handleMouseMove);
-  window.removeEventListener('mousedown', handleMouseDown);
-  window.removeEventListener('mouseup', handleMouseUp);
-});
 </script>
 
 <template>
   <div
-    class="relative min-h-screen w-full overflow-hidden bg-base-100 text-white font-sans selection:bg-primary selection:text-white"
+    class="min-h-screen w-full bg-[#050505] text-white font-sans selection:bg-white/20 selection:text-white flex flex-col justify-center items-center py-16 px-4 md:px-8 overflow-hidden relative"
   >
-    <!-- Starfield Background -->
-    <canvas
-      ref="canvasRef"
-      class="absolute inset-0 w-full h-full pointer-events-none z-0"
-    ></canvas>
-
-    <!-- CRT Scanline Effect -->
-    <div
-      class="absolute inset-0 pointer-events-none z-[1] opacity-[0.07] bg-scanlines mix-blend-overlay"
-    ></div>
-
-    <!-- Cockpit Frame & Vignette -->
-    <div
-      class="absolute inset-0 pointer-events-none z-[2] bg-cockpit-vignette opacity-80"
-    ></div>
-    <div
-      class="absolute inset-0 pointer-events-none z-[3] border-[40px] border-black/20 blur-2xl"
-    ></div>
-
-    <!-- HUD Overlay Dynamic Elements -->
-    <div
-      class="absolute inset-0 pointer-events-none z-[5] p-4 md:p-8 flex flex-col justify-between overflow-hidden font-oxanium"
-    >
-      <!-- Top HUD -->
-      <div class="flex justify-between items-start">
-        <div class="flex flex-col gap-2">
-          <div
-            class="border-t-2 border-l-2 border-primary/60 w-20 md:w-24 h-12 rounded-tl-field relative bg-primary/5 backdrop-blur-[2px]"
-          >
-            <span
-              class="absolute top-1 left-2 text-[8px] md:text-[9px] text-primary/80 tracking-tighter"
-              >HDG.312°</span
-            >
-            <span
-              class="absolute bottom-1 left-2 text-[9px] md:text-[10px] text-primary font-mono"
-              >{{ systemTime }}</span
-            >
-          </div>
-          <div class="flex gap-1">
-            <div
-              v-for="i in 5"
-              :key="i"
-              class="h-1 w-2 md:w-4 bg-primary/20 rounded-field overflow-hidden"
-            >
-              <div
-                class="h-full bg-primary animate-pulse"
-                :style="{ animationDelay: `${i * 200}ms`, width: '100%' }"
-              ></div>
-            </div>
-          </div>
-        </div>
-
-        <div
-          class="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-0.5 md:gap-1 scale-[0.8] md:scale-100 transition-all duration-300"
-        >
-          <div
-            class="h-[1px] w-32 bg-gradient-to-r from-transparent via-primary/80 to-transparent"
-          ></div>
-          <div
-            class="text-[9px] md:text-[10px] text-primary/60 tracking-[0.2em] md:tracking-[0.4em] uppercase whitespace-nowrap"
-          >
-            Feito na Apptime AI
-          </div>
-          <div
-            class="h-[1px] w-48 bg-gradient-to-r from-transparent via-primary/40 to-transparent"
-          ></div>
-        </div>
-
-        <div class="flex flex-col items-end gap-2">
-          <div
-            class="border-t-2 border-r-2 border-primary/60 w-20 md:w-24 h-12 rounded-tr-field relative bg-primary/5 backdrop-blur-[2px]"
-          >
-            <span
-              class="absolute top-1 right-2 text-[8px] md:text-[9px] text-primary/80 tracking-tighter"
-              >REACT.CORE</span
-            >
-            <span
-              class="absolute bottom-1 right-2 text-[9px] md:text-[10px] text-primary font-mono"
-              >99.2%</span
-            >
-          </div>
-          <div
-            class="text-[7px] md:text-[8px] text-secondary/60 font-mono uppercase"
-          >
-            See you space cowboy...
-          </div>
-        </div>
-      </div>
-
-      <!-- Center Aiming HUD (Subtle) -->
+    <!-- Dynamic Animated Background -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
       <div
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-primary/10 rounded-field flex items-center justify-center pointer-events-none"
-      >
-        <div class="w-full h-[1px] bg-primary/5 absolute"></div>
-        <div class="h-full w-[1px] bg-primary/5 absolute"></div>
-        <div
-          class="w-12 h-12 border-2 border-primary/20 rounded-field animate-ping"
-        ></div>
-      </div>
-
-      <!-- Bottom HUD -->
-      <div class="flex justify-between items-end">
-        <div class="flex flex-col gap-2">
-          <div
-            class="text-[8px] text-primary/40 font-mono tracking-widest uppercase"
-          >
-            Alt: {{ Math.floor(altitude) }}m
-          </div>
-          <div
-            class="border-b-2 border-l-2 border-primary/60 w-20 md:w-24 h-12 rounded-bl-field relative bg-primary/5 backdrop-blur-[2px]"
-          >
-            <span
-              class="absolute bottom-1 left-2 text-[9px] md:text-[10px] text-primary font-mono"
-              >VEL: {{ Math.floor(velocity) }}</span
-            >
-          </div>
-        </div>
-
-        <div
-          class="absolute left-1/2 -translate-x-1/2 flex flex-col items-center scale-[0.8] md:scale-100 transition-all duration-300"
-        >
-          <div
-            class="font-mono text-[8px] md:text-[9px] text-primary/60 tracking-[0.3em] md:tracking-[0.5em] mb-2 uppercase whitespace-nowrap"
-          >
-            Pronto para decolar?
-          </div>
-          <div class="flex gap-1 mb-1">
-            <div
-              v-for="i in isMobile ? 8 : 12"
-              :key="i"
-              class="w-1 h-3 rounded-field"
-              :class="i < 6 ? 'bg-primary/60' : 'bg-primary/40'"
-            ></div>
-          </div>
-          <div
-            class="hidden md:block w-64 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent"
-          ></div>
-        </div>
-
-        <div class="flex flex-col items-end gap-2">
-          <div
-            class="text-[8px] text-primary/40 font-mono tracking-widest uppercase truncate w-20 md:w-24 text-right"
-          >
-            Target_Acq
-          </div>
-          <div
-            class="border-b-2 border-r-2 border-primary/60 w-20 md:w-24 h-12 rounded-br-field relative bg-primary/5 backdrop-blur-[2px]"
-          >
-            <span
-              class="absolute bottom-1 right-2 text-[9px] md:text-[10px] text-primary font-mono"
-              >X-{{ (mousePos.x / 100).toFixed(1) }}</span
-            >
-          </div>
-        </div>
-      </div>
+        class="absolute -top-[40%] -left-[20%] w-[70%] h-[70%] rounded-full bg-pink-600/10 blur-[120px] mix-blend-screen animate-blob"
+      ></div>
+      <div
+        class="absolute top-[20%] -right-[20%] w-[60%] h-[60%] rounded-full bg-blue-600/10 blur-[120px] mix-blend-screen animate-blob animation-delay-2000"
+      ></div>
+      <div
+        class="absolute -bottom-[40%] left-[10%] w-[80%] h-[80%] rounded-full bg-orange-600/10 blur-[120px] mix-blend-screen animate-blob animation-delay-4000"
+      ></div>
+      <div class="absolute inset-0 opacity-20 mix-blend-overlay"></div>
     </div>
 
-    <!-- Dynamic Content -->
-    <div
-      class="relative z-10 max-w-2xl mx-auto px-3 md:px-6 py-30 flex flex-col items-center gap-20 h-full"
-    >
-      <!-- Profile HUD Module -->
+    <div class="relative z-10 w-full mx-auto flex flex-col gap-12">
+      <!-- Profile section -->
       <header
-        class="flex flex-col items-center text-center gap-20 animate-slide-down relative w-full"
+        class="flex flex-col items-center text-center gap-6 md:gap-8 animate-slide-down"
       >
-        <div class="relative group cursor-crosshair">
-          <!-- HUD Target Circle -->
+        <!-- Logo Container with glow -->
+        <a
+          class="relative group"
+          href="https://apptime.ai?utm_source=apptime-links"
+          target="_blank"
+        >
           <div
-            class="absolute -inset-12 border border-primary/10 rounded-field animate-spin-slow-reverse"
+            class="absolute -inset-1 bg-gradient-to-r from-pink-600 via-orange-600 to-blue-600 rounded-3xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-tilt"
           ></div>
           <div
-            class="absolute -inset-16 border border-secondary/5 rounded-field animate-spin-slow"
-          ></div>
-
-          <div
-            class="absolute -inset-1 bg-gradient-to-b from-primary/30 to-secondary/30 rounded-field blur transition duration-511 animate-pulse-slow"
-          ></div>
-          <div
-            class="relative bg-black/40 p-6 rounded-field border border-white/5 backdrop-blur-md"
+            class="relative h-20 md:h-24 bg-base-100/80 backdrop-blur-xl rounded-3xl flex items-center justify-center p-4 border border-white/10 shadow-2xl transition-transform duration-500 group-hover:scale-105"
           >
             <Logo size="2xl" />
           </div>
+        </a>
 
-          <!-- Corner brackets for logo -->
-          <div
-            class="absolute top-0 left-0 w-4 h-4 border-t border-l border-primary/40"
-          ></div>
-          <div
-            class="absolute top-0 right-0 w-4 h-4 border-t border-r border-primary/40"
-          ></div>
-          <div
-            class="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-primary/40"
-          ></div>
-          <div
-            class="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-primary/40"
-          ></div>
-        </div>
-
-        <div class="space-y-4 relative">
+        <div class="space-y-3 px-2 max-w-2xl mx-auto">
           <h1
-            class="text-4xl md:text-5xl uppercase font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_15px_rgba(249,115,22,0.4)] font-oxanium italic"
+            class="text-3xl md:text-4xl font-bold tracking-tight text-white drop-shadow-sm leading-tight"
           >
-            {{ profile.catchphrase }}
+            {{ profile.title }}
           </h1>
-          <div class="flex items-center gap-4 justify-center">
-            <div
-              class="h-[1px] w-24 bg-gradient-to-r from-transparent to-primary/50"
-            ></div>
-            <div class="w-2 h-2 bg-primary rotate-45 animate-pulse"></div>
-            <div
-              class="h-[1px] w-24 bg-gradient-to-l from-transparent to-primary/50"
-            ></div>
-          </div>
           <p
-            class="max-w-lg mx-auto text-xs uppercase md:text-sm leading-relaxed font-mono tracking-wide text-base-content"
+            class="text-xl md:text-2xl text-neutral-400 font-medium leading-relaxed"
           >
-            <span class="text-primary">></span> {{ profile.description }}
+            {{ profile.subtitle }}
           </p>
         </div>
       </header>
 
-      <!-- Links Holographic Panels -->
-      <main class="w-full flex flex-col gap-6 perspective-container px-2">
+      <!-- Main Links -->
+      <main
+        class="w-full flex flex-col gap-4 perspective-1000 max-w-xl mx-auto"
+      >
         <a
           v-for="(item, index) in mainLinks"
           :key="item.id"
           :href="item.url"
           target="_blank"
-          class="holo-card group relative flex bg-white/20 flex-col md:flex-row items-center md:items-start gap-4 p-6 overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:scale-[1.02]"
-          :style="{ animationDelay: `${index * 150}ms` }"
+          class="group relative flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 p-6 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:bg-white/10 overflow-hidden animate-slide-up"
+          :style="
+            {
+              '--theme-color-rgb': item.themeColorRgb,
+              'animation-delay': `${index * 150 + 200}ms`,
+            } as any
+          "
         >
-          <!-- Background Color -->
+          <!-- Shiny sweep effect -->
           <div
-            class="absolute top-0 left-0 w-full h-full bg-accent/10 group-hover:bg-transparent transition-all duration-300"
+            class="absolute inset-0 -translate-x-full group-hover:animate-sweep bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 pointer-events-none z-20"
           ></div>
 
-          <!-- Border Glows -->
+          <!-- Radial Glow on Hover with Specific Color -->
           <div
-            class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-secondary/40 rounded-tl-field transition-all duration-300 group-hover:w-full group-hover:h-full group-hover:border-secondary bg-secondary/20 group-hover:bg-secondary/5 opacity-60"
-          ></div>
-          <div
-            class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-secondary/40 rounded-br-field transition-all duration-300 group-hover:w-full group-hover:h-full group-hover:border-secondary bg-secondary/20 group-hover:bg-secondary/5 opacity-60"
+            class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+            style="
+              background: radial-gradient(
+                400px circle at right top,
+                rgba(var(--theme-color-rgb), 0.15),
+                transparent 60%
+              );
+            "
           ></div>
 
-          <!-- Moving Grid Background (Subtle) -->
+          <!-- Colored Border Glow -->
           <div
-            class="absolute inset-0 bg-grid-pattern opacity-70 group-hover:opacity-40 transition-opacity pointer-events-none"
+            class="absolute inset-0 border-2 rounded-2xl border-transparent group-hover:border-[rgba(var(--theme-color-rgb),0.4)] transition-colors duration-500 pointer-events-none shadow-[inset_0_0_20px_rgba(var(--theme-color-rgb),0)] group-hover:shadow-[inset_0_0_20px_rgba(var(--theme-color-rgb),0.1)]"
           ></div>
 
-          <!-- Content -->
+          <!-- Card Content -->
           <div class="flex-grow z-10 w-full text-left relative">
-            <div class="flex justify-between items-start mb-2">
+            <div class="flex justify-between items-start mb-3">
               <span
                 v-if="item.tag"
-                class="font-oxanium text-xs uppercase tracking-[0.2em] px-2 py-0.5 rounded border border-primary/30 bg-primary/10 text-primary group-hover:border-base-content group-hover:text-base-content transition-colors"
+                :class="[
+                  'text-xs md:text-sm font-semibold px-3 py-1 rounded-full border backdrop-blur-sm transition-all duration-300 shadow-lg',
+                  item.tagClass,
+                ]"
               >
                 {{ item.tag }}
               </span>
-              <span
-                class="text-[9px] font-mono text-primary/30 group-hover:text-primary/60 transition-colors"
-                >0{{ index + 1 }}</span
-              >
             </div>
 
             <h2
-              class="font-oxanium font-bold italic text-xl md:text-2xl text-white group-hover:text-primary transition-colors tracking-tight mb-2"
+              class="font-bold text-xl md:text-2xl text-neutral-100 transition-colors tracking-tight mb-2 group-hover:drop-shadow-[0_0_8px_rgba(var(--theme-color-rgb),0.5)]"
+              :class="item.textClass"
             >
               {{ item.title }}
+              <i
+                class="fa-solid fa-arrow-right inline-block ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+              ></i>
             </h2>
 
             <p
-              class="text-sm md:text-base text-base-content/80 font-mono leading-relaxed group-hover:text-base-content transition-colors"
+              class="text-sm md:text-base text-neutral-400 group-hover:text-neutral-300 transition-colors leading-relaxed"
             >
               {{ item.description }}
             </p>
 
-            <!-- Status Indicator -->
+            <!-- Interactive Colored CTA -->
             <div
-              class="mt-4 flex items-center gap-2 opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0"
+              class="mt-4 flex items-center gap-2.5 opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0"
             >
-              <div class="w-2 h-2 rounded-field bg-primary animate-ping"></div>
+              <div
+                class="w-2 h-2 rounded-full shadow-[0_0_12px_rgba(var(--theme-color-rgb),1)] animate-pulse"
+                style="background-color: rgb(var(--theme-color-rgb))"
+              ></div>
               <span
-                class="text-[10px] font-oxanium text-primary tracking-widest uppercase"
+                class="text-sm md:text-base font-bold transition-colors"
+                :class="item.ctaClass"
                 >{{ item.cta }}</span
               >
             </div>
@@ -594,36 +203,35 @@ onUnmounted(() => {
         </a>
       </main>
 
-      <!-- Socials -->
-      <footer class="flex flex-col items-center gap-6 w-full mt-2">
-        <div
-          class="flex gap-4 items-center justify-center p-4 rounded-box bg-black/40 border border-white/5 backdrop-blur-sm"
-        >
+      <!-- Social Footer -->
+      <footer
+        class="flex flex-col items-center gap-8 w-full animate-fade-in"
+        style="animation-delay: 800ms"
+      >
+        <div class="flex gap-4 md:gap-6 items-center justify-center">
           <a
             v-for="social in socialLinks"
             :key="social.id"
             :href="social.url"
             target="_blank"
-            class="group relative p-2 transition-all duration-300 hover:scale-110"
+            class="group relative w-12 h-12 flex items-center justify-center transition-all duration-300 hover:-translate-y-1"
             :title="social.name"
           >
             <div
-              class="absolute inset-0 bg-primary/20 rounded-field blur opacity-0 group-hover:opacity-100 transition-opacity"
+              class="absolute inset-0 bg-white/5 backdrop-blur-md border border-white/10 rounded-full scale-100 group-hover:scale-110 group-hover:bg-white/10 transition-all duration-300 shadow-lg group-hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
             ></div>
             <i
               :class="social.iconClass"
-              class="relative text-2xl text-primary/80 group-hover:text-primary transition-colors"
+              class="relative text-xl text-neutral-400 group-hover:text-white transition-colors duration-300"
             ></i>
           </a>
         </div>
 
-        <div
-          class="text-center font-mono text-[9px] text-base-content/80 uppercase tracking-[0.2em] hover:text-base-content transition-colors"
-        >
-          <p class="mb-1">
+        <div class="text-center text-xs text-neutral-500 space-y-1">
+          <p>
             © {{ new Date().getFullYear() }} Apptime Serviços de Internet Ltda.
           </p>
-          <p class="mb-1">Todos os direitos reservados.</p>
+          <p>Todos os direitos reservados.</p>
         </div>
       </footer>
     </div>
@@ -631,124 +239,38 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.font-oxanium {
-  font-family: 'Oxanium', sans-serif;
-}
-
-.bg-scanlines {
-  background: none;
-}
-
-.bg-cockpit-vignette {
-  background: none;
-}
-
-.bg-grid-pattern {
-  background-image:
-    linear-gradient(rgba(249, 115, 22, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(249, 115, 22, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-.holo-card {
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(16px) saturate(180%);
-  clip-path: polygon(
-    15px 0,
-    100% 0,
-    100% calc(100% - 15px),
-    calc(100% - 15px) 100%,
-    0 100%,
-    0 15px
-  );
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
-}
-
-.holo-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    45deg,
-    transparent,
-    rgba(249, 115, 22, 0.03),
-    transparent
-  );
-  pointer-events: none;
-}
-
-.holo-card:hover {
-  background: rgba(10, 10, 10, 0.8);
-  box-shadow:
-    0 0 30px rgba(249, 115, 22, 0.15),
-    inset 0 0 15px rgba(255, 255, 255, 0.02);
-  border-color: rgba(249, 115, 22, 0.3);
-}
-
-@media (max-width: 768px) {
-  .holo-card {
-    backdrop-filter: blur(6px) saturate(150%);
-  }
-}
-
-@keyframes scan-vertical {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(1000%);
-  }
-}
-
-@keyframes pulse-slow {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.6;
-    transform: scale(1.05);
-  }
-}
-
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes spin-slow-reverse {
-  from {
-    transform: rotate(360deg);
-  }
-  to {
-    transform: rotate(0deg);
-  }
-}
-
-.animate-scan-vertical {
-  animation: scan-vertical 3s linear infinite;
-}
-
-.animate-pulse-slow {
-  animation: pulse-slow 5s ease-in-out infinite;
-}
-
-.animate-spin-slow {
-  animation: spin-slow 20s linear infinite;
-}
-
-.animate-spin-slow-reverse {
-  animation: spin-slow-reverse 15s linear infinite;
-}
-
 .animate-slide-down {
-  animation: slideDown 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: slideDown 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  opacity: 0;
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.animate-blob {
+  animation: blob 15s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+.animate-sweep {
+  animation: sweep 1.5s ease-in-out infinite;
+}
+
+.animate-tilt {
+  animation: tilt 10s infinite linear;
 }
 
 @keyframes slideDown {
@@ -762,18 +284,65 @@ onUnmounted(() => {
   }
 }
 
-/* Custom scrollbar for HUD feel */
-::-webkit-scrollbar {
-  width: 4px;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-::-webkit-scrollbar-thumb {
-  background: rgba(249, 115, 22, 0.3);
-  border-radius: 20px;
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(50px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-40px, 40px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
 }
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(249, 115, 22, 0.5);
+
+@keyframes sweep {
+  0% {
+    transform: translateX(-100%) skewX(12deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(12deg);
+  }
+}
+
+@keyframes tilt {
+  0%,
+  50%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(2deg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+}
+
+.perspective-1000 {
+  perspective: 1000px;
 }
 </style>
