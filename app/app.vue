@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Minimalist App Entry
+useTheme();
 </script>
 
 <template>

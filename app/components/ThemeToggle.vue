@@ -15,7 +15,8 @@
       <!-- Sun Icon (Active in Light mode, transitions out in Dark) -->
       <i
         :class="[
-          'fa-solid fa-sun text-amber-500 absolute transition-all duration-500 transform',
+          'fa-solid fa-sun text-amber-500 absolute transform',
+          isMounted ? 'transition-all duration-500' : '',
           theme === 'apptime-light'
             ? 'scale-100 rotate-0 opacity-100'
             : 'scale-0 -rotate-90 opacity-0',
@@ -25,7 +26,8 @@
       <!-- Moon Icon (Active in Dark mode, transitions out in Light) -->
       <i
         :class="[
-          'fa-solid fa-moon text-primary absolute transition-all duration-500 transform',
+          'fa-solid fa-moon text-primary absolute transform',
+          isMounted ? 'transition-all duration-500' : '',
           theme === 'apptime-dark'
             ? 'scale-100 rotate-0 opacity-100'
             : 'scale-0 rotate-90 opacity-0',
@@ -37,4 +39,9 @@
 
 <script setup lang="ts">
 const { theme, toggleTheme } = useTheme();
+const isMounted = ref(false);
+
+onMounted(() => {
+  isMounted.value = true;
+});
 </script>

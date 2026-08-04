@@ -12,41 +12,42 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'pt-BR',
         'data-theme': 'apptime-dark',
+        class: 'dark',
       },
-      title: 'Apptime AI | Sua ideia no ar em 15 minutos por R$ 27',
+      title: 'Apptime | Crie site, posts e marca com IA em minutos',
       meta: [
         { charset: 'UTF-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
         {
           name: 'description',
           content:
-            'Fale em português simples e a IA gera seus textos, imagens, documentos e publica sua landing page em menos de 15 minutos. Sem mensalidades.',
+            'Tire sua ideia do papel: crie site, identidade de marca, posts e documentos com IA. Sem mensalidade — compre créditos e use quando quiser. Resultados profissionais.',
         },
         {
           name: 'keywords',
           content:
-            'Apptime, Academy, AI, Agency, Tecnologia, SaaS, Mentoria, Desenvolvimento, IA',
+            'Apptime, Crie site com IA, IA, Criador de site, Posts com IA, Marca com IA, Tecnologia, SaaS',
         },
         {
           property: 'og:title',
-          content: 'Apptime AI | Sua ideia no ar em 15 minutos por R$ 27',
+          content: 'Apptime | Crie site, posts e marca com IA em minutos',
         },
         {
           property: 'og:description',
           content:
-            'Fale em português simples e a IA gera seus textos, imagens, documentos e publica sua landing page em menos de 15 minutos. Sem mensalidades.',
+            'Tire sua ideia do papel: crie site, identidade de marca, posts e documentos com IA. Sem mensalidade — compre créditos e use quando quiser. Resultados profissionais.',
         },
         { property: 'og:type', content: 'website' },
         { property: 'og:image', content: '/og-image.webp' },
         { name: 'twitter:card', content: 'summary_large_image' },
         {
           name: 'twitter:title',
-          content: 'Apptime AI | Sua ideia no ar em 15 minutos por R$ 27',
+          content: 'Apptime | Crie site, posts e marca com IA em minutos',
         },
         {
           name: 'twitter:description',
           content:
-            'Fale em português simples e a IA gera seus textos, imagens, documentos e publica sua landing page em menos de 15 minutos. Sem mensalidades.',
+            'Tire sua ideia do papel: crie site, identidade de marca, posts e documentos com IA. Sem mensalidade — compre créditos e use quando quiser. Resultados profissionais.',
         },
         { name: 'twitter:image', content: '/og-image.webp' },
       ],
@@ -68,6 +69,10 @@ export default defineNuxtConfig({
         },
       ],
       script: [
+        {
+          innerHTML: `(function(){try{var m=document.cookie.match(/apptime-theme=([^;]+)/);var theme=(m&&m[1])?m[1]:'apptime-dark';document.documentElement.setAttribute('data-theme',theme);if(theme==='apptime-light'){document.documentElement.classList.add('light');document.documentElement.classList.remove('dark');}else{document.documentElement.classList.add('dark');document.documentElement.classList.remove('light');}}catch(e){}})()`,
+          type: 'text/javascript',
+        },
         {
           src: 'https://cdn.apptime.app/apptime.js',
           async: true,

@@ -5,7 +5,7 @@ export const useTheme = () => {
     default: () => "apptime-dark",
   });
 
-  const theme = ref<ThemeMode>("apptime-dark");
+  const theme = useState<ThemeMode>("theme", () => themeCookie.value || "apptime-dark");
 
   const applyTheme = (newTheme: ThemeMode) => {
     theme.value = newTheme;
@@ -30,8 +30,10 @@ export const useTheme = () => {
   };
 
   onMounted(() => {
-    const saved = (themeCookie.value as ThemeMode) || "apptime-dark";
-    applyTheme(saved);
+    const saved = themeCookie.value || "apptime-dark";
+    if (document.documentElement.getAttribute("data-theme") !== saved) {
+      applyTheme(saved);
+    }
   });
 
   return {
@@ -40,3 +42,4 @@ export const useTheme = () => {
     applyTheme,
   };
 };
+

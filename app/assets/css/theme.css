@@ -115,6 +115,21 @@
 }
 
 @layer base {
+  html {
+    background-color: #050408;
+    color-scheme: dark;
+  }
+
+  html[data-theme="apptime-light"] {
+    background-color: #f8fafc;
+    color-scheme: light;
+  }
+
+  html[data-theme="apptime-dark"] {
+    background-color: #050408;
+    color-scheme: dark;
+  }
+
   body {
     margin: 0;
     background-color: var(--color-base-100);
