@@ -1,0 +1,11 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "prettier.singleQuote": true,
+  "js/ts.format.semicolons": "insert",
+  "git.autofetch": true,
+  "git.postCommitCommand": "push"
+}

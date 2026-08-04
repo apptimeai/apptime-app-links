@@ -1,51 +1,236 @@
 @plugin "daisyui";
 
-@plugin "daisyui/theme" {
-  name: 'apptime';
-  default: false;
-  prefersdark: false;
-  color-scheme: dark;
+@layer base {
+  :root {
+    /* -- Brand Palette -- */
+    --color-brand-primary: #ff6b00; /* Vibrant Orange */
+    --color-brand-secondary: #ff2a85; /* Vibrant Pink */
+    --color-brand-accent: #ff66cc; /* Bright Light Pink */
 
-  /* True Black Space Background Hierarchy */
-  --color-base-100: #000000; /* Pure black */
-  --color-base-200: #050505; /* Extremely dark gray for cards */
-  --color-base-300: #0a0a0a; /* Slightly lighter for depth */
-  --color-base-content: #f8fafc; /* Clean white-gray text */
+    /* -- Base / Backgrounds (Default Dark) -- */
+    --color-surface-100: #050408; /* Deepest Indigo Black */
+    --color-surface-200: #0b0914; /* Deep Dark Indigo */
+    --color-surface-300: #151224; /* Dark Slate Indigo */
 
-  /* Brand colors (unchanged) */
-  --color-primary: #ff7f00;
-  --color-primary-content: #ffffff;
-  --color-secondary: #ff00ae;
-  --color-secondary-content: #ffffff;
-  --color-accent: #4508f9;
-  --color-accent-content: #ffffff;
+    /* -- Content -- */
+    --color-text-main: #ffffff;
+    --color-text-muted: #cbd5e1;
+    --color-text-inverted: #03000a;
 
-  /* Grayscale for text, borders, and muted elements */
-  --color-neutral: #22314f; /* Cooler neutral gray with blue tint */
-  --color-neutral-content: #e2e8f0;
+    /* -- Utility / Overlay -- */
+    --overlay-base-02: rgba(255, 255, 255, 0.02);
+    --overlay-base-05: rgba(255, 255, 255, 0.05);
+    --overlay-base-08: rgba(255, 255, 255, 0.08);
+    --overlay-base-10: rgba(255, 255, 255, 0.1);
 
-  /* Semantic colors */
-  --color-info: #0ea5e9;
-  --color-info-content: #ffffff;
-  --color-success: #22c55e;
-  --color-success-content: #ffffff;
-  --color-warning: #f59e0b;
-  --color-warning-content: #000000;
-  --color-error: #ef4444;
-  --color-error-content: #ffffff;
+    --grid-line-color: rgba(255, 255, 255, 0.02);
+    --card-border-color: rgba(255, 255, 255, 0.1);
+    --card-bg-gradient: linear-gradient(
+      145deg,
+      rgba(11, 9, 20, 0.9) 0%,
+      rgba(21, 18, 36, 0.9) 100%
+    );
+    --card-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.8);
+  }
 
-  --radius-selector: 0.1rem;
-  --radius-field: 0.1rem;
-  --radius-box: 0.1rem;
-  --size-selector: 0.25rem;
-  --size-field: 0.25rem;
-  --border: 1px;
-  --depth: 0;
-  --noise: 0;
+  [data-theme="apptime-light"] {
+    --color-surface-100: #f8fafc; /* Crisp Light Slate */
+    --color-surface-200: #ffffff; /* Pure White Surface */
+    --color-surface-300: #f1f5f9; /* Soft Slate Card */
+
+    --color-text-main: #0f172a; /* Slate 900 */
+    --color-text-muted: #475569; /* Slate 600 */
+    --color-text-inverted: #ffffff;
+
+    --overlay-base-02: rgba(15, 23, 42, 0.02);
+    --overlay-base-05: rgba(15, 23, 42, 0.05);
+    --overlay-base-08: rgba(15, 23, 42, 0.08);
+    --overlay-base-10: rgba(15, 23, 42, 0.12);
+
+    --grid-line-color: rgba(15, 23, 42, 0.04);
+    --card-border-color: rgba(15, 23, 42, 0.1);
+    --card-bg-gradient: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(248, 250, 252, 0.95) 100%
+    );
+    --card-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08);
+  }
 }
 
-body {
-  font-family: Archivo, sans-serif;
-  background-color: var(--bg-base-100);
-  color: var(--fg-base-content);
+@plugin "daisyui/theme" {
+  name: "apptime-dark";
+  default: true;
+  prefersdark: true;
+  color-scheme: "dark";
+
+  --color-base-100: #050408;
+  --color-base-200: #0b0914;
+  --color-base-300: #151224;
+  --color-base-content: #ffffff;
+
+  --color-primary: var(--color-brand-primary);
+  --color-primary-content: #ffffff;
+  --color-secondary: var(--color-brand-secondary);
+  --color-secondary-content: #ffffff;
+  --color-accent: var(--color-brand-accent);
+  --color-accent-content: #ffffff;
+
+  --color-neutral: #151224;
+  --color-neutral-content: #ffffff;
+
+  --radius-selector: 9999px;
+  --radius-field: 0.2rem;
+  --radius-box: 1rem;
+}
+
+@plugin "daisyui/theme" {
+  name: "apptime-light";
+  color-scheme: "light";
+
+  --color-base-100: #f8fafc;
+  --color-base-200: #ffffff;
+  --color-base-300: #f1f5f9;
+  --color-base-content: #0f172a;
+
+  --color-primary: var(--color-brand-primary);
+  --color-primary-content: #ffffff;
+  --color-secondary: var(--color-brand-secondary);
+  --color-secondary-content: #ffffff;
+  --color-accent: var(--color-brand-accent);
+  --color-accent-content: #ffffff;
+
+  --color-neutral: #e2e8f0;
+  --color-neutral-content: #0f172a;
+
+  --radius-selector: 9999px;
+  --radius-field: 0.2rem;
+  --radius-box: 1rem;
+}
+
+@layer components {
+  .btn {
+    @apply rounded-full text-primary-content;
+  }
+}
+
+@layer base {
+  body {
+    margin: 0;
+    background-color: var(--color-base-100);
+    background-image:
+      linear-gradient(to bottom, var(--grid-line-color) 1px, transparent 1px),
+      linear-gradient(to right, var(--grid-line-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    color: var(--color-base-content);
+    font-family: "Archivo", sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+}
+
+/* Invert SVG brand text logo in Light theme for high contrast */
+[data-theme="apptime-light"] img[alt="Apptime"] {
+  filter: invert(0.9);
+}
+
+@utility glass-effect {
+  background: color-mix(in srgb, var(--color-base-100), transparent 25%);
+  border: 1px solid var(--overlay-base-10);
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 4px 30px rgba(0, 0, 0, 0.06),
+    inset 0 0 1px 1px var(--overlay-base-05);
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease;
+}
+
+@utility premium-card {
+  background: var(--card-bg-gradient);
+  border: 1px solid var(--card-border-color);
+  backdrop-filter: blur(16px);
+  border-radius: 1.5rem;
+  box-shadow: var(--card-shadow);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  &:hover {
+    transform: translateY(-4px) scale(1.01);
+    border-color: color-mix(
+      in srgb,
+      var(--color-brand-primary),
+      transparent 40%
+    );
+    box-shadow:
+      0 20px 40px -10px
+        color-mix(in srgb, var(--color-brand-primary), transparent 85%),
+      0 0 20px 0
+        color-mix(in srgb, var(--color-brand-secondary), transparent 85%);
+  }
+}
+
+@utility brand-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--color-brand-primary) 0%,
+    var(--color-brand-secondary) 100%
+  );
+}
+
+@utility brand-text-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--color-brand-primary) 0%,
+    var(--color-brand-secondary) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+@utility glow-primary {
+  box-shadow: none;
+}
+
+@utility text-glow {
+  text-shadow: none;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1deg);
+  }
+}
+
+@utility animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@utility bg-radial-gradient {
+  background-image: radial-gradient(var(--tw-gradient-stops));
 }

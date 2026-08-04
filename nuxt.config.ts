@@ -11,16 +11,16 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: {
         lang: 'pt-BR',
-        'data-theme': 'apptime',
+        'data-theme': 'apptime-dark',
       },
-      title: 'Apptime | Crie e hospede sites com IA + Experts',
+      title: 'Apptime AI | Sua ideia no ar em 15 minutos por R$ 27',
       meta: [
         { charset: 'UTF-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
         {
           name: 'description',
           content:
-            'Crie e publique seu site profissional rapidamente com IA, como se fosse uma conversa no WhatsApp.',
+            'Fale em português simples e a IA gera seus textos, imagens, documentos e publica sua landing page em menos de 15 minutos. Sem mensalidades.',
         },
         {
           name: 'keywords',
@@ -29,24 +29,24 @@ export default defineNuxtConfig({
         },
         {
           property: 'og:title',
-          content: 'Apptime | Crie e hospede sites com IA + Experts',
+          content: 'Apptime AI | Sua ideia no ar em 15 minutos por R$ 27',
         },
         {
           property: 'og:description',
           content:
-            'Crie e publique seu site profissional rapidamente com IA, como se fosse uma conversa no WhatsApp.',
+            'Fale em português simples e a IA gera seus textos, imagens, documentos e publica sua landing page em menos de 15 minutos. Sem mensalidades.',
         },
         { property: 'og:type', content: 'website' },
         { property: 'og:image', content: '/og-image.webp' },
         { name: 'twitter:card', content: 'summary_large_image' },
         {
           name: 'twitter:title',
-          content: 'Apptime | Crie e hospede sites com IA + Experts',
+          content: 'Apptime AI | Sua ideia no ar em 15 minutos por R$ 27',
         },
         {
           name: 'twitter:description',
           content:
-            'Crie e publique seu site profissional rapidamente com IA, como se fosse uma conversa no WhatsApp.',
+            'Fale em português simples e a IA gera seus textos, imagens, documentos e publica sua landing page em menos de 15 minutos. Sem mensalidades.',
         },
         { name: 'twitter:image', content: '/og-image.webp' },
       ],
@@ -60,7 +60,7 @@ export default defineNuxtConfig({
         },
         {
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;900&family=Oxanium:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap',
+          href: 'https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;900&display=swap',
         },
         {
           rel: 'stylesheet',
