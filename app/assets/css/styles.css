@@ -1,1 +1,19 @@
-/* Styles cleared */
+/* Flat Sophisticated Editorial Styles - Zero Shadows / Zero Blurs / Zero Gradients */
+
+@keyframes marqueeSlow {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-slow {
+  animation: marqueeSlow 45s linear infinite;
+}
+
+.animate-marquee-slow:hover {
+  animation-play-state: paused;
+}
+
