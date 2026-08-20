@@ -1,45 +1,5 @@
 @plugin "daisyui";
 
-@layer base {
-  :root {
-    /* -- Flat Noble Palette (Lighter, Vibrant Primary) -- */
-    --color-terracotta: #e86339;
-    --color-terracotta-light: #f27952;
-    --color-cognac: #8d4925;
-    --color-cognac-light: #a6592f;
-    --color-amber: #d9822b;
-    --color-amber-light: #f09637;
-    --color-emerald: #1b4d3e;
-    --color-emerald-light: #2a6f5a;
-
-    /* -- Dark Mode: Flat Obsidian/Espresso -- */
-    --color-surface-100: #12100e;
-    --color-surface-200: #1a1714;
-    --color-surface-300: #231f1a;
-
-    --color-text-main: #f5f2eb;
-    --color-text-muted: #9e9589;
-    --color-text-inverted: #12100e;
-
-    --color-border-subtle: #2d2721;
-    --color-border-prominent: #423a32;
-  }
-
-  [data-theme="apptime-light"] {
-    /* -- Light Mode: Warm Yellowish Off-White / Parchment -- */
-    --color-surface-100: #f7f3e8;
-    --color-surface-200: #ffffff;
-    --color-surface-300: #ede5d4;
-
-    --color-text-main: #1d1814;
-    --color-text-muted: #6e6457;
-    --color-text-inverted: #f7f3e8;
-
-    --color-border-subtle: #e4dac7;
-    --color-border-prominent: #c8baa2;
-  }
-}
-
 @plugin "daisyui/theme" {
   name: "apptime-dark";
   default: true;
@@ -55,11 +15,13 @@
   --color-primary-content: #ffffff;
   --color-secondary: #8d4925;
   --color-secondary-content: #ffffff;
-  --color-accent: #1b4d3e;
+  --color-accent: #2a7a63;
   --color-accent-content: #ffffff;
 
   --color-neutral: #231f1a;
   --color-neutral-content: #f5f2eb;
+  --color-warning: #d9822b;
+  --color-success: #25d366;
 
   --radius-selector: 9999px;
   --radius-field: 0.75rem;
@@ -84,6 +46,8 @@
 
   --color-neutral: #ede5d4;
   --color-neutral-content: #1d1814;
+  --color-warning: #d9822b;
+  --color-success: #25d366;
 
   --radius-selector: 9999px;
   --radius-field: 0.75rem;
@@ -91,19 +55,16 @@
 }
 
 @layer base {
+  :root {
+    --color-surface-100: var(--color-base-100);
+    --color-surface-200: var(--color-base-200);
+    --color-surface-300: var(--color-base-300);
+  }
+
   html {
-    background-color: #12100e;
-    color-scheme: dark;
-  }
-
-  html[data-theme="apptime-light"] {
-    background-color: #f7f3e8;
-    color-scheme: light;
-  }
-
-  html[data-theme="apptime-dark"] {
-    background-color: #12100e;
-    color-scheme: dark;
+    background-color: var(--color-base-100);
+    color: var(--color-base-content);
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   body {
@@ -119,7 +80,6 @@
   }
 }
 
-
 /* Typography Classes - Modern, Bold, Harmonious */
 .font-display {
   font-family: "Outfit", "Plus Jakarta Sans", sans-serif;
@@ -132,12 +92,12 @@
 
 /* Flat Solid Fill Card - Zero Borders / Zero Shadows */
 .flat-card {
-  background-color: var(--color-surface-200);
+  background-color: var(--color-base-200);
   border-radius: 1.25rem;
   transition: background-color 0.2s ease;
 }
 
 .flat-card:hover {
-  background-color: var(--color-surface-300);
+  background-color: var(--color-base-300);
 }
 

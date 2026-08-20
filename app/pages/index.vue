@@ -36,7 +36,7 @@ const mainLinks = ref([
       'Crie sites, posts e materiais apenas pedindo em português pra IA que te entrega tudo pronto em minutos.',
     url: 'https://apptime.com.br?utm_source=apptime-links',
     cta: 'Começar agora',
-    btnStyle: 'bg-[#e86339] text-white hover:bg-[#d4522a]',
+    btnStyle: 'bg-primary text-primary-content hover:brightness-90',
   },
   {
     id: 'agency',
@@ -45,7 +45,7 @@ const mainLinks = ref([
       'Quer um projeto exclusivo? Nossa equipe de experts impulsiona o seu negócio, do design à venda.',
     url: 'https://wa.me/5511975205644?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20um%20especialista%20sobre%20um%20projeto%20sob%20medida.',
     cta: 'Falar com especialista',
-    btnStyle: 'bg-[#1b4d3e] dark:bg-[#2a7a63] text-white hover:bg-[#153e32]',
+    btnStyle: 'bg-accent text-accent-content hover:brightness-90',
   },
 ]);
 
@@ -55,42 +55,42 @@ const socialLinks = ref([
     name: 'WhatsApp',
     url: 'https://wa.me/5511975205644?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20a%20Apptime.',
     iconClass: 'fa-brands fa-whatsapp',
-    hoverText: 'hover:text-[#25D366]',
+    hoverText: 'hover:text-success',
   },
   {
     id: 'instagram',
     name: 'Instagram',
     url: 'https://instagram.com/apptimeai?utm_source=apptime-links',
     iconClass: 'fa-brands fa-instagram',
-    hoverText: 'hover:text-[#e86339]',
+    hoverText: 'hover:text-primary',
   },
   {
     id: 'linkedin',
     name: 'LinkedIn',
     url: 'https://linkedin.com/company/apptimeai?utm_source=apptime-links',
     iconClass: 'fa-brands fa-linkedin',
-    hoverText: 'hover:text-[#8d4925]',
+    hoverText: 'hover:text-primary',
   },
   {
     id: 'discord',
     name: 'Discord',
     url: 'https://discord.gg/afcuMUuXju?utm_source=apptime-links',
     iconClass: 'fa-brands fa-discord',
-    hoverText: 'hover:text-[#d9822b]',
+    hoverText: 'hover:text-warning',
   },
   {
     id: 'github',
     name: 'GitHub',
     url: 'https://github.com/apptimeai?utm_source=apptime-links',
     iconClass: 'fa-brands fa-github',
-    hoverText: 'hover:text-[#1b4d3e] dark:hover:text-[#2a7a63]',
+    hoverText: 'hover:text-accent',
   },
 ]);
 </script>
 
 <template>
   <div
-    class="min-h-screen flex flex-col font-modern bg-base-100 text-base-content selection:bg-[#e86339] selection:text-white"
+    class="min-h-screen flex flex-col font-modern bg-base-100 text-base-content selection:bg-primary selection:text-primary-content"
   >
     <div
       class="w-full max-w-xl mx-auto flex flex-col gap-7 py-8 sm:py-12 px-4 sm:px-6"
@@ -109,7 +109,7 @@ const socialLinks = ref([
           class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight leading-[1.15] text-base-content"
         >
           Foque no criativo. <br />
-          <span class="text-[#e86339]"> A IA faz o repetitivo. </span>
+          <span class="text-primary"> A IA faz o repetitivo. </span>
         </h1>
         <p
           class="font-modern text-sm sm:text-base text-base-content/75 font-medium leading-relaxed"

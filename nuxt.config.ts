@@ -70,10 +70,6 @@ export default defineNuxtConfig({
       ],
       script: [
         {
-          innerHTML: `(function(){try{var m=document.cookie.match(/apptime-theme=([^;]+)/);var theme=(m&&m[1])?m[1]:'apptime-dark';document.documentElement.setAttribute('data-theme',theme);if(theme==='apptime-light'){document.documentElement.classList.add('light');document.documentElement.classList.remove('dark');}else{document.documentElement.classList.add('dark');document.documentElement.classList.remove('light');}}catch(e){}})()`,
-          type: 'text/javascript',
-        },
-        {
           src: 'https://cdn.apptime.app/apptime.js',
           async: true,
         },

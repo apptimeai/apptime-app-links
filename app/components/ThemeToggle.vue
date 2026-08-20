@@ -13,22 +13,17 @@
   >
     <i
       v-if="theme === 'apptime-light'"
-      class="fa-solid fa-sun text-[#d9822b] text-sm"
+      class="fa-solid fa-sun text-warning text-sm"
     ></i>
     <i
       v-else
-      class="fa-solid fa-moon text-[#e86339] text-sm"
+      class="fa-solid fa-moon text-primary text-sm"
     ></i>
   </button>
 </template>
 
 <script setup lang="ts">
 const { theme, toggleTheme } = useTheme();
-const isMounted = ref(false);
-
-onMounted(() => {
-  isMounted.value = true;
-});
 </script>
 
 

@@ -1,19 +1,13 @@
 export type ThemeMode = "apptime-dark" | "apptime-light";
 
 export const useTheme = () => {
-  const themeCookie = useCookie<ThemeMode>("apptime-theme", {
-    default: () => "apptime-dark",
-  });
+  const theme = useState<ThemeMode>("theme", () => "apptime-dark");
 
-  const theme = useState<ThemeMode>("theme", () => themeCookie.value || "apptime-dark");
-
-  const applyTheme = (newTheme: ThemeMode) => {
-    theme.value = newTheme;
-    themeCookie.value = newTheme;
-
+  const toggleTheme = () => {
+    theme.value = theme.value === "apptime-dark" ? "apptime-light" : "apptime-dark";
     if (import.meta.client) {
-      document.documentElement.setAttribute("data-theme", newTheme);
-      if (newTheme === "apptime-light") {
+      document.documentElement.setAttribute("data-theme", theme.value);
+      if (theme.value === "apptime-light") {
         document.documentElement.classList.add("light");
         document.documentElement.classList.remove("dark");
       } else {
@@ -23,23 +17,9 @@ export const useTheme = () => {
     }
   };
 
-  const toggleTheme = () => {
-    const nextTheme: ThemeMode =
-      theme.value === "apptime-dark" ? "apptime-light" : "apptime-dark";
-    applyTheme(nextTheme);
-  };
-
-  onMounted(() => {
-    const saved = themeCookie.value || "apptime-dark";
-    if (document.documentElement.getAttribute("data-theme") !== saved) {
-      applyTheme(saved);
-    }
-  });
-
   return {
     theme,
     toggleTheme,
-    applyTheme,
   };
 };
 
