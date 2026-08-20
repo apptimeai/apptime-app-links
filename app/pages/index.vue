@@ -2,13 +2,13 @@
 useSeoMeta({
   title: 'Apptime | Criação com IA & Projetos Sob Medida',
   description:
-    'Crie sites, marcas e plataformas sob medida com IA. Sem mensalidade, direto ao ponto.',
+    'Sites hospedados, posts e carrosseis para redes sociais e materiais em PDF prontos em minutos para o seu negócio.',
   ogTitle: 'Apptime | Criação com IA & Projetos Sob Medida',
   ogDescription:
-    'Crie sites, marcas e plataformas sob medida com IA. Sem mensalidade, direto ao ponto.',
+    'Sites hospedados, posts e carrosseis para redes sociais e materiais em PDF prontos em minutos para o seu negócio.',
   twitterTitle: 'Apptime | Criação com IA & Projetos Sob Medida',
   twitterDescription:
-    'Crie sites, marcas e plataformas sob medida com IA. Sem mensalidade, direto ao ponto.',
+    'Sites hospedados, posts e carrosseis para redes sociais e materiais em PDF prontos em minutos para o seu negócio.',
 });
 
 const appImages = ref([
@@ -31,35 +31,38 @@ const appImages = ref([
 const mainLinks = ref([
   {
     id: 'academy',
-    numeral: '01',
-    title: 'Crie com IA em Minutos',
+    title: 'Crie tudo com IA em minutos',
     description:
-      'Sites, posts e identidade de marca sob demanda. Sem mensalidade.',
+      'Crie sites, posts e materiais apenas pedindo em português pra IA que te entrega tudo pronto em minutos.',
     url: 'https://apptime.com.br?utm_source=apptime-links',
     cta: 'Começar agora',
-    accentColor: 'text-[#c85a38]',
-    btnStyle: 'bg-[#c85a38] text-white hover:bg-[#b84c2a]',
+    btnStyle: 'bg-[#e86339] text-white hover:bg-[#d4522a]',
   },
   {
     id: 'agency',
-    numeral: '02',
-    title: 'Projetos Sob Medida',
+    title: 'Nós criamos tudo pra você',
     description:
-      'Sites, softwares e automações exclusivas com equipe especialista.',
-    url: 'https://apptime.dev?utm_source=apptime-links',
+      'Quer um projeto exclusivo? Nossa equipe de experts impulsiona o seu negócio, do design à venda.',
+    url: 'https://wa.me/5511975205644?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20um%20especialista%20sobre%20um%20projeto%20sob%20medida.',
     cta: 'Falar com especialista',
-    accentColor: 'text-[#1b4d3e] dark:text-[#2a7a63]',
     btnStyle: 'bg-[#1b4d3e] dark:bg-[#2a7a63] text-white hover:bg-[#153e32]',
   },
 ]);
 
 const socialLinks = ref([
   {
+    id: 'whatsapp',
+    name: 'WhatsApp',
+    url: 'https://wa.me/5511975205644?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20a%20Apptime.',
+    iconClass: 'fa-brands fa-whatsapp',
+    hoverText: 'hover:text-[#25D366]',
+  },
+  {
     id: 'instagram',
     name: 'Instagram',
     url: 'https://instagram.com/apptimeai?utm_source=apptime-links',
     iconClass: 'fa-brands fa-instagram',
-    hoverText: 'hover:text-[#c85a38]',
+    hoverText: 'hover:text-[#e86339]',
   },
   {
     id: 'linkedin',
@@ -87,45 +90,47 @@ const socialLinks = ref([
 
 <template>
   <div
-    class="min-h-screen flex flex-col font-modern bg-base-100 text-base-content selection:bg-[#c85a38] selection:text-white"
+    class="min-h-screen flex flex-col font-modern bg-base-100 text-base-content selection:bg-[#e86339] selection:text-white"
   >
     <div
       class="w-full max-w-xl mx-auto flex flex-col gap-7 py-8 sm:py-12 px-4 sm:px-6"
     >
       <!-- Navigation Header -->
       <nav class="w-full flex items-center justify-between pb-1">
-        <Logo
-          to="https://apptime.ai?utm_source=apptime-links"
-          size="md"
-        />
+        <Logo to="https://apptime.ai?utm_source=apptime-links" size="md" />
 
         <!-- Flat Theme Toggle -->
         <ThemeToggle />
       </nav>
 
       <!-- Direct Hero Section -->
-      <header class="flex flex-col text-left gap-2">
+      <header class="flex flex-col text-left gap-2.5">
         <h1
           class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight leading-[1.15] text-base-content"
         >
           Foque no criativo. <br />
-          <span class="text-[#c85a38]">
-            A IA faz o repetitivo.
-          </span>
+          <span class="text-[#e86339]"> A IA faz o repetitivo. </span>
         </h1>
-        <p class="font-modern text-sm sm:text-base text-base-content/75 font-medium leading-relaxed">
-          Sites, marcas e sistemas prontos em minutos. Sem mensalidade.
+        <p
+          class="font-modern text-sm sm:text-base text-base-content/75 font-medium leading-relaxed"
+        >
+          Sites hospedados, posts e carrosseis para redes sociais e materiais em
+          PDF prontos em minutos para o seu negócio.
         </p>
       </header>
 
-      <!-- Flat Fill Showcase Strip -->
-      <section class="w-full bg-base-200 rounded-2xl p-2.5 overflow-hidden">
-        <div class="relative flex overflow-hidden">
-          <div class="flex animate-marquee-slow gap-2.5 pr-2.5 whitespace-nowrap min-w-max">
+      <!-- Flat Fill Showcase Strip with Rounded Crop -->
+      <section
+        class="w-full bg-base-200 rounded-[1.75rem] p-2.5 sm:p-3 overflow-hidden"
+      >
+        <div class="relative flex overflow-hidden rounded-2xl">
+          <div
+            class="flex animate-marquee-slow gap-3 pr-3 whitespace-nowrap min-w-max"
+          >
             <div
               v-for="(img, idx) in appImages"
               :key="`showcase-a-${idx}`"
-              class="relative w-[65px] sm:w-[75px] aspect-[9/16] bg-base-300 rounded-xl overflow-hidden shrink-0"
+              class="relative w-[95px] sm:w-[120px] aspect-[9/16] bg-base-300 rounded-2xl overflow-hidden shrink-0"
             >
               <img
                 :src="img"
@@ -137,13 +142,13 @@ const socialLinks = ref([
           </div>
 
           <div
-            class="flex animate-marquee-slow gap-2.5 pr-2.5 whitespace-nowrap min-w-max"
+            class="flex animate-marquee-slow gap-3 pr-3 whitespace-nowrap min-w-max"
             aria-hidden="true"
           >
             <div
               v-for="(img, idx) in appImages"
               :key="`showcase-b-${idx}`"
-              class="relative w-[65px] sm:w-[75px] aspect-[9/16] bg-base-300 rounded-xl overflow-hidden shrink-0"
+              class="relative w-[95px] sm:w-[120px] aspect-[9/16] bg-base-300 rounded-2xl overflow-hidden shrink-0"
             >
               <img
                 :src="img"
@@ -163,27 +168,28 @@ const socialLinks = ref([
           :key="item.id"
           :href="item.url"
           target="_blank"
-          class="group flat-card rounded-2xl p-5 sm:p-6 flex flex-col gap-2.5"
+          class="group flat-card rounded-2xl p-5 sm:p-6 flex flex-col gap-3 transition-colors"
         >
-          <div class="flex items-center justify-between">
-            <span class="font-display text-xs font-black tracking-wider" :class="item.accentColor">
-              {{ item.numeral }}
-            </span>
-            <div
-              class="px-3.5 py-1.5 text-xs font-bold rounded-full transition-colors duration-150"
-              :class="item.btnStyle"
-            >
-              {{ item.cta }} <i class="fa-solid fa-arrow-right text-[10px] ml-1"></i>
-            </div>
-          </div>
-
-          <h2 class="font-display text-xl sm:text-2xl font-bold tracking-tight text-base-content leading-snug">
+          <h2
+            class="font-display text-xl sm:text-2xl font-bold tracking-tight text-base-content leading-snug"
+          >
             {{ item.title }}
           </h2>
 
-          <p class="font-modern text-xs sm:text-sm text-base-content/75 font-medium leading-relaxed">
+          <p
+            class="font-modern text-xs sm:text-sm text-base-content/75 font-medium leading-relaxed"
+          >
             {{ item.description }}
           </p>
+
+          <div class="pt-1.5 flex items-center">
+            <div
+              class="px-4 py-2 text-xs font-bold rounded-full inline-flex items-center gap-1.5 transition-colors duration-150"
+              :class="item.btnStyle"
+            >
+              {{ item.cta }} <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </div>
+          </div>
         </a>
       </main>
 
@@ -203,11 +209,13 @@ const socialLinks = ref([
           </a>
         </div>
 
-        <p class="font-modern text-xs text-base-content/50 font-medium tracking-normal">
-          © {{ new Date().getFullYear() }} Apptime · Todos os direitos reservados.
+        <p
+          class="font-modern text-xs text-base-content/50 font-medium tracking-normal"
+        >
+          © {{ new Date().getFullYear() }} Apptime · Todos os direitos
+          reservados.
         </p>
       </footer>
     </div>
   </div>
 </template>
-

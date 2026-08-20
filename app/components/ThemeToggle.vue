@@ -17,7 +17,7 @@
     ></i>
     <i
       v-else
-      class="fa-solid fa-moon text-[#c85a38] text-sm"
+      class="fa-solid fa-moon text-[#e86339] text-sm"
     ></i>
   </button>
 </template>

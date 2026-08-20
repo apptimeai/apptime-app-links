@@ -5,5 +5,5 @@ app:
   deployPath: '.output/public'
   deployEntry: '.output/public/index.html'
   title: 'Apptime | Crie site, posts e marca com IA em minutos'
-  description: 'Tire sua ideia do papel: crie site, identidade de marca, posts e documentos com IA. Sem mensalidade — compre créditos e use quando quiser. Resultados profissionais.'
+  description: 'Tire sua ideia do papel: crie site, identidade de marca, posts e documentos com IA. Resultados profissionais.'
   keywords: 'Apptime, Crie site com IA, IA, Criador de site, Posts com IA, Marca com IA, Tecnologia, SaaS'

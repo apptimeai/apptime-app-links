@@ -2,9 +2,9 @@
 
 @layer base {
   :root {
-    /* -- Flat Noble Palette -- */
-    --color-terracotta: #c85a38;
-    --color-terracotta-light: #df6b47;
+    /* -- Flat Noble Palette (Lighter, Vibrant Primary) -- */
+    --color-terracotta: #e86339;
+    --color-terracotta-light: #f27952;
     --color-cognac: #8d4925;
     --color-cognac-light: #a6592f;
     --color-amber: #d9822b;
@@ -26,17 +26,17 @@
   }
 
   [data-theme="apptime-light"] {
-    /* -- Light Mode: Flat Parchment/Alabaster -- */
-    --color-surface-100: #fbf9f4;
+    /* -- Light Mode: Warm Yellowish Off-White / Parchment -- */
+    --color-surface-100: #f7f3e8;
     --color-surface-200: #ffffff;
-    --color-surface-300: #f3ede2;
+    --color-surface-300: #ede5d4;
 
-    --color-text-main: #181512;
-    --color-text-muted: #6b6256;
-    --color-text-inverted: #fbf9f4;
+    --color-text-main: #1d1814;
+    --color-text-muted: #6e6457;
+    --color-text-inverted: #f7f3e8;
 
-    --color-border-subtle: #e5ddd0;
-    --color-border-prominent: #c8bdae;
+    --color-border-subtle: #e4dac7;
+    --color-border-prominent: #c8baa2;
   }
 }
 
@@ -51,7 +51,7 @@
   --color-base-300: #231f1a;
   --color-base-content: #f5f2eb;
 
-  --color-primary: #c85a38;
+  --color-primary: #e86339;
   --color-primary-content: #ffffff;
   --color-secondary: #8d4925;
   --color-secondary-content: #ffffff;
@@ -70,20 +70,20 @@
   name: "apptime-light";
   color-scheme: "light";
 
-  --color-base-100: #fbf9f4;
+  --color-base-100: #f7f3e8;
   --color-base-200: #ffffff;
-  --color-base-300: #f3ede2;
-  --color-base-content: #181512;
+  --color-base-300: #ede5d4;
+  --color-base-content: #1d1814;
 
-  --color-primary: #c85a38;
+  --color-primary: #e86339;
   --color-primary-content: #ffffff;
   --color-secondary: #8d4925;
   --color-secondary-content: #ffffff;
   --color-accent: #1b4d3e;
   --color-accent-content: #ffffff;
 
-  --color-neutral: #f3ede2;
-  --color-neutral-content: #181512;
+  --color-neutral: #ede5d4;
+  --color-neutral-content: #1d1814;
 
   --radius-selector: 9999px;
   --radius-field: 0.75rem;
@@ -97,7 +97,7 @@
   }
 
   html[data-theme="apptime-light"] {
-    background-color: #fbf9f4;
+    background-color: #f7f3e8;
     color-scheme: light;
   }
 

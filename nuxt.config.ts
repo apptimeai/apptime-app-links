@@ -21,7 +21,7 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content:
-            'Tire sua ideia do papel: crie site, identidade de marca, posts e documentos com IA. Sem mensalidade — compre créditos e use quando quiser. Resultados profissionais.',
+            'Tire sua ideia do papel: crie site, identidade de marca, posts e documentos com IA. Resultados profissionais.',
         },
         {
           name: 'keywords',
@@ -35,7 +35,7 @@ export default defineNuxtConfig({
         {
           property: 'og:description',
           content:
-            'Tire sua ideia do papel: crie site, identidade de marca, posts e documentos com IA. Sem mensalidade — compre créditos e use quando quiser. Resultados profissionais.',
+            'Tire sua ideia do papel: crie site, identidade de marca, posts e documentos com IA. Resultados profissionais.',
         },
         { property: 'og:type', content: 'website' },
         { property: 'og:image', content: '/og-image.webp' },
@@ -47,7 +47,7 @@ export default defineNuxtConfig({
         {
           name: 'twitter:description',
           content:
-            'Tire sua ideia do papel: crie site, identidade de marca, posts e documentos com IA. Sem mensalidade — compre créditos e use quando quiser. Resultados profissionais.',
+            'Tire sua ideia do papel: crie site, identidade de marca, posts e documentos com IA. Resultados profissionais.',
         },
         { name: 'twitter:image', content: '/og-image.webp' },
       ],
