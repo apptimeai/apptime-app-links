@@ -12,20 +12,11 @@ useSeoMeta({
 });
 
 const appImages = ref([
-  '/images/apps/akira_appti_me.webp',
-  '/images/apps/beijo-doce-confeitari-zy1mhxba_appti_me.webp',
-  '/images/apps/cardapio-ehfjjv_appti_me.webp',
-  '/images/apps/cardapio-restaurante-italiano-tp2n40zg_appti_me.webp',
-  '/images/apps/cathedra_appti_me.webp',
-  '/images/apps/cns_com_br.webp',
-  '/images/apps/jogo-luta-3d-mobile-combate-personalizaca-a0qzw7ta_appti_me.webp',
-  '/images/apps/loupeloupe_com.webp',
-  '/images/apps/mapa-interativo-moder-dduv9pth_appti_me.webp',
-  '/images/apps/mimi-se_appti_me.webp',
-  '/images/apps/observatorio-migracao-religiao_appti_me.webp',
-  '/images/apps/quiz-emagrecimento-cartoon-dqmcchko_appti_me.webp',
-  '/images/apps/souzalimaodontologia_com.webp',
-  '/images/apps/teste-mbti-lb63ify0_appti_me.webp',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/1CqXPasHfhYrO92ziHh9/imgHd.jpeg',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/075oNIx7DwYMj4jP2T6n/imgHd.jpeg',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/yMtXNbvS2JIdqqMu0r0L/imgHd.jpeg',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/1Uh9aEOkpNKPPTLWSN5D/imgHd.jpeg',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/PW2IWuLhdkGX3FtVHeAD/imgHd.jpeg',
 ]);
 
 const mainLinks = ref([
@@ -45,7 +36,7 @@ const mainLinks = ref([
       'Quer um projeto exclusivo? Nossa equipe de experts impulsiona o seu negócio, do design à venda.',
     url: 'https://wa.me/5511975205644?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20um%20especialista%20sobre%20um%20projeto%20sob%20medida.',
     cta: 'Falar com especialista',
-    btnStyle: 'bg-accent text-accent-content hover:brightness-90',
+    btnStyle: 'bg-secondary text-secondary-content hover:brightness-90',
   },
 ]);
 

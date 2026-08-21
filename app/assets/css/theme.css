@@ -6,22 +6,22 @@
   prefersdark: true;
   color-scheme: "dark";
 
-  --color-base-100: #12100e;
-  --color-base-200: #1a1714;
-  --color-base-300: #231f1a;
-  --color-base-content: #f5f2eb;
+  --color-base-100: #0c0e10;
+  --color-base-200: #131619;
+  --color-base-300: #1a1e22;
+  --color-base-content: #f4f0e6;
 
-  --color-primary: #e86339;
+  --color-primary: #b85d3b;
   --color-primary-content: #ffffff;
-  --color-secondary: #8d4925;
+  --color-secondary: #3a6999;
   --color-secondary-content: #ffffff;
-  --color-accent: #2a7a63;
+  --color-accent: #3e5f4d;
   --color-accent-content: #ffffff;
 
-  --color-neutral: #231f1a;
-  --color-neutral-content: #f5f2eb;
-  --color-warning: #d9822b;
-  --color-success: #25d366;
+  --color-neutral: #22272e;
+  --color-neutral-content: #f4f0e6;
+  --color-warning: #af8242;
+  --color-success: #3e5f48;
 
   --radius-selector: 9999px;
   --radius-field: 0.75rem;
@@ -32,22 +32,22 @@
   name: "apptime-light";
   color-scheme: "light";
 
-  --color-base-100: #f7f3e8;
-  --color-base-200: #ffffff;
-  --color-base-300: #ede5d4;
-  --color-base-content: #1d1814;
+  --color-base-100: #eee7dc;
+  --color-base-200: #fbf9f4;
+  --color-base-300: #ded4c3;
+  --color-base-content: #0c0e10;
 
-  --color-primary: #e86339;
+  --color-primary: #b85d3b;
   --color-primary-content: #ffffff;
-  --color-secondary: #8d4925;
+  --color-secondary: #3a6999;
   --color-secondary-content: #ffffff;
-  --color-accent: #1b4d3e;
+  --color-accent: #3e5f4d;
   --color-accent-content: #ffffff;
 
-  --color-neutral: #ede5d4;
-  --color-neutral-content: #1d1814;
-  --color-warning: #d9822b;
-  --color-success: #25d366;
+  --color-neutral: #ded4c3;
+  --color-neutral-content: #0c0e10;
+  --color-warning: #af8242;
+  --color-success: #3e5f48;
 
   --radius-selector: 9999px;
   --radius-field: 0.75rem;

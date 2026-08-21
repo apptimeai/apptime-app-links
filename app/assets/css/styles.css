@@ -5,12 +5,12 @@
     transform: translateX(0%);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
   }
 }
 
 .animate-marquee-slow {
-  animation: marqueeSlow 45s linear infinite;
+  animation: marqueeSlow 14s linear infinite;
 }
 
 .animate-marquee-slow:hover {
