@@ -11,12 +11,31 @@ useSeoMeta({
     'Sites hospedados, posts e carrosseis para redes sociais e materiais em PDF prontos em minutos para o seu negócio.',
 });
 
-const appImages = [
+const siteImages = [
   'https://storage.googleapis.com/storage.apptime.app/public/artifacts/1CqXPasHfhYrO92ziHh9/imgHd.jpeg',
   'https://storage.googleapis.com/storage.apptime.app/public/artifacts/075oNIx7DwYMj4jP2T6n/imgHd.jpeg',
   'https://storage.googleapis.com/storage.apptime.app/public/artifacts/yMtXNbvS2JIdqqMu0r0L/imgHd.jpeg',
   'https://storage.googleapis.com/storage.apptime.app/public/artifacts/1Uh9aEOkpNKPPTLWSN5D/imgHd.jpeg',
   'https://storage.googleapis.com/storage.apptime.app/public/artifacts/PW2IWuLhdkGX3FtVHeAD/imgHd.jpeg',
+];
+
+const postImages = [
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/kxNSyHFngK2YjojkL7oT/imgHd.jpeg',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/7ryzmlSaZ6a8ZChbmNH4/imgHd.jpeg',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/RgtttqFN28n3zTaaPhK5/imgHd.jpeg',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/nhlgmMbTXKxuK4eJoSbE/imgHd.jpeg',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/szju71GVntSUgsyWeVEN/imgHd.jpeg',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/dbyaWJCykfyxGgbKJcRC/imgHd.jpeg',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/TvFm5VpnhxlfiqWpEmSE/imgHd.jpeg',
+];
+
+const materialImages = [
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/8kCXM8JFaUSijMLJRolO/imgHd.jpeg',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/7v27ezwkH8zv06Q4qPj6/imgHd.jpeg',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/c6hOqXVbmJcenDWfX8ry/imgHd.jpeg',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/UnnstdPs9ULGmH5jOwwX/imgHd.jpeg',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/VTdvd8AVsffepXpgY2f4/imgHd.jpeg',
+  'https://storage.googleapis.com/storage.apptime.app/public/artifacts/vlCmOYaLDjKgXNndR8LJ/imgHd.jpeg',
 ];
 
 const showcaseCategories = computed(() => [
@@ -25,24 +44,32 @@ const showcaseCategories = computed(() => [
     title: 'Sites hospedados',
     aspectRatio: 'aspect-[9/16]',
     cardWidth: 'w-[75px] sm:w-[90px]',
-    images: [...appImages, ...appImages],
+    images: [...siteImages, ...siteImages],
     reverse: false,
+    duration: '45s',
   },
   {
     id: 'posts',
     title: 'Posts e carrosseis',
     aspectRatio: 'aspect-[4/5]',
     cardWidth: 'w-[95px] sm:w-[115px]',
-    images: [...appImages, ...appImages],
+    images: [...postImages, ...postImages],
     reverse: true,
+    duration: '78s',
   },
   {
     id: 'materiais',
     title: 'Materiais em PDF',
-    aspectRatio: 'aspect-square',
+    aspectRatio: 'aspect-[4/5]',
     cardWidth: 'w-[95px] sm:w-[115px]',
-    images: [...appImages, ...appImages],
+    images: [
+      ...materialImages,
+      ...materialImages,
+      ...materialImages,
+      ...materialImages,
+    ],
     reverse: false,
+    duration: '67s',
   },
 ]);
 
@@ -165,7 +192,12 @@ const scrollToNextSection = () => {
           >
             <div
               class="flex shrink-0 gap-3 whitespace-nowrap min-w-max"
-              :class="cat.reverse ? 'animate-marquee-slow-reverse' : 'animate-marquee-slow'"
+              :class="
+                cat.reverse
+                  ? 'animate-marquee-slow-reverse'
+                  : 'animate-marquee-slow'
+              "
+              :style="{ animationDuration: cat.duration }"
             >
               <div
                 v-for="(img, idx) in cat.images"
@@ -184,7 +216,12 @@ const scrollToNextSection = () => {
 
             <div
               class="flex shrink-0 gap-3 whitespace-nowrap min-w-max"
-              :class="cat.reverse ? 'animate-marquee-slow-reverse' : 'animate-marquee-slow'"
+              :class="
+                cat.reverse
+                  ? 'animate-marquee-slow-reverse'
+                  : 'animate-marquee-slow'
+              "
+              :style="{ animationDuration: cat.duration }"
               aria-hidden="true"
             >
               <div

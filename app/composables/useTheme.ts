@@ -1,7 +1,7 @@
 export type ThemeMode = "apptime-dark" | "apptime-light";
 
 export const useTheme = () => {
-  const theme = useState<ThemeMode>("theme", () => "apptime-dark");
+  const theme = useState<ThemeMode>("theme", () => "apptime-light");
 
   const toggleTheme = () => {
     theme.value = theme.value === "apptime-dark" ? "apptime-light" : "apptime-dark";
