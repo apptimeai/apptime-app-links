@@ -2,15 +2,16 @@
 
 @keyframes marqueeSlow {
   0% {
-    transform: translateX(0%);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(calc(-100% - 0.75rem));
   }
 }
 
 .animate-marquee-slow {
   animation: marqueeSlow 14s linear infinite;
+  will-change: transform;
 }
 
 .animate-marquee-slow:hover {

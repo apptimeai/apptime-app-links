@@ -114,9 +114,9 @@ const socialLinks = ref([
       <section
         class="w-full bg-base-200 rounded-[1.75rem] p-2.5 sm:p-3 overflow-hidden"
       >
-        <div class="relative flex overflow-hidden rounded-2xl">
+        <div class="relative flex gap-3 overflow-hidden rounded-2xl">
           <div
-            class="flex animate-marquee-slow gap-3 pr-3 whitespace-nowrap min-w-max"
+            class="flex shrink-0 animate-marquee-slow gap-3 whitespace-nowrap min-w-max"
           >
             <div
               v-for="(img, idx) in appImages"
@@ -133,7 +133,7 @@ const socialLinks = ref([
           </div>
 
           <div
-            class="flex animate-marquee-slow gap-3 pr-3 whitespace-nowrap min-w-max"
+            class="flex shrink-0 animate-marquee-slow gap-3 whitespace-nowrap min-w-max"
             aria-hidden="true"
           >
             <div
