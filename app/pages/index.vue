@@ -62,12 +62,7 @@ const showcaseCategories = computed(() => [
     title: 'Materiais em PDF',
     aspectRatio: 'aspect-[4/5]',
     cardWidth: 'w-[95px] sm:w-[115px]',
-    images: [
-      ...materialImages,
-      ...materialImages,
-      ...materialImages,
-      ...materialImages,
-    ],
+    images: [...materialImages, ...materialImages],
     reverse: false,
     duration: '67s',
   },
@@ -79,7 +74,7 @@ const mainLinks = ref([
     title: 'Crie tudo com IA em minutos',
     description:
       'Crie sites, posts e materiais apenas pedindo em português pra IA que te entrega tudo pronto em minutos.',
-    url: 'https://apptime.com.br?utm_source=apptime-links',
+    url: 'https://apptime.ai/auth?utm_source=apptime-links',
     cta: 'Começar agora',
     btnStyle: 'bg-primary text-primary-content hover:brightness-90',
   },
@@ -115,20 +110,6 @@ const socialLinks = ref([
     url: 'https://linkedin.com/company/apptimeai?utm_source=apptime-links',
     iconClass: 'fa-brands fa-linkedin',
     hoverText: 'hover:text-primary',
-  },
-  {
-    id: 'discord',
-    name: 'Discord',
-    url: 'https://discord.gg/afcuMUuXju?utm_source=apptime-links',
-    iconClass: 'fa-brands fa-discord',
-    hoverText: 'hover:text-warning',
-  },
-  {
-    id: 'github',
-    name: 'GitHub',
-    url: 'https://github.com/apptimeai?utm_source=apptime-links',
-    iconClass: 'fa-brands fa-github',
-    hoverText: 'hover:text-accent',
   },
 ]);
 
@@ -290,12 +271,12 @@ const scrollToNextSection = () => {
           </a>
         </div>
 
-        <p
-          class="font-modern text-xs text-base-content/50 font-medium tracking-normal"
+        <div
+          class="font-modern text-xs text-base-content/50 font-medium tracking-normal text-center flex flex-col gap-0.5"
         >
-          © {{ new Date().getFullYear() }} Apptime · Todos os direitos
-          reservados.
-        </p>
+          <span>© {{ new Date().getFullYear() }} Apptime Servicos de Internet Ltda.</span>
+          <span>Todos os direitos reservados.</span>
+        </div>
       </footer>
     </div>
   </div>
