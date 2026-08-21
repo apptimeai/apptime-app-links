@@ -19,7 +19,32 @@ const appImages = [
   'https://storage.googleapis.com/storage.apptime.app/public/artifacts/PW2IWuLhdkGX3FtVHeAD/imgHd.jpeg',
 ];
 
-const showcaseImages = computed(() => [...appImages, ...appImages]);
+const showcaseCategories = computed(() => [
+  {
+    id: 'sites',
+    title: 'Sites hospedados',
+    aspectRatio: 'aspect-[9/16]',
+    cardWidth: 'w-[75px] sm:w-[90px]',
+    images: [...appImages, ...appImages],
+    reverse: false,
+  },
+  {
+    id: 'posts',
+    title: 'Posts e carrosseis',
+    aspectRatio: 'aspect-[4/5]',
+    cardWidth: 'w-[95px] sm:w-[115px]',
+    images: [...appImages, ...appImages],
+    reverse: true,
+  },
+  {
+    id: 'materiais',
+    title: 'Materiais em PDF',
+    aspectRatio: 'aspect-square',
+    cardWidth: 'w-[95px] sm:w-[115px]',
+    images: [...appImages, ...appImages],
+    reverse: false,
+  },
+]);
 
 const mainLinks = ref([
   {
@@ -79,6 +104,13 @@ const socialLinks = ref([
     hoverText: 'hover:text-accent',
   },
 ]);
+
+const scrollToNextSection = () => {
+  const target = document.getElementById('action-links');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
 </script>
 
 <template>
@@ -112,78 +144,97 @@ const socialLinks = ref([
         </p>
       </header>
 
-      <!-- Flat Fill Showcase Strip with Rounded Crop -->
-      <section
-        class="w-full bg-base-200 rounded-[1.75rem] p-2.5 sm:p-3 overflow-hidden"
-      >
-        <div class="carousel-track relative flex gap-3 overflow-hidden rounded-2xl">
-          <div
-            class="flex shrink-0 animate-marquee-slow gap-3 whitespace-nowrap min-w-max"
-          >
-            <div
-              v-for="(img, idx) in showcaseImages"
-              :key="`showcase-a-${idx}`"
-              class="relative w-[95px] sm:w-[120px] aspect-[9/16] bg-base-300 rounded-2xl overflow-hidden shrink-0"
-            >
-              <img
-                :src="img"
-                class="w-full h-full object-cover object-top"
-                loading="lazy"
-                alt="App"
-              />
-            </div>
-          </div>
-
-          <div
-            class="flex shrink-0 animate-marquee-slow gap-3 whitespace-nowrap min-w-max"
-            aria-hidden="true"
-          >
-            <div
-              v-for="(img, idx) in showcaseImages"
-              :key="`showcase-b-${idx}`"
-              class="relative w-[95px] sm:w-[120px] aspect-[9/16] bg-base-300 rounded-2xl overflow-hidden shrink-0"
-            >
-              <img
-                :src="img"
-                class="w-full h-full object-cover object-top"
-                loading="lazy"
-                alt="App"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Direct Flat Fill Action Cards -->
+      <!-- All Cards: Carousels and Action Links with Unified Spacing -->
       <main class="w-full flex flex-col gap-3.5">
+        <!-- Showcase Cards for Sites, Posts, and Materiais -->
         <a
-          v-for="item in mainLinks"
-          :key="item.id"
-          :href="item.url"
-          target="_blank"
-          class="group flat-card rounded-2xl p-5 sm:p-6 flex flex-col gap-3 transition-colors"
+          v-for="cat in showcaseCategories"
+          :key="cat.id"
+          href="#action-links"
+          @click.prevent="scrollToNextSection"
+          class="flat-card rounded-2xl p-5 sm:p-6 flex flex-col gap-4 overflow-hidden cursor-pointer select-none"
         >
           <h2
             class="font-display text-xl sm:text-2xl font-bold tracking-tight text-base-content leading-snug"
           >
-            {{ item.title }}
+            {{ cat.title }}
           </h2>
 
-          <p
-            class="font-modern text-xs sm:text-sm text-base-content/75 font-medium leading-relaxed"
+          <div
+            class="carousel-track relative flex gap-3 overflow-hidden rounded-xl"
           >
-            {{ item.description }}
-          </p>
-
-          <div class="pt-1.5 flex items-center">
             <div
-              class="px-4 py-2 text-xs font-bold rounded-full inline-flex items-center gap-1.5 transition-colors duration-150"
-              :class="item.btnStyle"
+              class="flex shrink-0 gap-3 whitespace-nowrap min-w-max"
+              :class="cat.reverse ? 'animate-marquee-slow-reverse' : 'animate-marquee-slow'"
             >
-              {{ item.cta }} <i class="fa-solid fa-arrow-right text-xs"></i>
+              <div
+                v-for="(img, idx) in cat.images"
+                :key="`${cat.id}-a-${idx}`"
+                class="relative bg-base-300 rounded-xl overflow-hidden shrink-0"
+                :class="[cat.cardWidth, cat.aspectRatio]"
+              >
+                <img
+                  :src="img"
+                  class="w-full h-full object-cover object-top"
+                  loading="lazy"
+                  :alt="cat.title"
+                />
+              </div>
+            </div>
+
+            <div
+              class="flex shrink-0 gap-3 whitespace-nowrap min-w-max"
+              :class="cat.reverse ? 'animate-marquee-slow-reverse' : 'animate-marquee-slow'"
+              aria-hidden="true"
+            >
+              <div
+                v-for="(img, idx) in cat.images"
+                :key="`${cat.id}-b-${idx}`"
+                class="relative bg-base-300 rounded-xl overflow-hidden shrink-0"
+                :class="[cat.cardWidth, cat.aspectRatio]"
+              >
+                <img
+                  :src="img"
+                  class="w-full h-full object-cover object-top"
+                  loading="lazy"
+                  :alt="cat.title"
+                />
+              </div>
             </div>
           </div>
         </a>
+
+        <!-- Direct Flat Fill Action Cards Anchor Point -->
+        <div id="action-links" class="flex flex-col gap-3.5">
+          <a
+            v-for="item in mainLinks"
+            :key="item.id"
+            :href="item.url"
+            target="_blank"
+            class="group flat-card rounded-2xl p-5 sm:p-6 flex flex-col gap-3 transition-colors"
+          >
+            <h2
+              class="font-display text-xl sm:text-2xl font-bold tracking-tight text-base-content leading-snug"
+            >
+              {{ item.title }}
+            </h2>
+
+            <p
+              class="font-modern text-xs sm:text-sm text-base-content/75 font-medium leading-relaxed"
+            >
+              {{ item.description }}
+            </p>
+
+            <div class="pt-1.5 flex items-center">
+              <div
+                class="px-4 py-2 text-xs font-bold rounded-full inline-flex items-center gap-1.5 transition-colors duration-150"
+                :class="item.btnStyle"
+              >
+                {{ item.cta }} <i class="fa-solid fa-arrow-right text-xs"></i>
+              </div>
+            </div>
+          </a>
+        </div>
       </main>
 
       <!-- Clean Minimal Footer -->
