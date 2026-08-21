@@ -11,13 +11,15 @@ useSeoMeta({
     'Sites hospedados, posts e carrosseis para redes sociais e materiais em PDF prontos em minutos para o seu negócio.',
 });
 
-const appImages = ref([
+const appImages = [
   'https://storage.googleapis.com/storage.apptime.app/public/artifacts/1CqXPasHfhYrO92ziHh9/imgHd.jpeg',
   'https://storage.googleapis.com/storage.apptime.app/public/artifacts/075oNIx7DwYMj4jP2T6n/imgHd.jpeg',
   'https://storage.googleapis.com/storage.apptime.app/public/artifacts/yMtXNbvS2JIdqqMu0r0L/imgHd.jpeg',
   'https://storage.googleapis.com/storage.apptime.app/public/artifacts/1Uh9aEOkpNKPPTLWSN5D/imgHd.jpeg',
   'https://storage.googleapis.com/storage.apptime.app/public/artifacts/PW2IWuLhdkGX3FtVHeAD/imgHd.jpeg',
-]);
+];
+
+const showcaseImages = computed(() => [...appImages, ...appImages]);
 
 const mainLinks = ref([
   {
@@ -114,12 +116,12 @@ const socialLinks = ref([
       <section
         class="w-full bg-base-200 rounded-[1.75rem] p-2.5 sm:p-3 overflow-hidden"
       >
-        <div class="relative flex gap-3 overflow-hidden rounded-2xl">
+        <div class="carousel-track relative flex gap-3 overflow-hidden rounded-2xl">
           <div
             class="flex shrink-0 animate-marquee-slow gap-3 whitespace-nowrap min-w-max"
           >
             <div
-              v-for="(img, idx) in appImages"
+              v-for="(img, idx) in showcaseImages"
               :key="`showcase-a-${idx}`"
               class="relative w-[95px] sm:w-[120px] aspect-[9/16] bg-base-300 rounded-2xl overflow-hidden shrink-0"
             >
@@ -137,7 +139,7 @@ const socialLinks = ref([
             aria-hidden="true"
           >
             <div
-              v-for="(img, idx) in appImages"
+              v-for="(img, idx) in showcaseImages"
               :key="`showcase-b-${idx}`"
               class="relative w-[95px] sm:w-[120px] aspect-[9/16] bg-base-300 rounded-2xl overflow-hidden shrink-0"
             >
@@ -178,7 +180,7 @@ const socialLinks = ref([
               class="px-4 py-2 text-xs font-bold rounded-full inline-flex items-center gap-1.5 transition-colors duration-150"
               :class="item.btnStyle"
             >
-              {{ item.cta }} <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              {{ item.cta }} <i class="fa-solid fa-arrow-right text-xs"></i>
             </div>
           </div>
         </a>
@@ -186,17 +188,17 @@ const socialLinks = ref([
 
       <!-- Clean Minimal Footer -->
       <footer class="flex flex-col items-center gap-4 pt-2 pb-6">
-        <div class="flex gap-2.5 items-center justify-center">
+        <div class="flex gap-3 items-center justify-center">
           <a
             v-for="social in socialLinks"
             :key="social.id"
             :href="social.url"
             target="_blank"
-            class="w-9 h-9 rounded-full flex items-center justify-center bg-base-200 hover:bg-base-300 text-base-content/70 transition-colors"
+            class="w-10 h-10 rounded-full flex items-center justify-center bg-base-200 hover:bg-base-300 text-base-content/70 transition-colors"
             :class="social.hoverText"
             :title="social.name"
           >
-            <i :class="social.iconClass" class="text-sm"></i>
+            <i :class="social.iconClass" class="text-base"></i>
           </a>
         </div>
 

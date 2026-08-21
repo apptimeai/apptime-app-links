@@ -10,11 +10,11 @@
 }
 
 .animate-marquee-slow {
-  animation: marqueeSlow 14s linear infinite;
+  animation: marqueeSlow 25s linear infinite;
   will-change: transform;
 }
 
-.animate-marquee-slow:hover {
+.carousel-track:hover .animate-marquee-slow {
   animation-play-state: paused;
 }
 
