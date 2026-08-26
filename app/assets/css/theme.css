@@ -1,57 +1,93 @@
-@plugin "daisyui";
+@plugin 'daisyui';
 
-@plugin "daisyui/theme" {
-  name: 'apptime-dark';
-  prefersdark: true;
-  color-scheme: 'dark';
+/* Light Theme — Refined Neutral Palette (Soft Contrast, Neutral Platinum Canvas) */
+@plugin 'daisyui/theme' {
+  name: 'light';
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
 
-  --color-base-100: #0c0e10;
-  --color-base-200: #131619;
-  --color-base-300: #1a1e22;
-  --color-base-content: #f4f0e6;
+  /* Base — Neutral platinum canvas with soft-elevated surfaces & gentle contrast */
+  --color-base-100: #eceef0; /* Balanced neutral platinum page background */
+  --color-base-200: #f6f7f8; /* Soft neutral pearl surfaces & cards (no pure white) */
+  --color-base-300: #d6d9dc; /* Neutral balanced borders & dividers */
+  --color-base-content: #1e2329; /* Softened deep neutral graphite text */
 
-  --color-primary: #c86a45;
-  --color-primary-content: #ffffff;
-  --color-secondary: #3a6999;
-  --color-secondary-content: #ffffff;
-  --color-accent: #3e5f4d;
-  --color-accent-content: #ffffff;
+  /* Brand — Vibrant Sunset Orange, Sunny Mandarin & Crimson Red Accent */
+  --color-primary: #ff5722; /* Vibrant citrus sunset orange */
+  --color-primary-content: #f8fafc;
+  --color-secondary: #ff881a; /* Lighter radiant sunny mandarin orange */
+  --color-secondary-content: #f8fafc;
+  --color-accent: #e61937; /* Vibrant rich scarlet / crimson red */
+  --color-accent-content: #f8fafc;
 
-  --color-neutral: #22272e;
-  --color-neutral-content: #f4f0e6;
-  --color-warning: #af8242;
-  --color-success: #3e5f48;
+  /* Neutral — Light Neutral for Light Canvas */
+  --color-neutral: #e2e4e8; /* Balanced soft neutral light tone */
+  --color-neutral-content: #1e2329;
 
-  --radius-selector: 9999px;
-  --radius-field: 0.75rem;
-  --radius-box: 1.25rem;
+  /* Semantic — Vibrant & Harmonious */
+  --color-info: #0284c7; /* Vibrant sapphire azure */
+  --color-info-content: #f8fafc;
+  --color-success: #059669; /* Vibrant emerald green */
+  --color-success-content: #f8fafc;
+  --color-warning: #d97706; /* Vibrant warm antique gold */
+  --color-warning-content: #f8fafc;
+  --color-error: #dc2626; /* Vibrant ruby crimson */
+  --color-error-content: #f8fafc;
+
+  --radius-selector: 0.5rem;
+  --radius-field: 1rem;
+  --radius-box: 1.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
 }
 
-@plugin "daisyui/theme" {
-  name: 'apptime-light';
-  default: true;
-  color-scheme: 'light';
+/* Dark Theme — Refined Neutral Slate (Matching Theme Colors & Balanced Dark Base) */
+@plugin 'daisyui/theme' {
+  name: 'dark';
+  default: false;
+  prefersdark: false;
+  color-scheme: dark;
 
-  --color-base-100: #eee7dc;
-  --color-base-200: #fbf9f4;
-  --color-base-300: #ded4c3;
-  --color-base-content: #0c0e10;
+  /* Base — Neutral deep charcoal background & surfaces */
+  --color-base-100: #121316; /* Balanced neutral deep charcoal background */
+  --color-base-200: #181a1e; /* Elevated neutral dark surfaces & cards */
+  --color-base-300: #26282e; /* Neutral muted borders & dividers */
+  --color-base-content: #e2e3e6; /* Softened neutral silver text */
 
-  --color-primary: #c86a45;
-  --color-primary-content: #ffffff;
-  --color-secondary: #3a6999;
-  --color-secondary-content: #ffffff;
-  --color-accent: #3e5f4d;
-  --color-accent-content: #ffffff;
+  /* Brand — Vibrant Sunset Orange, Sunny Mandarin & Crimson Red Accent (Identical to Light) */
+  --color-primary: #ff5722; /* Vibrant citrus sunset orange */
+  --color-primary-content: #f8fafc;
+  --color-secondary: #ff881a; /* Lighter radiant sunny mandarin orange */
+  --color-secondary-content: #f8fafc;
+  --color-accent: #e61937; /* Vibrant rich scarlet / crimson red */
+  --color-accent-content: #f8fafc;
 
-  --color-neutral: #ded4c3;
-  --color-neutral-content: #0c0e10;
-  --color-warning: #af8242;
-  --color-success: #3e5f48;
+  /* Neutral — Dark Neutral for Dark Canvas */
+  --color-neutral: #1b1d22; /* Balanced dark neutral tone */
+  --color-neutral-content: #e2e3e6;
 
-  --radius-selector: 9999px;
-  --radius-field: 0.75rem;
-  --radius-box: 1.25rem;
+  /* Semantic — Vibrant & Harmonious (Identical to Light) */
+  --color-info: #0284c7; /* Vibrant sapphire azure */
+  --color-info-content: #f8fafc;
+  --color-success: #059669; /* Vibrant emerald green */
+  --color-success-content: #f8fafc;
+  --color-warning: #d97706; /* Vibrant warm antique gold */
+  --color-warning-content: #f8fafc;
+  --color-error: #dc2626; /* Vibrant ruby crimson */
+  --color-error-content: #f8fafc;
+
+  --radius-selector: 0.5rem;
+  --radius-field: 1rem;
+  --radius-box: 1.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
 }
 
 @layer base {
@@ -103,10 +139,11 @@
 /* Flat Solid Fill Card - Zero Borders / Zero Shadows */
 .flat-card {
   background-color: var(--color-base-200);
-  border-radius: 1.25rem;
+  border-radius: var(--radius-box, 1.5rem);
   transition: background-color 0.2s ease;
 }
 
 .flat-card:hover {
   background-color: var(--color-base-300);
 }
+

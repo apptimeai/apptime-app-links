@@ -1,13 +1,13 @@
-export type ThemeMode = "apptime-dark" | "apptime-light";
+export type ThemeMode = "dark" | "light";
 
 export const useTheme = () => {
-  const theme = useState<ThemeMode>("theme", () => "apptime-light");
+  const theme = useState<ThemeMode>("theme", () => "light");
 
   const toggleTheme = () => {
-    theme.value = theme.value === "apptime-dark" ? "apptime-light" : "apptime-dark";
+    theme.value = theme.value === "dark" ? "light" : "dark";
     if (import.meta.client) {
       document.documentElement.setAttribute("data-theme", theme.value);
-      if (theme.value === "apptime-light") {
+      if (theme.value === "light") {
         document.documentElement.classList.add("light");
         document.documentElement.classList.remove("dark");
       } else {
@@ -22,4 +22,5 @@ export const useTheme = () => {
     toggleTheme,
   };
 };
+
 

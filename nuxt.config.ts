@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: {
         lang: 'pt-BR',
-        'data-theme': 'apptime-light',
+        'data-theme': 'light',
         class: 'light',
       },
       title: 'Apptime | Crie site, posts e marca com IA em minutos',

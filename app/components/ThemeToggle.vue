@@ -2,17 +2,17 @@
   <button
     @click="toggleTheme"
     :title="
-      theme === 'apptime-dark'
+      theme === 'dark'
         ? 'Alternar para Modo Claro'
         : 'Alternar para Modo Escuro'
     "
     :aria-label="
-      theme === 'apptime-dark' ? 'Ativar modo claro' : 'Ativar modo escuro'
+      theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'
     "
     class="w-10 h-10 rounded-full flex items-center justify-center bg-base-200 hover:bg-base-300 transition-colors duration-200 cursor-pointer text-base-content/80"
   >
     <i
-      v-if="theme === 'apptime-light'"
+      v-if="theme === 'light'"
       class="fa-solid fa-sun text-warning text-base"
     ></i>
     <i
