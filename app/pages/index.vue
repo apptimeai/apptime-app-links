@@ -1,14 +1,15 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Apptime | Criação em Minutos & Projetos Sob Medida',
+  title: 'Apptime | Foque no criativo. Nós fazemos o repetitivo em minutos',
   description:
-    'Sites hospedados, posts e carrosseis para redes sociais e materiais em PDF prontos em minutos para o seu negócio.',
-  ogTitle: 'Apptime | Criação em Minutos & Projetos Sob Medida',
+    'Sites hospedados, posts para redes sociais e materiais em PDF prontos em minutos para o seu negócio. Criação rápida e projetos sob medida com excelência.',
+  ogTitle: 'Apptime | Foque no criativo. Nós fazemos o repetitivo em minutos',
   ogDescription:
-    'Sites hospedados, posts e carrosseis para redes sociais e materiais em PDF prontos em minutos para o seu negócio.',
-  twitterTitle: 'Apptime | Criação em Minutos & Projetos Sob Medida',
+    'Sites hospedados, posts para redes sociais e materiais em PDF prontos em minutos para o seu negócio. Criação rápida e projetos sob medida com excelência.',
+  twitterTitle:
+    'Apptime | Foque no criativo. Nós fazemos o repetitivo em minutos',
   twitterDescription:
-    'Sites hospedados, posts e carrosseis para redes sociais e materiais em PDF prontos em minutos para o seu negócio.',
+    'Sites hospedados, posts para redes sociais e materiais em PDF prontos em minutos para o seu negócio. Criação rápida e projetos sob medida com excelência.',
 });
 
 const siteImages = [

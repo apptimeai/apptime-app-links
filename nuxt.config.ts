@@ -14,40 +14,43 @@ export default defineNuxtConfig({
         'data-theme': 'light',
         class: 'light',
       },
-      title: 'Apptime | Crie site, posts e marca com IA em minutos',
+      title:
+        'Apptime | Foque no criativo. Nós fazemos o repetitivo em minutos',
       meta: [
         { charset: 'UTF-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
         {
           name: 'description',
           content:
-            'Tire sua ideia do papel: crie site, identidade de marca, posts e documentos com IA. Resultados profissionais.',
+            'Sites hospedados, posts para redes sociais e materiais em PDF prontos em minutos para o seu negócio. Criação rápida e projetos sob medida com excelência.',
         },
         {
           name: 'keywords',
           content:
-            'Apptime, Crie site com IA, IA, Criador de site, Posts com IA, Marca com IA, Tecnologia, SaaS',
+            'Apptime, Criação em minutos, Sites hospedados, Posts para redes sociais, Carrosseis, Materiais em PDF, Projetos sob medida, Design, Marketing',
         },
         {
           property: 'og:title',
-          content: 'Apptime | Crie site, posts e marca com IA em minutos',
+          content:
+            'Apptime | Foque no criativo. Nós fazemos o repetitivo em minutos',
         },
         {
           property: 'og:description',
           content:
-            'Tire sua ideia do papel: crie site, identidade de marca, posts e documentos com IA. Resultados profissionais.',
+            'Sites hospedados, posts para redes sociais e materiais em PDF prontos em minutos para o seu negócio. Criação rápida e projetos sob medida com excelência.',
         },
         { property: 'og:type', content: 'website' },
         { property: 'og:image', content: '/og-image.webp' },
         { name: 'twitter:card', content: 'summary_large_image' },
         {
           name: 'twitter:title',
-          content: 'Apptime | Crie site, posts e marca com IA em minutos',
+          content:
+            'Apptime | Foque no criativo. Nós fazemos o repetitivo em minutos',
         },
         {
           name: 'twitter:description',
           content:
-            'Tire sua ideia do papel: crie site, identidade de marca, posts e documentos com IA. Resultados profissionais.',
+            'Sites hospedados, posts para redes sociais e materiais em PDF prontos em minutos para o seu negócio. Criação rápida e projetos sob medida com excelência.',
         },
         { name: 'twitter:image', content: '/og-image.webp' },
       ],
