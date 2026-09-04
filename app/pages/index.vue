@@ -1,12 +1,12 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Apptime | Criação com IA & Projetos Sob Medida',
+  title: 'Apptime | Criação em Minutos & Projetos Sob Medida',
   description:
     'Sites hospedados, posts e carrosseis para redes sociais e materiais em PDF prontos em minutos para o seu negócio.',
-  ogTitle: 'Apptime | Criação com IA & Projetos Sob Medida',
+  ogTitle: 'Apptime | Criação em Minutos & Projetos Sob Medida',
   ogDescription:
     'Sites hospedados, posts e carrosseis para redes sociais e materiais em PDF prontos em minutos para o seu negócio.',
-  twitterTitle: 'Apptime | Criação com IA & Projetos Sob Medida',
+  twitterTitle: 'Apptime | Criação em Minutos & Projetos Sob Medida',
   twitterDescription:
     'Sites hospedados, posts e carrosseis para redes sociais e materiais em PDF prontos em minutos para o seu negócio.',
 });
@@ -70,19 +70,19 @@ const showcaseCategories = computed(() => [
 
 const mainLinks = ref([
   {
-    id: 'academy',
-    title: 'Crie tudo com IA em minutos',
+    id: 'instant',
+    title: 'Criamos para você em minutos',
     description:
-      'Crie sites, posts e materiais apenas pedindo em português pra IA que te entrega tudo pronto em minutos.',
+      'Sites, posts e materiais prontos antes do café. Basta pedir o que precisa para colocar sua ideia no ar sem perder tempo.',
     url: 'https://apptime.ai/auth?utm_source=apptime-links',
     cta: 'Começar agora',
     btnStyle: 'bg-primary text-primary-content hover:brightness-90',
   },
   {
     id: 'agency',
-    title: 'Nós criamos tudo pra você',
+    title: 'Sob medida com excelência',
     description:
-      'Quer um projeto exclusivo? Nossa equipe de experts impulsiona o seu negócio, do design à venda.',
+      'Para quem busca projetos exclusivos focados em conversões. Nossa equipe cuida de tudo com máxima excelência, do design à entrega.',
     url: 'https://wa.me/5511975205644?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20um%20especialista%20sobre%20um%20projeto%20sob%20medida.',
     cta: 'Falar com especialista',
     btnStyle: 'bg-secondary text-secondary-content hover:brightness-90',
@@ -142,7 +142,14 @@ const scrollToNextSection = () => {
           class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight leading-[1.15] text-base-content"
         >
           Foque no criativo. <br />
-          <span class="text-primary"> A IA faz o repetitivo. </span>
+          <span class="text-primary">
+            Nós fazemos o repetitivo.
+            <span
+              class="font-cursive font-bold text-base-content text-[1.18em] lowercase ml-0.5 inline-block"
+            >
+              em minutos.
+            </span>
+          </span>
         </h1>
         <p
           class="font-modern text-sm sm:text-base text-base-content/75 font-medium leading-relaxed"
@@ -274,7 +281,10 @@ const scrollToNextSection = () => {
         <div
           class="font-modern text-xs text-base-content/50 font-medium tracking-normal text-center flex flex-col gap-0.5"
         >
-          <span>© {{ new Date().getFullYear() }} Apptime Servicos de Internet Ltda.</span>
+          <span
+            >© {{ new Date().getFullYear() }} Apptime Servicos de Internet
+            Ltda.</span
+          >
           <span>Todos os direitos reservados.</span>
         </div>
       </footer>
