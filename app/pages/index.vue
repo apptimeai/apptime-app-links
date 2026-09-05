@@ -146,14 +146,14 @@ const scrollToNextSection = () => {
           <span class="text-primary">
             Nós fazemos o repetitivo.
             <span
-              class="font-cursive font-bold text-base-content text-[1.18em] lowercase ml-0.5 inline-block"
+              class="font-cursive font-bold text-base-content text-[1.26em] sm:text-[1.32em] lowercase ml-0.5 inline-block"
             >
               em minutos.
             </span>
           </span>
         </h1>
         <p
-          class="font-modern text-sm sm:text-base text-base-content/75 font-medium leading-relaxed"
+          class="font-modern text-[15px] sm:text-base text-base-content/80 font-medium leading-relaxed"
         >
           Sites hospedados, posts e carrosseis para redes sociais e materiais em
           PDF prontos em minutos para o seu negócio.
@@ -253,7 +253,7 @@ const scrollToNextSection = () => {
 
             <div class="pt-1.5 flex items-center">
               <div
-                class="px-4 py-2 text-xs font-bold rounded-full inline-flex items-center gap-1.5 transition-colors duration-150"
+                class="px-5 py-2.5 text-xs sm:text-sm font-bold rounded-full inline-flex items-center gap-1.5 transition-colors duration-150"
                 :class="item.btnStyle"
               >
                 {{ item.cta }} <i class="fa-solid fa-arrow-right text-xs"></i>
